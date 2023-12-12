@@ -1,0 +1,11 @@
+.drawer {
+  background-color: aliceblue;
+}
+
+.drawer :global(.mantine-Drawer-header){
+  background-color: #00000050;
+}
+
+.body {
+  margin: 1rem 0;
+}

@@ -1,0 +1,50 @@
+{
+  "files.eol": "\n",
+  "editor.renderWhitespace": "all",
+  "editor.tabSize": 2,
+  "editor.suggest.showVariables": true,
+  "editor.tabCompletion": "on",
+  "eslint.format.enable": true,
+  "eslint.validate": ["javascript"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnType": false,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.wordWrap": "on"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnType": false,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.wordWrap": "on"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnType": false,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.wordWrap": "on"
+  },
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "on",
+    "editor.acceptSuggestionOnEnter": "off"
+  },
+  "conventionalCommits.scopes": [
+    "manager",
+    "ui",
+    "core",
+    "setup",
+    "attributes",
+    "modules",
+    "tenants",
+    "pages",
+    "docker",
+    "theme"
+  ]
+}

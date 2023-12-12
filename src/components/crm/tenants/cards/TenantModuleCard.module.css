@@ -1,0 +1,12 @@
+.card {
+  display: block;
+  opacity: .3;
+}
+
+.card.isSelected {
+  opacity: 1;
+}
+
+.cardTitle {
+  font-weight: bold;
+}

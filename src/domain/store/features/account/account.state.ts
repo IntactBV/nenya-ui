@@ -1,0 +1,31 @@
+// import { LOCAL_STORAGE } from '@scDomain/constants';
+import { isNil } from 'lodash';
+import { AccountState, EAccountRole } from './account.types';
+// import * as jose from 'jose'
+
+const APP_PREFIX = 'sc';
+const LOCAL_STORAGE = {
+  KEYS: {
+    COLOR_SCHEME: `${APP_PREFIX}ColorScheme`,
+    ACCOUNT: `${APP_PREFIX}Account`,
+  },
+};
+
+const rawAccount = typeof window === 'undefined' ? null : localStorage.getItem( LOCAL_STORAGE.KEYS.ACCOUNT );
+
+export const
+  accountSlideName = 'account';
+export const accountState: AccountState = isNil( rawAccount )
+  ? {
+    email: 'gabi@bitvice.ro',
+    tenant: {
+      name: 'Alpha',
+      slug: 'alpha',
+    },
+    role: EAccountRole.VISITOR,
+    token: '',
+    // await jose.EncryptJWT({ 'urn:example:claim': true })
+  }
+  : JSON.parse( rawAccount );
+
+export default accountState;

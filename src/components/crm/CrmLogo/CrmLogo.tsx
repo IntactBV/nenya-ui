@@ -14,8 +14,8 @@ export const CrmLogo = ({ sub }: { sub: string }) => (
         alt="Nenya Digital"
       />
       <Stack gap={0}>
-        <Text variant="gradient" component="span" gradient={{ from: 'red', to: 'yellow' }} className={css.title}>
-          NenyaDigital
+        <Text variant="gradient" component="span" gradient={{ from: '#ccc', to: '#999' }} className={css.title}>
+          nenya.digital
         </Text>
         <Text className={css.sub}>
           {sub}

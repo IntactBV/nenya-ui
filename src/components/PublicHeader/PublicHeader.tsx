@@ -116,11 +116,11 @@ export function PublicHeader() {
         <Group justify="space-between" h="100%">
 
           <Title order={3}>
-            <Text inherit variant="gradient" component="span" gradient={{ from: 'purple', to: 'orange' }}>
+            <Text inherit variant="gradient" component="span" gradient={{ from: 'white', to: 'gray' }}>
             Nenya
             </Text>
           &nbsp;
-            <Text inherit variant="gradient" component="span" gradient={{ from: 'violet', to: 'blue' }}>
+            <Text inherit variant="gradient" component="span" gradient={{ from: 'gray', to: 'white' }}>
             Digital
             </Text>
           </Title>

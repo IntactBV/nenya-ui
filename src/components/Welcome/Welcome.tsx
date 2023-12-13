@@ -14,11 +14,11 @@ export function Welcome() {
         <span style={{
           wordBreak: 'keep-all',
         }}>
-          <Text inherit variant="gradient" component="span" gradient={{ from: 'purple', to: 'orange' }}>
+          <Text inherit variant="gradient" component="span" gradient={{ from: 'violet', to: '#eee' }}>
             Nenya
           </Text>
           &nbsp;
-          <Text inherit variant="gradient" component="span" gradient={{ from: 'violet', to: 'blue' }}>
+          <Text inherit variant="gradient" component="span" gradient={{ from: '#eee', to: 'purple' }}>
             Digital
           </Text>
         </span>

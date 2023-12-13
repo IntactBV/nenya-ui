@@ -34,6 +34,7 @@ import {
 import { isNil } from 'lodash';
 import { useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useAuth } from '@/src/domain/contexts/AuthProvider';
 import classes from './PublicHeader.module.css';
 
@@ -115,15 +116,16 @@ export function PublicHeader() {
       <header className={classes.header}>
         <Group justify="space-between" h="100%">
 
-          <Title order={3}>
-            <Text inherit variant="gradient" component="span" gradient={{ from: 'white', to: 'gray' }}>
-            Nenya
-            </Text>
-          &nbsp;
-            <Text inherit variant="gradient" component="span" gradient={{ from: 'gray', to: 'white' }}>
-            Digital
-            </Text>
-          </Title>
+          <Link href="/" style={{ textDecoration: 'none' }}>
+            <Title order={1}>
+              <Text inherit variant="gradient" component="span" gradient={{ from: 'white', to: 'violet' }}>
+            nenya.
+              </Text>
+              <Text inherit variant="gradient" component="span" gradient={{ from: 'violet', to: 'white' }}>
+            digital
+              </Text>
+            </Title>
+          </Link>
 
           {/* <MantineLogo size={30} /> */}
 

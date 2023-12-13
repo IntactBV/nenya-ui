@@ -1,7 +1,7 @@
 'use client';
 
-import { PublicHeader } from '@uiComponents/PublicHeader';
-import { Welcome } from '@/src/components/Welcome/Welcome';
+import { PublicHeader } from '@uiComponents/public/PublicHeader/PublicHeader';
+import { Welcome } from '@uiComponents/public/Welcome/Welcome';
 
 export default function DashboardPage() {
   return (

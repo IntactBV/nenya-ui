@@ -5,7 +5,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { FC, PropsWithChildren } from 'react';
 import { CrmLogo } from '@uiComponents/crm/CrmLogo';
 import { CrmSidebar } from '@uiComponents/crm/CrmSidebar';
-import { ColorSchemeToggle } from '@uiComponents/ColorSchemeToggle/ColorSchemeToggle';
+import { ColorSchemeToggle } from '@uiComponents/common/ColorSchemeToggle/ColorSchemeToggle';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/notifications/styles.css';

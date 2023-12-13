@@ -1,1 +1,1 @@
-export * from './PublicHeader/PublicHeader';
+export * from './public/PublicHeader/PublicHeader';

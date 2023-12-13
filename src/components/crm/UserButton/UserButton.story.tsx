@@ -1,4 +1,4 @@
-import { StoryWrapper } from '@/src/components/StoryWrapper/StoryWrapper';
+import { StoryWrapper } from '@uiComponents/public/StoryWrapper/StoryWrapper';
 import attributes from './attributes.json';
 import { UserButton } from './UserButton';
 

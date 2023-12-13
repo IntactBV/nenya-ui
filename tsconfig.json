@@ -41,6 +41,9 @@
       "@uiRepos/*": [
         "./src/domain/repositories/*"
       ],
+      "@uiSignals/*": [
+        "./src/domain/signals/*"
+      ],
       "@uiDomain/*": [
         "./src/domain/*"
       ],

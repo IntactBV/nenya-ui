@@ -18,7 +18,7 @@ export const TenantsScreen = () => {
   const { t } = useTranslation();
   const { data: tenants, isLoading, error, isError } = useGetAllTenantsQuery();
 
-  const handleAddButtonClick = useCallback(( editMode = false ) => {
+  const handleAddButtonClick = useCallback(() => {
     modals.open({
       id: 'addTenantModal',
       title: 'Add tenant',

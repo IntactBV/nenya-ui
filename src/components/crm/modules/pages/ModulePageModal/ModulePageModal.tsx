@@ -12,6 +12,8 @@ import { GoCheck } from 'react-icons/go';
 import { modals } from '@mantine/modals';
 import * as renderers from '@crmComponents/renderers';
 import { RENDERER_NAMES } from '@uiDomain/domain.constants';
+import { useParams } from 'next/navigation';
+import { useAppSelector } from '@uiStore/hooks';
 
 type TModulePage = {
   id: string;
@@ -53,6 +55,7 @@ export const ModulePageModal: FC<TModulePageModalProps> = ({
   page,
   // onClose,
 }) => {
+  const { moduleSlug } = useParams();
   const form = useForm<TModulePage>({
     initialValues: isNil( page ) ? emptyEntity : {
       ...page,
@@ -62,14 +65,18 @@ export const ModulePageModal: FC<TModulePageModalProps> = ({
   const editMode = useMemo(() => !isNil( page ), [ page ]);
   const [ performCreateModulePage, createState ] = useCreateModulePageMutation();
   const [ performUpdateModulePage, updateState ] = useUpdateModulePageMutation();
+  const moduleData = useAppSelector(( state ) => ( state as any ).modulesRepo.queries[ `getModuleStructure("${moduleSlug}")` ].data );
+  const moduleEntities = moduleData.entities.map(( e: any ) => e.slug );
   const { data: entities } = useGetActiveEntitiesQuery();
-  const entitiesData = useMemo(() => entities?.map(( item: IEntity ) => ({
-    value: item.id,
-    label: item.name,
-  })) || [], [ entities ]);
+  const entitiesData = useMemo(() => entities?.filter(
+    ( e: any ) => moduleEntities.includes( e.slug )
+  )
+    .map(( item: IEntity ) => ({
+      value: item.id,
+      label: item.name,
+    })) || [], [ entities ]);
 
   const handleFormSubmit = useCallback( async( data: TModulePage ) => {
-    console.log( data );
     // const result: any = null;
     try {
       data.module = moduleId;
@@ -200,6 +207,7 @@ export const ModulePageModal: FC<TModulePageModalProps> = ({
           </Group>
         </form>
       )}
+      <pre>moduleData: {JSON.stringify( moduleData, null, 2 )}</pre>
     </Stack>
   );
 };

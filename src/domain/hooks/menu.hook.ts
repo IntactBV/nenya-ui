@@ -10,8 +10,8 @@ import {
 } from '@tabler/icons-react';
 import { computed } from '@preact/signals-react';
 import { isEmpty } from 'lodash';
+import { $userData } from '@uiSignals/common.signals';
 import { EAccountRoles } from '@/src/domain/types';
-import { $userData } from '@/src/domain/signals/common.signals';
 
 const mockdata = [
   { label: 'Dashboard', icon: IconGauge },
@@ -65,7 +65,7 @@ type TNavItem = {
 export const useNavigation = ( tenantModules: any ) => {
   const $navData = computed(() => {
     if ( !tenantModules ) {
-      return [];
+      tenantModules = [];
     }
 
     const tenantOptions = tenantModules

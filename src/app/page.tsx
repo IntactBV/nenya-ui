@@ -1,5 +1,5 @@
-import { PublicHeader } from '@uiComponents/PublicHeader';
-import { Welcome } from '@uiComponents/Welcome/Welcome';
+import { PublicHeader } from '@uiComponents/public/PublicHeader/PublicHeader';
+import { Welcome } from '@uiComponents/public/Welcome/Welcome';
 
 export default function CrmPage() {
   return (

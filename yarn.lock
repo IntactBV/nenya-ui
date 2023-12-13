@@ -671,7 +671,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-syntax-flow@npm:^7.23.3":
+"@babel/plugin-syntax-flow@npm:^7.22.5, @babel/plugin-syntax-flow@npm:^7.23.3":
   version: 7.23.3
   resolution: "@babel/plugin-syntax-flow@npm:7.23.3"
   dependencies:
@@ -847,7 +847,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-syntax-typescript@npm:^7.23.3":
+"@babel/plugin-syntax-typescript@npm:^7.22.5, @babel/plugin-syntax-typescript@npm:^7.23.3":
   version: 7.23.3
   resolution: "@babel/plugin-syntax-typescript@npm:7.23.3"
   dependencies:
@@ -5292,6 +5292,67 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@stylexjs/babel-plugin@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@stylexjs/babel-plugin@npm:0.3.0"
+  dependencies:
+    "@stylexjs/shared": "npm:0.3.0"
+  peerDependencies:
+    "@babel/core": ^7.19.6
+    "@babel/traverse": ^7.0.0-0
+    "@babel/types": ^7.15.6
+  checksum: 80c1197252756273e3a1c64e09be0d53f6a9bfc0bb3dfe3c5e1a1d38ef88b6aed691a2df5de0e73f6d519b446f15868da59c54aa91e0ccb54da134c10ff96c01
+  languageName: node
+  linkType: hard
+
+"@stylexjs/nextjs-plugin@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@stylexjs/nextjs-plugin@npm:0.3.0"
+  dependencies:
+    "@babel/core": "npm:^7.23.2"
+    "@babel/plugin-syntax-flow": "npm:^7.22.5"
+    "@babel/plugin-syntax-jsx": "npm:^7.22.5"
+    "@babel/plugin-syntax-typescript": "npm:^7.22.5"
+    "@stylexjs/babel-plugin": "npm:^0.3.0"
+  peerDependencies:
+    next: ">=12.0.7"
+  checksum: e45e589f16a5ed4ad9e0f9ef625e2ba983f7367da4abf6476a58bfb219236ce4aecb38e89c1723dbbe07237b9fb7c52f52b0b45a1e357592ff483c6721c5e562
+  languageName: node
+  linkType: hard
+
+"@stylexjs/open-props@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@stylexjs/open-props@npm:0.3.0"
+  dependencies:
+    css-mediaquery: "npm:^0.1.2"
+    invariant: "npm:^2.2.4"
+    styleq: "npm:0.1.3"
+    utility-types: "npm:^3.10.0"
+  checksum: 7a9a0d602f975d90e7ec602428032ffdf6aa8b6fcda775c66c1e71fbd76105e344a13ef0566099e7b06ac3a77f06009e6e498ca5fdc18e06e1bd35443ec8fefc
+  languageName: node
+  linkType: hard
+
+"@stylexjs/shared@npm:0.3.0":
+  version: 0.3.0
+  resolution: "@stylexjs/shared@npm:0.3.0"
+  dependencies:
+    postcss-value-parser: "npm:^4.1.0"
+  checksum: 0af58db0690848129a8bd17162d671a04393707c820c81fb97aba60b992d7be8cbd2ebc1aa4311ea8010366c92f75210fb53742276a689407423c44ed3a288c5
+  languageName: node
+  linkType: hard
+
+"@stylexjs/stylex@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@stylexjs/stylex@npm:0.3.0"
+  dependencies:
+    css-mediaquery: "npm:^0.1.2"
+    invariant: "npm:^2.2.4"
+    styleq: "npm:0.1.3"
+    utility-types: "npm:^3.10.0"
+  checksum: 6130accaada8f4e3096b731d25d3e3df20345486149be73fc808fd4d18ef5c34a973469fb09dadefa57d032646d04dcac341a2a2a50d889a3cfeb57b1d2f4b9f
+  languageName: node
+  linkType: hard
+
 "@swc/core-darwin-arm64@npm:1.3.95":
   version: 1.3.95
   resolution: "@swc/core-darwin-arm64@npm:1.3.95"
@@ -8234,6 +8295,13 @@ __metadata:
   peerDependencies:
     webpack: ^5.0.0
   checksum: a6e23de4ec1d2832f10b8ca3cfec6b6097a97ca3c73f64338ae5cd110ac270f1b218ff0273d39f677a7a561f1a9d9b0d332274664d0991bcfafaae162c2669c4
+  languageName: node
+  linkType: hard
+
+"css-mediaquery@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "css-mediaquery@npm:0.1.2"
+  checksum: b7825a78f52ce8a8198e004fcad0d7be1d3c9a0463ecd05ba31a0f2c94fb81468ad6f4d7bf715a6ca775696e7a17500c2a339b5216a6d0f789cbf78f9454d048
   languageName: node
   linkType: hard
 
@@ -12920,6 +12988,10 @@ __metadata:
     "@storybook/blocks": "npm:^7.6.4"
     "@storybook/nextjs": "npm:^7.6.4"
     "@storybook/react": "npm:^7.6.4"
+    "@stylexjs/babel-plugin": "npm:^0.3.0"
+    "@stylexjs/nextjs-plugin": "npm:^0.3.0"
+    "@stylexjs/open-props": "npm:^0.3.0"
+    "@stylexjs/stylex": "npm:^0.3.0"
     "@tabler/icons-react": "npm:^2.44.0"
     "@testing-library/dom": "npm:^9.3.3"
     "@testing-library/jest-dom": "npm:^6.1.5"
@@ -15958,6 +16030,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"styleq@npm:0.1.3":
+  version: 0.1.3
+  resolution: "styleq@npm:0.1.3"
+  checksum: 975d951792e65052f1f6e41aaad46492642ce4922b3dc36d4b49b37c8509f9a776794d8f275360f00116a5e6ab1e31514bdcd5840656c4e3213da6803fa12941
+  languageName: node
+  linkType: hard
+
 "sugarss@npm:^4.0.1":
   version: 4.0.1
   resolution: "sugarss@npm:4.0.1"
@@ -16906,6 +16985,13 @@ __metadata:
   version: 0.4.0
   resolution: "utila@npm:0.4.0"
   checksum: 2791604e09ca4f77ae314df83e80d1805f867eb5c7e13e7413caee01273c278cf2c9a3670d8d25c889a877f7b149d892fe61b0181a81654b425e9622ab23d42e
+  languageName: node
+  linkType: hard
+
+"utility-types@npm:^3.10.0":
+  version: 3.10.0
+  resolution: "utility-types@npm:3.10.0"
+  checksum: 79a6f7ea0cdd4fcafcec8c6e68e1e0cfa657e414b6f1696552d89ae70a3634b12ac6c16b7a0a3bfdb0a222ebc3d9a7649f2de434a78f2d65d318b50f314a85e4
   languageName: node
   linkType: hard
 

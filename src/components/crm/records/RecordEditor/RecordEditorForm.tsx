@@ -6,14 +6,19 @@ import { Button, Group, Stack } from '@mantine/core';
 import * as formRenderers from '@crmComponents/renderers/form';
 import { capitalize } from 'lodash';
 import { TEntityAttribute } from '@uiDomain/types';
+import { RecordEditorEntitySelector } from './RecordEditorEntitySelector';
 
 type TRecordEditorFormProps = {
   attributes: TEntityAttribute[],
+  entities?: any[],
+  moduleId: string,
   onFormSubmit: ( data: any ) => void
 };
 
 export const RecordEditorForm: FC<TRecordEditorFormProps> = ({
   attributes,
+  entities,
+  moduleId,
   onFormSubmit,
 }) => {
   const editMode = false;
@@ -42,6 +47,14 @@ export const RecordEditorForm: FC<TRecordEditorFormProps> = ({
     <form onSubmit={form.onSubmit( onFormSubmit )}>
       <Stack>
         {formControls}
+        {entities && entities.map(( entity: any ) => (
+          <RecordEditorEntitySelector
+            key={entity.id}
+            entity={entity}
+            moduleId={moduleId}
+            props={form.getInputProps( entity.slug )}
+          />
+        ))}
         <Group justify="flex-end" mt="md">
           <Button type="submit">{editMode ? 'Edit' : 'Add'}</Button>
         </Group>

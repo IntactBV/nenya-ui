@@ -6,6 +6,7 @@ export enum EAccountRole {
 }
 
 export interface IAccountTenant {
+  id: string;
   slug: string;
   name: string;
 }

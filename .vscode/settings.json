@@ -45,6 +45,7 @@
     "tenants",
     "pages",
     "docker",
-    "theme"
+    "theme",
+    "records"
   ]
 }

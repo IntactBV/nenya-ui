@@ -7,7 +7,6 @@ import { useGetTenantQuery } from '@uiRepos/tenants.repo';
 import { PageHeader } from '@uiComponents/common/PageHeader';
 import { useParams } from 'next/navigation';
 import { TenantTabs } from '../tabs/TenantTabs';
-import { TenantModuleScreen } from '../modules/TenantModuleScreen';
 
 export const TenantScreen: FC = () => {
   const { tenantId } = useParams();
@@ -41,7 +40,7 @@ export const TenantScreen: FC = () => {
 
       <TenantTabs tenant={tenantData} />
 
-      <TenantModuleScreen />
+      {/* <TenantModuleScreen /> */}
 
       {/* <CommonDebugger field="tenantData" data={tenantData} floating /> */}
     </Stack>

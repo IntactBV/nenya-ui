@@ -19,10 +19,11 @@ export const accountState: AccountState = isNil( rawAccount )
   ? {
     email: 'gabi@bitvice.ro',
     tenant: {
+      id: '3e439136-f6c2-4e88-83e7-a592b8ae9db7',
       name: 'Alpha',
       slug: 'alpha',
     },
-    role: EAccountRole.VISITOR,
+    role: EAccountRole.ADMIN,
     token: '',
     // await jose.EncryptJWT({ 'urn:example:claim': true })
   }

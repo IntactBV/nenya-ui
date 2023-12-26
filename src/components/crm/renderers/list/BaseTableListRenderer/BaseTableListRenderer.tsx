@@ -13,7 +13,6 @@ import { useCreateRecordMutation, useGetPageRecordsQuery } from '@uiRepos/record
 import { useAppSelector } from '@uiStore/hooks';
 import { selectAccountEmail } from '@uiStore/features/account/account.selectors';
 import { notifications } from '@mantine/notifications';
-import { Exception } from 'sass';
 import { RecordsListTable } from '@crmComponents/records/RecordsListTable/RecordsListTable';
 import css from './BaseTableListRenderer.module.css';
 
@@ -92,6 +91,19 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
     );
   }
 
+  if ( isEmpty( pageData.entities )) {
+    return (
+      <Stack h="100%" justify="center" align="center">
+        <Group justify="center" mt={20}>
+          <NoData
+            title="No entities found"
+            description="There are no entities for this module page"
+          />
+        </Group>
+      </Stack>
+    );
+  }
+
   return (
     <Stack h="100%">
 
@@ -111,8 +123,10 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
         <Stack h="100%" justify="center" align="center">
           <Group justify="center" mt={20}>
             <NoData
-              title="Page under construction"
-              description="Enable NoData when no records are found"
+              title="No records found"
+              description={`There are no recors defined for ${pageData.entities[ 0 ].name.toLowerCase()} entity`}
+              buttonLabel={`Add the first ${pageData.entities[ 0 ].name.toLowerCase()}`}
+              buttonClickHandler={handleAddEntityBtnClick}
             />
           </Group>
 
@@ -128,12 +142,16 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
       <Drawer
         opened={showDrawer}
         onClose={handleDrawerClose}
-        title={`${isNil( selectedRecord ) ? 'Add' : 'Edit'} ${pageData.entities[ 0 ].name}`}
+        title={`${isNil( selectedRecord ) ? 'Add' : 'Edit'} ${pageData.entities[ 0 ].name.toLowerCase()}`}
         position="right"
         className={css.drawer}
       >
         <Stack className={css.body}>
-          <RecordEditor entity={entity} onEditorSave={handleEditorSave} />
+          <RecordEditor
+            entity={entity}
+            onEditorSave={handleEditorSave}
+            moduleId={pageData.module.id}
+          />
         </Stack>
         {/* <ButtonConfigEditor buttonId={buttonId} config={selectedConfig} onClose={handleCloseDrawer} /> */}
       </Drawer>

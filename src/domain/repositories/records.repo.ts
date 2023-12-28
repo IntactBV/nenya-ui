@@ -39,6 +39,13 @@ export const
         }),
         invalidatesTags: [ recordsTag ],
       }),
+      removeRecord: builder.mutation({
+        query: ( id: string ) => ({
+          url: `/${id}/remove-record`,
+          method: 'DELETE',
+        }),
+        invalidatesTags: [ recordsTag ],
+      }),
       getPageRecords: builder.query({
         query: ({ moduleId, entityId }) => ({
           url: `/module/${moduleId}/entity/${entityId}/records-by-module-entity`,
@@ -53,4 +60,5 @@ export const
     useGetRecordsByModuleQuery,
     useCreateRecordMutation,
     useGetPageRecordsQuery,
+    useRemoveRecordMutation,
   } = recordsRepo;

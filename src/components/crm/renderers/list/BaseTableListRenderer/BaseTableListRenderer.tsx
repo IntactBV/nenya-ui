@@ -137,7 +137,8 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
           <RecordsListTable records={recordsData} entity={entity} />
         </ScrollArea>
       )}
-      {/* <pre>{JSON.stringify( recordsData, null, 2 )}</pre> */}
+      {/* <pre>{JSON.stringify( entity, null, 2 )}</pre>
+      <pre>{JSON.stringify( recordsData, null, 2 )}</pre> */}
 
       <Drawer
         opened={showDrawer}

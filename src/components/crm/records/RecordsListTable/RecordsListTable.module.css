@@ -1,0 +1,16 @@
+.recordRow {
+}
+
+.recordRow .recordActions {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.recordRow:hover {
+  opacity: 1;
+  background-color: #00000050;
+}
+
+.recordRow:hover .recordActions {
+  opacity: 1;
+}

@@ -47,7 +47,7 @@ export const ModulePageScreen = () => {
   }
 
   return (
-    <Stack h="80vh">
+    <Stack h="90vh">
       {isSuccess && (
         <>
           {isEmpty( data.pageType ) && (

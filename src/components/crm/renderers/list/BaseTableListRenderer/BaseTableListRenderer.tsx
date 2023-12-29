@@ -140,11 +140,10 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
               buttonClickHandler={handleAddEntityBtnClick}
             />
           </Group>
-
         </Stack>
       )}
       {!isEmpty( recordsData ) && (
-        <ScrollArea h="100vh" pt="lg">
+        <ScrollArea h="100%" pt="lg">
           <RecordsListTable records={recordsData} entity={entity} />
         </ScrollArea>
       )}

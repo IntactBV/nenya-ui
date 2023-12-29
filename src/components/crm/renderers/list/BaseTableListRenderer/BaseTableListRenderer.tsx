@@ -14,8 +14,10 @@ import { useAppDispatch, useAppSelector } from '@uiStore/hooks';
 import { selectAccountEmail } from '@uiStore/features/account/account.selectors';
 import { notifications } from '@mantine/notifications';
 import { RecordsListTable } from '@crmComponents/records/RecordsListTable/RecordsListTable';
-import { selectCommonEditedRecord, selectCommonPageShowEditDrawer } from '@uiStore/features/common/common.selectors';
+import { selectCommnFilters, selectCommonEditedRecord, selectCommonPageShowEditDrawer } from '@uiStore/features/common/common.selectors';
 import { setCommonEditedRecord, setCommonPageShowEditDrawer } from '@uiStore/features/common/common.slice';
+import { RecordsListFilters } from '@crmComponents/records/RecordsListFilters/RecordsListFilters';
+import { useGetEntityDetailsQuery } from '@uiRepos/entities.repo';
 import css from './BaseTableListRenderer.module.css';
 
 type TBaseTableListRendererprops = {
@@ -26,6 +28,7 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
   const dispatch = useAppDispatch();
   const showDrawer = useAppSelector( selectCommonPageShowEditDrawer );
   const selectedRecord = useAppSelector( selectCommonEditedRecord );
+  const commonFilters = useAppSelector( selectCommnFilters );
   const accountEmail = useAppSelector( selectAccountEmail );
   const entity = useMemo(() => pageData.entities[ 0 ] || {}, [ pageData ]);
   const [ createRecord, recordStatus ] = useCreateRecordMutation();
@@ -34,6 +37,34 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
     entityId: entity.id,
     moduleId: pageData.module.id,
   });
+  const {
+    data: entityDetails,
+    isLoading: attributesLoading,
+    isError: attributesHasError,
+    error: attributesError,
+  } = useGetEntityDetailsQuery( entity.id );
+
+  const filteredData = useMemo(() => {
+    if ( !recordsData ) {
+      return [];
+    }
+
+    if ( isEmpty( commonFilters?.query )) {
+      return recordsData;
+    }
+
+    return recordsData.filter(( record: any ) => {
+      let found = false;
+
+      entityDetails.attributes.forEach(( attr: any ) => {
+        if ( record[ attr.slug ].toLowerCase().includes( commonFilters.query.toLowerCase())) {
+          found = true;
+        }
+      });
+
+      return found;
+    });
+  }, [ recordsData, commonFilters ]);
 
   const handleAddEntityBtnClick = useCallback(() => {
     dispatch( setCommonPageShowEditDrawer( true ));
@@ -143,12 +174,13 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
         </Stack>
       )}
       {!isEmpty( recordsData ) && (
-        <ScrollArea h="100%" pt="lg">
-          <RecordsListTable records={recordsData} entity={entity} />
-        </ScrollArea>
+        <Stack gap="md" mt="lg">
+          <RecordsListFilters />
+          <ScrollArea h="67vh">
+            <RecordsListTable records={filteredData} entity={entity} />
+          </ScrollArea>
+        </Stack>
       )}
-      {/* <pre>{JSON.stringify( entity, null, 2 )}</pre>
-      <pre>{JSON.stringify( recordsData, null, 2 )}</pre> */}
 
       <Drawer
         opened={showDrawer}
@@ -168,6 +200,7 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
         {/* <ButtonConfigEditor buttonId={buttonId} config={selectedConfig} onClose={handleCloseDrawer} /> */}
       </Drawer>
 
+      {/* <CommonDebugger field="BaseTablelistRenderer::filteredData" data={filteredData} floating /> */}
       {/* <CommonDebugger field="BaseTablelistRenderer::pageData" data={pageData} floating /> */}
 
     </Stack>

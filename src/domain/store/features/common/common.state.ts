@@ -10,6 +10,9 @@ export const commonState: CommonState = {
   pageBreadcrumbs: [ { title: 'Home', href: '/admin' } ],
   pageShowEditDrawer: false,
   editedRecord: null,
+  filters: {
+    query: '',
+  },
 };
 
 export default commonState;

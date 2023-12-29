@@ -17,6 +17,7 @@ export const {
   addCommonPageBreadcrumbs,
   setCommonPageShowEditDrawer,
   setCommonEditedRecord,
+  setCommonFilter,
 } = commonSlice.actions;
 
 export default commonSlice.reducer;

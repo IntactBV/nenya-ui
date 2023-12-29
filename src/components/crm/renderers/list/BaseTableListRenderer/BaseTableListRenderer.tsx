@@ -3,17 +3,19 @@
 import { ModulePageHeader } from '@crmComponents/modules/pages/ModulePageHeader/ModulePageHeader';
 import { Box, Button, Drawer, Group, ScrollArea, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { isEmpty, isNil } from 'lodash';
+import { isEmpty, isNil, isNull } from 'lodash';
 import { FC, useCallback, useMemo, useState } from 'react';
 import { GoAlert, GoCheck, GoPlus, GoX } from 'react-icons/go';
 import { NoData } from '@uiComponents/common/NoData';
 import { RecordEditor } from '@crmComponents/records/RecordEditor/RecordEditor';
 import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
-import { useCreateRecordMutation, useGetPageRecordsQuery } from '@uiRepos/records.repo';
-import { useAppSelector } from '@uiStore/hooks';
+import { useCreateRecordMutation, useGetPageRecordsQuery, useUpdateRecordMutation } from '@uiRepos/records.repo';
+import { useAppDispatch, useAppSelector } from '@uiStore/hooks';
 import { selectAccountEmail } from '@uiStore/features/account/account.selectors';
 import { notifications } from '@mantine/notifications';
 import { RecordsListTable } from '@crmComponents/records/RecordsListTable/RecordsListTable';
+import { selectCommonEditedRecord, selectCommonPageShowEditDrawer } from '@uiStore/features/common/common.selectors';
+import { setCommonEditedRecord, setCommonPageShowEditDrawer } from '@uiStore/features/common/common.slice';
 import css from './BaseTableListRenderer.module.css';
 
 type TBaseTableListRendererprops = {
@@ -21,22 +23,25 @@ type TBaseTableListRendererprops = {
 };
 
 export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageData }) => {
-  const [ showDrawer, { open: displayDrawer, close: hideDrawer } ] = useDisclosure( false );
-  const [ selectedRecord, selectRecord ] = useState<any>( null );
+  const dispatch = useAppDispatch();
+  const showDrawer = useAppSelector( selectCommonPageShowEditDrawer );
+  const selectedRecord = useAppSelector( selectCommonEditedRecord );
   const accountEmail = useAppSelector( selectAccountEmail );
   const entity = useMemo(() => pageData.entities[ 0 ] || {}, [ pageData ]);
   const [ createRecord, recordStatus ] = useCreateRecordMutation();
+  const [ editRecord, editRecordStatus ] = useUpdateRecordMutation();
   const { data: recordsData, isLoading: recordsLoading, isError } = useGetPageRecordsQuery({
     entityId: entity.id,
     moduleId: pageData.module.id,
   });
 
   const handleAddEntityBtnClick = useCallback(() => {
-    displayDrawer();
+    dispatch( setCommonPageShowEditDrawer( true ));
   }, []);
 
   const handleDrawerClose = useCallback(() => {
-    hideDrawer();
+    dispatch( setCommonPageShowEditDrawer( false ));
+    dispatch( setCommonEditedRecord( null ));
   }, []);
 
   const handleEditorSave = useCallback( async( data: any ) => {
@@ -47,14 +52,20 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
         entity: entity.id,
         data,
       };
-
-      const result = await createRecord( dto );
+      const editMode = !isNull( selectedRecord );
+      const result = editMode
+        ? await editRecord({
+          id: selectedRecord?.id,
+          body: dto,
+        })
+        : await createRecord( dto );
 
       if ( !result || !isNil( result.error )) {
         throw new Error( result.error );
       }
 
-      hideDrawer();
+      handleDrawerClose();
+
       notifications.show({
         title: `${pageData.name} manger`,
         message: 'The record has been saved.',
@@ -76,7 +87,7 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
       });
       console.error( e );
     }
-  }, []);
+  }, [ accountEmail, entity, pageData, handleDrawerClose, selectedRecord ]);
 
   if ( isError ) {
     return (
@@ -150,6 +161,7 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
         <Stack className={css.body}>
           <RecordEditor
             entity={entity}
+            record={selectedRecord}
             onEditorSave={handleEditorSave}
             moduleId={pageData.module.id}
           />

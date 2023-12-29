@@ -47,8 +47,10 @@ export const TenantModuleScreen: FC = () => {
     );
   }
 
-  return ( <div>
-    <CommonDebugger data={moduleStructure} field="moduleStructure" />
-    <CommonDebugger data={moduleData} field="moduleData" />
-           </div> );
+  return (
+    <div>
+      <CommonDebugger data={moduleStructure} field="moduleStructure" />
+      <CommonDebugger data={moduleData} field="moduleData" />
+    </div>
+  );
 };

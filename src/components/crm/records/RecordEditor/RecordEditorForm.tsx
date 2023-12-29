@@ -4,7 +4,7 @@ import { FC, useMemo } from 'react';
 import { useForm } from '@mantine/form';
 import { Button, Group, Stack } from '@mantine/core';
 import * as formRenderers from '@crmComponents/renderers/form';
-import { capitalize } from 'lodash';
+import { capitalize, isNull } from 'lodash';
 import { TEntityAttribute } from '@uiDomain/types';
 import { RecordEditorEntitySelector } from './RecordEditorEntitySelector';
 
@@ -12,6 +12,7 @@ type TRecordEditorFormProps = {
   attributes: TEntityAttribute[],
   entities?: any[],
   moduleId: string,
+  record: Record<string, string> | null,
   onFormSubmit: ( data: any ) => void
 };
 
@@ -19,14 +20,17 @@ export const RecordEditorForm: FC<TRecordEditorFormProps> = ({
   attributes,
   entities,
   moduleId,
+  record,
   onFormSubmit,
 }) => {
-  const editMode = false;
+  const editMode = !isNull( record );
   const form = useForm({
-    initialValues: attributes.reduce(( acc: any, attr ) => {
-      acc[ attr.slug ] = '';
-      return acc;
-    }, {}),
+    initialValues: editMode
+      ? { ...record }
+      : attributes.reduce(( acc: any, attr ) => {
+        acc[ attr.slug ] = '';
+        return acc;
+      }, {}),
   });
 
   const formControls = useMemo(() => attributes.map(( attr: TEntityAttribute ) => {
@@ -59,6 +63,7 @@ export const RecordEditorForm: FC<TRecordEditorFormProps> = ({
           <Button type="submit">{editMode ? 'Edit' : 'Add'}</Button>
         </Group>
       </Stack>
+      {/* <pre>form: {JSON.stringify( form, null, 2 )}</pre> */}
     </form>
   );
 };

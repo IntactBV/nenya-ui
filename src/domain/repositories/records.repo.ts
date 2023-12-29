@@ -39,6 +39,14 @@ export const
         }),
         invalidatesTags: [ recordsTag ],
       }),
+      updateRecord: builder.mutation({
+        query: ({ id, body }: { id: string, body: any }) => ({
+          url: `/${id}/update-record`,
+          method: 'PATCH',
+          body,
+        }),
+        invalidatesTags: [ recordsTag ],
+      }),
       removeRecord: builder.mutation({
         query: ( id: string ) => ({
           url: `/${id}/remove-record`,
@@ -61,4 +69,5 @@ export const
     useCreateRecordMutation,
     useGetPageRecordsQuery,
     useRemoveRecordMutation,
+    useUpdateRecordMutation,
   } = recordsRepo;

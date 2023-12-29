@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Select } from '@mantine/core';
 import { useGetPageRecordsQuery, useGetRecordsByModuleQuery } from '@uiRepos/records.repo';
+import { sortBy } from 'lodash';
 
 type IRecordEditorEntitySelectorProps = {
   entity: any;
@@ -24,9 +25,10 @@ export const RecordEditorEntitySelector: FC<IRecordEditorEntitySelectorProps> = 
 
   return (
     <Select
+      searchable
       label={`Select ${entity.name.toLowerCase()}`}
       placeholder={`Select ${entity.name.toLowerCase()}`}
-      data={entityRecords.map(( record: any ) => (
+      data={sortBy( entityRecords, 'name' ).map(( record: any ) => (
         { value: record.id, label: record.name }
       ))}
       {...props}

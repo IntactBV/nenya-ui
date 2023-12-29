@@ -7,7 +7,9 @@ export const commonState: CommonState = {
   isExpanded: false,
   theme: 'light',
   pageTitle: 'CRM',
-  pageBreadcrumbs: [ { title: 'Home', href: '/admin' } ]
+  pageBreadcrumbs: [ { title: 'Home', href: '/admin' } ],
+  pageShowEditDrawer: false,
+  editedRecord: null,
 };
 
 export default commonState;

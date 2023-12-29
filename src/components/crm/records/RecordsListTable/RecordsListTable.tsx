@@ -76,7 +76,7 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
         });
 
         return (
-          <Table.Tr className={css.recordRow}>{
+          <Table.Tr key={`row_${rawRecord.id}`} className={css.recordRow}>{
             columns
               .map(( attr: any ) => {
                 const rendererName = subEntitiesSlugs.includes( attr.slug )

@@ -1,3 +1,5 @@
+/* eslint-disable no-continue */
+
 'use client';
 
 import { ModulePageHeader } from '@crmComponents/modules/pages/ModulePageHeader/ModulePageHeader';
@@ -49,22 +51,40 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
       return [];
     }
 
-    if ( isEmpty( commonFilters?.query )) {
-      return recordsData;
-    }
-
     return recordsData.filter(( record: any ) => {
-      let found = false;
+      let found = true;
 
-      entityDetails.attributes.forEach(( attr: any ) => {
-        if ( record[ attr.slug ].toLowerCase().includes( commonFilters.query.toLowerCase())) {
-          found = true;
+      for ( const attr of entityDetails.attributes ) {
+        if ( !isEmpty( commonFilters.query )
+          && !record[ attr.slug ].toLowerCase().includes( commonFilters.query.toLowerCase())
+        ) {
+          found = false;
+          return false;
         }
-      });
+
+        const entityKeys: string[] = [];
+
+        for ( const ent of pageData.entities ) {
+          for ( const subEnt of ent.children ) {
+            entityKeys.push( subEnt.slug );
+          }
+        }
+
+        for ( const key of entityKeys ) {
+          if ( isEmpty( commonFilters[ key ])) {
+            continue;
+          }
+
+          if ( record[ key ]?.id !== commonFilters[ key ]) {
+            found = false;
+            return false;
+          }
+        }
+      }
 
       return found;
     });
-  }, [ recordsData, commonFilters ]);
+  }, [ recordsData, commonFilters, pageData ]);
 
   const handleAddEntityBtnClick = useCallback(() => {
     dispatch( setCommonPageShowEditDrawer( true ));
@@ -174,9 +194,15 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
         </Stack>
       )}
       {!isEmpty( recordsData ) && (
-        <Stack gap="md" mt="lg">
-          <RecordsListFilters />
-          <ScrollArea h="67vh">
+        <Stack
+          gap="md"
+          mt="lg"
+          style={{
+            flexGrow: 1,
+          }}
+        >
+          <RecordsListFilters entityId={entity.id} moduleId={pageData.module.id} />
+          <ScrollArea h={`${window.innerHeight - 340}px`}>
             <RecordsListTable records={filteredData} entity={entity} />
           </ScrollArea>
         </Stack>
@@ -200,7 +226,7 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
         {/* <ButtonConfigEditor buttonId={buttonId} config={selectedConfig} onClose={handleCloseDrawer} /> */}
       </Drawer>
 
-      {/* <CommonDebugger field="BaseTablelistRenderer::filteredData" data={filteredData} floating /> */}
+      <CommonDebugger field="BaseTablelistRenderer::filteredData" data={filteredData} floating />
       {/* <CommonDebugger field="BaseTablelistRenderer::pageData" data={pageData} floating /> */}
 
     </Stack>

@@ -1,13 +1,30 @@
-import { ActionIcon, Card, Group, Input, Text } from '@mantine/core';
+import { ActionIcon, Card, Group, Input, InputLabel, Stack, Text } from '@mantine/core';
+import { useGetEntityDetailsQuery } from '@uiRepos/entities.repo';
 import { selectCommnFilters } from '@uiStore/features/common/common.selectors';
 import { setCommonFilter } from '@uiStore/features/common/common.slice';
 import { useAppDispatch, useAppSelector } from '@uiStore/hooks';
 import { FC, useCallback, useMemo } from 'react';
 import { GoFilter, GoSearch, GoX } from 'react-icons/go';
+import { RecordEditorEntitySelector } from '../RecordEditor/RecordEditorEntitySelector';
 
-export const RecordsListFilters: FC = () => {
+type TRecordListFiltersProps = {
+  entityId: string;
+  moduleId: string;
+};
+
+export const RecordsListFilters: FC<TRecordListFiltersProps> = ({
+  entityId,
+  moduleId,
+}) => {
   const dispatch = useAppDispatch();
   const commonFilters = useAppSelector( selectCommnFilters );
+  const {
+    data: entityDetails,
+    isLoading: attributesLoading,
+    isError: attributesHasError,
+    error: attributesError,
+  } = useGetEntityDetailsQuery( entityId );
+
   const handleFilterChange = useCallback(( e: any ) => {
     dispatch( setCommonFilter({
       query: e.target.value,
@@ -18,19 +35,40 @@ export const RecordsListFilters: FC = () => {
       query: '',
     }));
   }, []);
+  const handleEntityFilterChange = useCallback(( entity: any ) => ( e: any ) => {
+    dispatch( setCommonFilter({
+      [ entity.slug ]: e,
+    }));
+  }, []);
   const showClearFiltersButton = useMemo(() => !!( commonFilters.query ), [ commonFilters ]);
   return (
     <Card>
       <Group>
         <GoFilter size={20} />
         <Text>Filters</Text>
-        <Input
-          placeholder="Search"
-          variant="filled"
-          value={commonFilters.query}
-          leftSection={<GoSearch size={20} />}
-          onChange={handleFilterChange}
-        />
+        <Stack gap={0}>
+          <InputLabel>Search</InputLabel>
+          <Input
+            placeholder="Search"
+            variant="filled"
+            value={commonFilters.query}
+            leftSection={<GoSearch size={20} />}
+            onChange={handleFilterChange}
+          />
+        </Stack>
+
+        {entityDetails?.entities.map(( entity: any ) => (
+          <RecordEditorEntitySelector
+            entity={entity}
+            moduleId={moduleId}
+            key={entity.id}
+            showLabel
+            props={{
+              onChange: handleEntityFilterChange( entity ),
+            }}
+          />
+        ))}
+
         {showClearFiltersButton && (
           <ActionIcon
             variant="subtle"

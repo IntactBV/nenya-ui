@@ -7,12 +7,14 @@ type IRecordEditorEntitySelectorProps = {
   entity: any;
   moduleId: string;
   props?: any;
+  showLabel?: boolean;
 };
 
 export const RecordEditorEntitySelector: FC<IRecordEditorEntitySelectorProps> = ({
   entity,
   moduleId,
   props,
+  showLabel = true,
 }) => {
   const { data: entityRecords, isLoading } = useGetPageRecordsQuery({
     entityId: entity.id,
@@ -26,7 +28,8 @@ export const RecordEditorEntitySelector: FC<IRecordEditorEntitySelectorProps> = 
   return (
     <Select
       searchable
-      label={`Select ${entity.name.toLowerCase()}`}
+      variant="filled"
+      label={showLabel ? `Select ${entity.name.toLowerCase()}` : null}
       placeholder={`Select ${entity.name.toLowerCase()}`}
       data={sortBy( entityRecords, 'name' ).map(( record: any ) => (
         { value: record.id, label: record.name }

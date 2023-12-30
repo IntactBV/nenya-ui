@@ -30,6 +30,13 @@ const commonReducers = {
   setCommonEditedRecord: ( state: CommonState, action: PayloadAction<any> ) => {
     state.editedRecord = action.payload;
   },
+
+  setCommonFilter: ( state: CommonState, action: PayloadAction<Record<string, any>> ) => {
+    state.filters = {
+      ...state.filters,
+      ...action.payload,
+    };
+  },
 };
 
 export default commonReducers;

@@ -12,3 +12,5 @@ export const selectCommonPageShowEditDrawer = ( state: RootState ) => (
 );
 
 export const selectCommonEditedRecord = ( state: RootState ) => state.common?.editedRecord;
+
+export const selectCommnFilters = ( state: RootState ) => state.common?.filters;

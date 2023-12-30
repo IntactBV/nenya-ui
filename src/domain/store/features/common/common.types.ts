@@ -12,4 +12,5 @@ export interface CommonState {
   pageBreadcrumbs: TBreadcrumbItem[];
   pageShowEditDrawer: boolean;
   editedRecord: any;
+  filters: Record<string, any>;
 }

@@ -54,6 +54,10 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
     return recordsData.filter(( record: any ) => {
       let found = true;
 
+      if ( !entityDetails?.attributes ) {
+        return true;
+      }
+
       for ( const attr of entityDetails.attributes ) {
         if ( !isEmpty( commonFilters.query )
           && !record[ attr.slug ].toLowerCase().includes( commonFilters.query.toLowerCase())
@@ -64,10 +68,8 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
 
         const entityKeys: string[] = [];
 
-        for ( const ent of pageData.entities ) {
-          for ( const subEnt of ent.children ) {
-            entityKeys.push( subEnt.slug );
-          }
+        if ( !isEmpty( entityDetails.parent )) {
+          entityKeys.push( entityDetails.parent.slug );
         }
 
         for ( const key of entityKeys ) {
@@ -226,8 +228,9 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
         {/* <ButtonConfigEditor buttonId={buttonId} config={selectedConfig} onClose={handleCloseDrawer} /> */}
       </Drawer>
 
-      <CommonDebugger field="BaseTablelistRenderer::filteredData" data={filteredData} floating />
+      {/* <CommonDebugger field="BaseTablelistRenderer::filteredData" data={filteredData} floating /> */}
       {/* <CommonDebugger field="BaseTablelistRenderer::pageData" data={pageData} floating /> */}
+      {/* <CommonDebugger field="BaseTablelistRenderer::entityDetails" data={entityDetails} floating /> */}
 
     </Stack>
   );

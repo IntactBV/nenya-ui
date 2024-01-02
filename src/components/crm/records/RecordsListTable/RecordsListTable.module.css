@@ -14,3 +14,11 @@
 .recordRow:hover .recordActions {
   opacity: 1;
 }
+
+.mainAttr {
+  font-weight: bold;
+  text-decoration: none;
+}
+.mainAttr:hover {
+  text-decoration: underline;
+}

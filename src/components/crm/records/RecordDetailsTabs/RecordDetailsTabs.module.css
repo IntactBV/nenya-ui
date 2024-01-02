@@ -1,0 +1,38 @@
+.wrapper {
+  margin: 0 -1rem;
+}
+
+.tabList {
+  margin-left: -1.3rem;
+  padding-left: 5rem;
+  
+}
+
+.tabList :global(button) {
+  font-weight: bold;
+}
+
+.tabList :global(button[data-active]),
+.tabList :global(button[data-active]:hover) {
+  color: var(--mantine-color-violet-text);
+  background-color: var(--mantine-color-body);
+  border-bottom: none;
+}
+
+.light {
+  background-color: var(--mantine-color-gray-1);
+}
+
+.light :global(button:hover) {
+  background-color: var(--mantine-color-gray-2);
+  border-bottom: 1px solid var(--mantine-color-gray-4);
+}
+
+.dark {
+  background-color: var(--mantine-color-dark-8);
+}
+
+.dark :global(button:hover) {
+  background-color: var(--mantine-color-dark-9);
+  border-bottom: 1px solid var(--mantine-color-dark-4);
+}

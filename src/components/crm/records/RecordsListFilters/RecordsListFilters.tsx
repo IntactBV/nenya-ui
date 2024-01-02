@@ -57,17 +57,18 @@ export const RecordsListFilters: FC<TRecordListFiltersProps> = ({
           />
         </Stack>
 
-        {entityDetails?.entities.map(( entity: any ) => (
+        {entityDetails?.parent && (
           <RecordEditorEntitySelector
-            entity={entity}
+            entity={entityDetails?.parent}
             moduleId={moduleId}
-            key={entity.id}
             showLabel
             props={{
-              onChange: handleEntityFilterChange( entity ),
+              value: commonFilters[ entityDetails?.parent.slug ] || '',
+              onChange: handleEntityFilterChange( entityDetails?.parent ),
             }}
+            withAllOption
           />
-        ))}
+        )}
 
         {showClearFiltersButton && (
           <ActionIcon

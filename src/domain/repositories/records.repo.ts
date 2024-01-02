@@ -5,6 +5,7 @@ const baseUrl = `${API_BASE_URL}/api/v1/tenanted/records`;
 
 export const
   recordsTag = 'uiRecords',
+  recordDetailsTag = 'uiRecordDetails',
   recordsRepo: any = createApi({
     reducerPath: 'recordsRepo',
     baseQuery: fetchBaseQuery({
@@ -21,7 +22,7 @@ export const
         return headers;
       },
     }),
-    tagTypes: [ recordsTag ],
+    tagTypes: [ recordsTag, recordDetailsTag ],
     endpoints: ( builder ) => ({
       getRecordsByModule: builder.query({
         query: ( moduleSlug: string ) => ({
@@ -31,6 +32,17 @@ export const
           params: undefined,
         }),
       }),
+
+      getRecordDetails: builder.query({
+        query: ( recordId: string ) => ({
+          url: `${recordId}/record-details`,
+          method: 'GET',
+          data: undefined,
+          params: undefined,
+        }),
+        providesTags: [ recordDetailsTag ],
+      }),
+
       createRecord: builder.mutation({
         query: ( body: any ) => ({
           url: '/create-record',
@@ -39,13 +51,22 @@ export const
         }),
         invalidatesTags: [ recordsTag ],
       }),
+
+      filterRecords: builder.mutation({
+        query: ( body: any ) => ({
+          url: '/filter-records',
+          method: 'POST',
+          body,
+        }),
+      }),
+
       updateRecord: builder.mutation({
         query: ({ id, body }: { id: string, body: any }) => ({
           url: `/${id}/update-record`,
           method: 'PATCH',
           body,
         }),
-        invalidatesTags: [ recordsTag ],
+        invalidatesTags: [ recordsTag, recordDetailsTag ],
       }),
       removeRecord: builder.mutation({
         query: ( id: string ) => ({
@@ -66,8 +87,10 @@ export const
 
   {
     useGetRecordsByModuleQuery,
+    useGetRecordDetailsQuery,
     useCreateRecordMutation,
     useGetPageRecordsQuery,
     useRemoveRecordMutation,
     useUpdateRecordMutation,
+    useFilterRecordsMutation,
   } = recordsRepo;

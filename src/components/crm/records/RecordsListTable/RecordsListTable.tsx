@@ -1,11 +1,12 @@
-import { Table } from '@mantine/core';
+import { Button, Table } from '@mantine/core';
 import { CommonPageLoader } from '@uiComponents/common/CommonPageLoader';
 import { useGetEntityDetailsQuery } from '@uiRepos/entities.repo';
 import { useAppDispatch } from '@uiStore/hooks';
 import { FC, useMemo } from 'react';
 import * as fieldRenderers from '@crmComponents/renderers/fields';
-import { capitalize } from 'lodash';
+import { capitalize, isNil } from 'lodash';
 import { TFieldRendererProps } from '@crmComponents/renderers/fields/field-renderers.types';
+import Link from 'next/link';
 import css from './RecordsListTable.module.css';
 
 type TRecordsListTableProps = {
@@ -29,10 +30,10 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
     const headerItems = ( entityDetails?.attributes
       .filter(( attr: { isMain: boolean }) => attr.isMain )) || [];
 
-    for ( const e of entity.children ) {
+    if ( !isNil( entityDetails?.parent )) {
       headerItems.push({
-        slug: e.slug,
-        name: e.name,
+        slug: entityDetails?.parent.slug,
+        name: entityDetails?.parent.name,
       });
     }
 
@@ -62,12 +63,10 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
         const record = { ...rawRecord };
         const columns = ( entityDetails?.attributes
           .filter(( attr: { isMain: boolean }) => attr.isMain )) || [];
-        const subEntitiesSlugs: string[] = [];
 
-        for ( const e of entity.children ) {
-          subEntitiesSlugs.push( e.slug );
+        if ( !isNil( entityDetails?.parent )) {
           columns.push({
-            slug: e.slug,
+            slug: entityDetails?.parent.slug,
           });
         }
 
@@ -79,7 +78,7 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
           <Table.Tr key={`row_${rawRecord.id}`} className={css.recordRow}>{
             columns
               .map(( attr: any ) => {
-                const rendererName = subEntitiesSlugs.includes( attr.slug )
+                const rendererName = attr.slug === entityDetails?.parent?.slug
                   ? 'EntityFieldRenderer'
                   : attr.slug === '_actions'
                     ? 'ActionsFieldRenderer'
@@ -91,7 +90,17 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
                   <Table.Td
                     key={`row_${record.id}_col_${attr.slug}`}
                   >
-                    <FieldRenderer field={attr.slug === '_actions' ? record : record[ attr.slug ]} />
+                    {attr.isMain && (
+                      <Link href={`/crm/records/${record.id}`} className={css.mainAttr}>
+                        <Button variant="subtle">
+                          <FieldRenderer field={attr.slug === '_actions' ? record : record[ attr.slug ]} />
+                        </Button>
+                      </Link>
+                    )}
+                    {!attr.isMain && (
+                      <FieldRenderer field={attr.slug === '_actions' ? record : record[ attr.slug ]} />
+                    )}
+
                   </Table.Td>
                 );
               })
@@ -113,7 +122,6 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
     <Table>
       {renderHeader}
       {renderBody}
-      {/* <pre>{JSON.stringify( entityDetails, null, 2 )}</pre> */}
     </Table>
   );
 };

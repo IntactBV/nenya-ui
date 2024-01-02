@@ -101,7 +101,7 @@ export const
           params: undefined,
           body: undefined,
         }),
-        invalidatesTags: [ entityTag ],
+        invalidatesTags: [ entityTag, entitiesTag ],
       }),
 
       unlinkEntity: builder.mutation({
@@ -111,7 +111,7 @@ export const
           params: undefined,
           body: undefined,
         }),
-        invalidatesTags: [ entityTag ],
+        invalidatesTags: [ entityTag, entitiesTag ],
       }),
 
       updateEntityAttribute: builder.mutation({

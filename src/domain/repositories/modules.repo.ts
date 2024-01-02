@@ -44,6 +44,15 @@ export const
           return response;
         },
       }),
+      getModule: builder.query({
+        query: ( moduleId: string ) => ({
+          url: `/modules/${moduleId}/module-details`,
+          method: 'GET',
+          data: undefined,
+          params: undefined,
+        }),
+        providesTags: [],
+      }),
       createModule: builder.mutation({
         query: ( data ) => ({
           url: '/modules',
@@ -119,6 +128,7 @@ export const
   {
     useGetAllModulesQuery,
     useGetActiveModulesQuery,
+    useGetModuleQuery,
     useGetModuleStructureQuery,
     useCreateModuleMutation,
     useUpdateModuleMutation,

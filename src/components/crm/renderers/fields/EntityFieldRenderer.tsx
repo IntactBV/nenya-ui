@@ -16,11 +16,11 @@ export const EntityFieldRenderer: FC<TEntityFieldRendererProps> = ({
 }) => {
   const a = 1;
   return (
-    <Link href={`crm/records/${field.id}`}>
+    <Link href={`/crm/records/${field?.id}`}>
       <Button
         variant="subtle"
       >
-        {field.name}
+        {field?.name}
       </Button>
     </Link>
   );

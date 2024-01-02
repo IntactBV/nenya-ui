@@ -1,0 +1,18 @@
+.header {
+  display: block;
+  /* color: var(--mantine-color-white);   */
+  margin: -1rem;
+  padding: 2rem 5rem
+}
+
+.light {
+  background-color: var(--mantine-color-gray-1);
+}
+
+.dark {
+  background-color: var(--mantine-color-dark-8);
+}
+
+.title {
+  font-weight: bold;
+}

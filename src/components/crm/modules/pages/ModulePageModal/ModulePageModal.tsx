@@ -207,7 +207,7 @@ export const ModulePageModal: FC<TModulePageModalProps> = ({
           </Group>
         </form>
       )}
-      <pre>moduleData: {JSON.stringify( moduleData, null, 2 )}</pre>
+      {/* <pre>moduleData: {JSON.stringify( moduleData, null, 2 )}</pre> */}
     </Stack>
   );
 };

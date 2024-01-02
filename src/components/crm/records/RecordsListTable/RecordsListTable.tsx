@@ -4,7 +4,7 @@ import { useGetEntityDetailsQuery } from '@uiRepos/entities.repo';
 import { useAppDispatch } from '@uiStore/hooks';
 import { FC, useMemo } from 'react';
 import * as fieldRenderers from '@crmComponents/renderers/fields';
-import { capitalize, isNil } from 'lodash';
+import { capitalize, isEmpty, isNil } from 'lodash';
 import { TFieldRendererProps } from '@crmComponents/renderers/fields/field-renderers.types';
 import Link from 'next/link';
 import css from './RecordsListTable.module.css';
@@ -35,6 +35,15 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
         slug: entityDetails?.parent.slug,
         name: entityDetails?.parent.name,
       });
+    }
+
+    if ( !isEmpty( entityDetails?.entities )) {
+      for ( const ent of entityDetails.entities ) {
+        headerItems.push({
+          slug: ent.slug,
+          name: ent.name,
+        });
+      }
     }
 
     headerItems.push({
@@ -70,15 +79,28 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
           });
         }
 
+        if ( !isEmpty( entityDetails?.entities )) {
+          for ( const ent of entityDetails.entities ) {
+            columns.push({
+              slug: ent.slug,
+            });
+          }
+        }
+
         columns.push({
           slug: '_actions',
         });
+
+        console.log( 'columns', columns );
 
         return (
           <Table.Tr key={`row_${rawRecord.id}`} className={css.recordRow}>{
             columns
               .map(( attr: any ) => {
-                const rendererName = attr.slug === entityDetails?.parent?.slug
+                const rendererName = (
+                  attr.slug === entityDetails?.parent?.slug ||
+                  entityDetails?.entities.map(( ent: any ) => ent.slug ).includes( attr.slug )
+                )
                   ? 'EntityFieldRenderer'
                   : attr.slug === '_actions'
                     ? 'ActionsFieldRenderer'

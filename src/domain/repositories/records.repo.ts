@@ -43,6 +43,15 @@ export const
         providesTags: [ recordDetailsTag ],
       }),
 
+      getRecords: builder.query({
+        query: ( body: any ) => ({
+          url: '/filter-records',
+          method: 'POST',
+          body,
+        }),
+        providesTags: [ recordDetailsTag ],
+      }),
+
       createRecord: builder.mutation({
         query: ( body: any ) => ({
           url: '/create-record',
@@ -93,4 +102,5 @@ export const
     useRemoveRecordMutation,
     useUpdateRecordMutation,
     useFilterRecordsMutation,
+    useGetRecordsQuery,
   } = recordsRepo;

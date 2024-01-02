@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react';
 import { Select } from '@mantine/core';
-import { useGetPageRecordsQuery, useGetRecordsByModuleQuery } from '@uiRepos/records.repo';
+import { useGetPageRecordsQuery, useGetRecordsByModuleQuery, useGetRecordsQuery } from '@uiRepos/records.repo';
 import { sortBy } from 'lodash';
 
 type IRecordEditorEntitySelectorProps = {
@@ -18,17 +18,18 @@ export const RecordEditorEntitySelector: FC<IRecordEditorEntitySelectorProps> = 
   showLabel = true,
   withAllOption = false,
 }) => {
-  const { data: entityRecords, isLoading } = useGetPageRecordsQuery({
+  const { data: entityRecords, isLoading } = useGetRecordsQuery({
     entityId: entity.id,
-    moduleId,
   });
   const options = useMemo(() => {
     const list: any[] = sortBy( entityRecords, 'name' );
 
-    list.unshift({
-      id: '',
-      name: 'All',
-    });
+    if ( withAllOption ) {
+      list.unshift({
+        id: '',
+        name: 'All',
+      });
+    }
 
     return list.map(( record: any ) => (
       { value: record.id, label: record.name }

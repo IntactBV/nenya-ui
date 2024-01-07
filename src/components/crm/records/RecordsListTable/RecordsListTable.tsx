@@ -6,7 +6,10 @@ import { FC, useMemo } from 'react';
 import * as fieldRenderers from '@crmComponents/renderers/fields';
 import { capitalize, isEmpty, isNil } from 'lodash';
 import { TFieldRendererProps } from '@crmComponents/renderers/fields/field-renderers.types';
+import { AvatarFieldRenderer } from '@crmComponents/renderers/fields/AvatarFieldRenderer';
 import Link from 'next/link';
+import { EEntityFieldType } from '@uiDomain/types';
+import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
 import css from './RecordsListTable.module.css';
 
 type TRecordsListTableProps = {
@@ -25,26 +28,31 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
     isError,
     error: attributesError,
   } = useGetEntityDetailsQuery( entity.id );
+  const attributes = useMemo(() => {
+    if ( !entityDetails ) {
+      return [];
+    }
+    return entityDetails.attributes.map(( attr: any ) => attr.slug );
+  }, [ entityDetails ]);
 
   const renderHeader = useMemo(() => {
-    const headerItems = ( entityDetails?.attributes
-      .filter(( attr: { isMain: boolean }) => attr.isMain )) || [];
+    const headerItems = [ ...entityDetails?.attributes || [] ];
 
-    if ( !isNil( entityDetails?.parent )) {
-      headerItems.push({
-        slug: entityDetails?.parent.slug,
-        name: entityDetails?.parent.name,
-      });
-    }
+    // if ( !isNil( entityDetails?.parent )) {
+    //   headerItems.push({
+    //     slug: entityDetails?.parent.slug,
+    //     name: entityDetails?.parent.name,
+    //   });
+    // }
 
-    if ( !isEmpty( entityDetails?.entities )) {
-      for ( const ent of entityDetails.entities ) {
-        headerItems.push({
-          slug: ent.slug,
-          name: ent.name,
-        });
-      }
-    }
+    // if ( !isEmpty( entityDetails?.entities )) {
+    //   for ( const ent of entityDetails.entities ) {
+    //     headerItems.push({
+    //       slug: ent.slug,
+    //       name: ent.name,
+    //     });
+    //   }
+    // }
 
     headerItems.push({
       slug: '_actions',
@@ -52,13 +60,22 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
       align: 'right',
     });
 
+    const slugsToHide = [ 'id', 'avatar', '_actions' ];
+
     return (
       <Table.Thead>
         <Table.Tr>
           {
             headerItems
+              .filter(( attr: any ) => !slugsToHide.includes( attr.slug ))
               .map(( attr: any ) => (
-                <Table.Th key={`header_${attr.slug}`} style={{ textAlign: attr.align || 'left' }}>{attr.name}</Table.Th>
+                <Table.Th
+                  key={`header_${attr.slug}`}
+                  style={{ textAlign: attr.align || 'left' }}
+                  w={attr.slug === 'avatar' ? 40 : 'auto'}
+                >
+                  {slugsToHide.includes( attr.slug ) ? '' : attr.name}
+                </Table.Th>
               ))
           }
         </Table.Tr>
@@ -66,66 +83,86 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
     );
   }, [ entityDetails?.attributes ]);
 
+  const renderCell = ( attr: any, record ) => {
+    const rendererName = (
+      attr.fieldType === EEntityFieldType.Entity
+    )
+      ? 'EntityFieldRenderer'
+      : attr.slug === '_actions'
+        ? 'ActionsFieldRenderer'
+        : `${capitalize( attr.slug )}FieldRenderer`;
+    const FieldRenderer = (
+      ( fieldRenderers as Record<string, any> )[ rendererName ] as FC<TFieldRendererProps>
+    ) || fieldRenderers.TextFieldRenderer;
+
+    // @TODO - field to mark columns to skip / show
+    const slugsToSkip = [ 'id', 'avatar' ];
+
+    if ( slugsToSkip.includes( attr.slug )) {
+      return null;
+    }
+
+    if ( attr.slug === 'name' ) {
+      return (
+        <Table.Td
+          key={`row_${record.id}_col_${attr.slug}`}
+        >
+          <Link href={`/crm/records/${record.id}`} className={css.mainAttr}>
+            <Button
+              size="md"
+              variant="subtle"
+              leftSection={attributes.includes( 'avatar' )
+                ? <AvatarFieldRenderer field={{}} record={record} />
+                : null
+              }
+            >
+              <FieldRenderer field={attr.slug === '_actions' ? record : record[ attr.slug ]} />
+            </Button>
+          </Link>
+        </Table.Td>
+      );
+    }
+
+    return (
+      <Table.Td
+        key={`row_${record.id}_col_${attr.slug}`}
+      >
+        <FieldRenderer
+          field={attr.slug === '_actions' ? record : record[ attr.slug ]}
+          record={record}
+        />
+      </Table.Td>
+    );
+  };
+
   const renderBody = useMemo(() => {
     const rows = records
-      .map(( rawRecord: any ) => {
+      .map(( rawRecord: any, recordIndex: number ) => {
         const record = { ...rawRecord };
-        const columns = ( entityDetails?.attributes
-          .filter(( attr: { isMain: boolean }) => attr.isMain )) || [];
+        const columns = [ ...entityDetails?.attributes || [] ];
 
-        if ( !isNil( entityDetails?.parent )) {
-          columns.push({
-            slug: entityDetails?.parent.slug,
-          });
-        }
+        // if ( !isNil( entityDetails?.parent )) {
+        //   columns.push({
+        //     slug: entityDetails?.parent.slug,
+        //   });
+        // }
 
-        if ( !isEmpty( entityDetails?.entities )) {
-          for ( const ent of entityDetails.entities ) {
-            columns.push({
-              slug: ent.slug,
-            });
-          }
-        }
+        // if ( !isEmpty( entityDetails?.entities )) {
+        //   for ( const ent of entityDetails.entities ) {
+        //     columns.push({
+        //       slug: ent.slug,
+        //     });
+        //   }
+        // }
 
         columns.push({
           slug: '_actions',
         });
 
-        console.log( 'columns', columns );
-
         return (
-          <Table.Tr key={`row_${rawRecord.id}`} className={css.recordRow}>{
+          <Table.Tr key={`row_${rawRecord.id}_`} className={css.recordRow}>{
             columns
-              .map(( attr: any ) => {
-                const rendererName = (
-                  attr.slug === entityDetails?.parent?.slug ||
-                  entityDetails?.entities.map(( ent: any ) => ent.slug ).includes( attr.slug )
-                )
-                  ? 'EntityFieldRenderer'
-                  : attr.slug === '_actions'
-                    ? 'ActionsFieldRenderer'
-                    : `${capitalize( attr.slug )}FieldRenderer`;
-                const FieldRenderer = (( fieldRenderers as Record<string, any> )[ rendererName ] as
-              FC<TFieldRendererProps> )
-                || fieldRenderers.TextFieldRenderer;
-                return (
-                  <Table.Td
-                    key={`row_${record.id}_col_${attr.slug}`}
-                  >
-                    {attr.isMain && (
-                      <Link href={`/crm/records/${record.id}`} className={css.mainAttr}>
-                        <Button variant="subtle">
-                          <FieldRenderer field={attr.slug === '_actions' ? record : record[ attr.slug ]} />
-                        </Button>
-                      </Link>
-                    )}
-                    {!attr.isMain && (
-                      <FieldRenderer field={attr.slug === '_actions' ? record : record[ attr.slug ]} />
-                    )}
-
-                  </Table.Td>
-                );
-              })
+              .map(( attr: any ) => renderCell( attr, record ))
           }
           </Table.Tr> );
       });

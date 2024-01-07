@@ -1,0 +1,250 @@
+[
+  {
+    "name": "Asigurări de călătorie",
+    "activity-domain": {
+      "id": "87b393a4-a9f7-4e65-bfa7-458b3711f518",
+      "name": "Asigurări"
+    },
+    "id": "dcce315c-382c-45b9-bcf7-5868ef3db0c6"
+  },
+  {
+    "name": "Broker de asigurări",
+    "activity-domain": {
+      "id": "87b393a4-a9f7-4e65-bfa7-458b3711f518",
+      "name": "Asigurări"
+    },
+    "id": "4f7ab9f0-dc27-4100-b578-fbdc5c0702e4"
+  },
+  {
+    "name": "Asigurări agricole",
+    "activity-domain": {
+      "id": "87b393a4-a9f7-4e65-bfa7-458b3711f518",
+      "name": "Asigurări"
+    },
+    "id": "86c5b2f1-e5bb-4297-89e1-980ffbfea3dc"
+  },
+  {
+    "name": "Asigurări de viață",
+    "activity-domain": {
+      "id": "87b393a4-a9f7-4e65-bfa7-458b3711f518",
+      "name": "Asigurări"
+    },
+    "id": "b90df892-7c4e-4cce-8162-98aa9da40dcc"
+  },
+  {
+    "name": "Asigurări auto",
+    "activity-domain": {
+      "id": "87b393a4-a9f7-4e65-bfa7-458b3711f518",
+      "name": "Asigurări"
+    },
+    "id": "98e6ba64-ff3e-41ad-acc4-03e46bfc686a"
+  },
+  {
+    "name": "Asigurări medicale",
+    "activity-domain": {
+      "id": "87b393a4-a9f7-4e65-bfa7-458b3711f518",
+      "name": "Asigurări"
+    },
+    "id": "f063aa43-9873-44af-91b5-cb78782b7141"
+  },
+  {
+    "name": "Showroom",
+    "activity-domain": {
+      "id": "3f5dd1d6-e256-48dd-9900-1e4e05e7d270",
+      "name": "Auto"
+    },
+    "id": "4bf3d7e8-eb55-4799-8ff5-85f0783ac23a"
+  },
+  {
+    "name": "Service auto",
+    "activity-domain": {
+      "id": "3f5dd1d6-e256-48dd-9900-1e4e05e7d270",
+      "name": "Auto"
+    },
+    "id": "ad3d5ad0-83ae-4c91-9e39-fcebd477e03e"
+  },
+  {
+    "name": "Rent a Car",
+    "activity-domain": {
+      "id": "3f5dd1d6-e256-48dd-9900-1e4e05e7d270",
+      "name": "Auto"
+    },
+    "id": "436c3e6b-dece-41ac-985a-3e6761abe181"
+  },
+  {
+    "name": "Cămine sociale",
+    "activity-domain": {
+      "id": "f9e1a651-9830-4b4a-bf34-7b38b5059d28",
+      "name": "Unităţi de cazare"
+    },
+    "id": "3e07fac4-d770-4679-80dc-a47d0a17468e"
+  },
+  {
+    "name": "Cămine de bătrâni",
+    "activity-domain": {
+      "id": "f9e1a651-9830-4b4a-bf34-7b38b5059d28",
+      "name": "Unităţi de cazare"
+    },
+    "id": "f0d1eaa0-6c7f-44f0-b66b-02cc7f402608"
+  },
+  {
+    "name": "Cămine studenţeşti",
+    "activity-domain": {
+      "id": "f9e1a651-9830-4b4a-bf34-7b38b5059d28",
+      "name": "Unităţi de cazare"
+    },
+    "id": "026d0a7e-176a-4419-8238-ea9fc4754dbd"
+  },
+  {
+    "name": "Lanţ hotelier",
+    "activity-domain": {
+      "id": "ceb84d76-996c-43a5-b4a1-5bbb8ba620c7",
+      "name": "Turism / Hotelier"
+    },
+    "id": "ef7a9f8e-51bf-46bd-82a6-778bbf94f19f"
+  },
+  {
+    "name": "Hotel",
+    "activity-domain": {
+      "id": "ceb84d76-996c-43a5-b4a1-5bbb8ba620c7",
+      "name": "Turism / Hotelier"
+    },
+    "id": "128780c3-6d07-407e-9783-187ebfd71f49"
+  },
+  {
+    "name": "Agentie de turism",
+    "activity-domain": {
+      "id": "ceb84d76-996c-43a5-b4a1-5bbb8ba620c7",
+      "name": "Turism / Hotelier"
+    },
+    "id": "acbb8862-a1db-4f99-a562-bcc8e4c4b61c"
+  },
+  {
+    "name": "Casă de avocatură",
+    "activity-domain": {
+      "id": "4e9ab024-d34d-45f0-9cf9-1e1232ccbb01",
+      "name": "Profesii Liberale și Juridice"
+    },
+    "id": "8fb1a99e-a7c2-4eab-beea-559ea37d7931"
+  },
+  {
+    "name": "Cabinet Avocat",
+    "activity-domain": {
+      "id": "4e9ab024-d34d-45f0-9cf9-1e1232ccbb01",
+      "name": "Profesii Liberale și Juridice"
+    },
+    "id": "06006dc6-aa89-4643-9ace-cfb88ef1c6c8"
+  },
+  {
+    "name": "Cabinet Notarial",
+    "activity-domain": {
+      "id": "4e9ab024-d34d-45f0-9cf9-1e1232ccbb01",
+      "name": "Profesii Liberale și Juridice"
+    },
+    "id": "9f66f962-4d58-4114-902a-fb12e8c9619d"
+  },
+  {
+    "name": "Cazinouri/săli jocuri de noroc",
+    "activity-domain": {
+      "id": "8c320602-b335-4ddb-a4f5-f65fde0d5006",
+      "name": "Pariuri sportive şi jocuri de noroc"
+    },
+    "id": "9f3d8038-90ef-4744-aa7f-6d112b34a5e6"
+  },
+  {
+    "name": "Pariuri sportive",
+    "activity-domain": {
+      "id": "8c320602-b335-4ddb-a4f5-f65fde0d5006",
+      "name": "Pariuri sportive şi jocuri de noroc"
+    },
+    "id": "1c9d23ef-ee16-4691-9c47-06bcd1374edf"
+  },
+  {
+    "name": "CMI",
+    "activity-domain": {
+      "id": "98da37c8-1404-418f-8871-db41ce7394fc",
+      "name": "Medical și Sectorul Sanitar"
+    },
+    "id": "4b7a2ce7-f4c4-4f74-83e1-2a8053113063"
+  },
+  {
+    "name": "Clinica",
+    "activity-domain": {
+      "id": "98da37c8-1404-418f-8871-db41ce7394fc",
+      "name": "Medical și Sectorul Sanitar"
+    },
+    "id": "0e15a1bd-5629-4592-a27a-ad84e76b58e7"
+  },
+  {
+    "name": "Spital",
+    "activity-domain": {
+      "id": "98da37c8-1404-418f-8871-db41ce7394fc",
+      "name": "Medical și Sectorul Sanitar"
+    },
+    "id": "6de993a7-70fe-4a12-895c-c5571a153c88"
+  },
+  {
+    "name": "Dezvoltatori imobiliari",
+    "activity-domain": {
+      "id": "99bd058b-fb39-4969-a43a-68ad55fcc9a2",
+      "name": "Imobiliare"
+    },
+    "id": "e53cd5ef-a532-4b9d-a758-301672f67dad"
+  },
+  {
+    "name": "Agenţie Imobiliară",
+    "activity-domain": {
+      "id": "99bd058b-fb39-4969-a43a-68ad55fcc9a2",
+      "name": "Imobiliare"
+    },
+    "id": "824f22d3-2d87-438f-881f-2bf90068a865"
+  },
+  {
+    "name": "Fond de investiţii",
+    "activity-domain": {
+      "id": "fd379764-3974-491b-af3d-ddd4e50e2128",
+      "name": "Financiar"
+    },
+    "id": "cccc3dfa-8a76-4301-908f-aa253968f75f"
+  },
+  {
+    "name": "Bancă",
+    "activity-domain": {
+      "id": "fd379764-3974-491b-af3d-ddd4e50e2128",
+      "name": "Financiar"
+    },
+    "id": "f50f805f-2186-4a54-9f0b-14f7917c670a"
+  },
+  {
+    "name": "Birou Contabilitate",
+    "activity-domain": {
+      "id": "fd379764-3974-491b-af3d-ddd4e50e2128",
+      "name": "Financiar"
+    },
+    "id": "7ed149d5-d293-4030-9243-aae8c82f1f4d"
+  },
+  {
+    "name": "After school",
+    "activity-domain": {
+      "id": "147e88c5-9782-48d2-8200-b293d5dc23a2",
+      "name": "Educaţie şi învăţământ"
+    },
+    "id": "a7e14dc3-ce95-43e4-9e7c-da45c634490d"
+  },
+  {
+    "name": "Şcoli, licee, facultăţi",
+    "activity-domain": {
+      "id": "147e88c5-9782-48d2-8200-b293d5dc23a2",
+      "name": "Educaţie şi învăţământ"
+    },
+    "id": "a892261e-eda5-43c6-9c70-740712618303"
+  },
+  {
+    "name": "Creşe şi grădiniţe",
+    "activity-domain": {
+      "id": "147e88c5-9782-48d2-8200-b293d5dc23a2",
+      "name": "Educaţie şi învăţământ"
+    },
+    "id": "ff05a114-44e2-4cda-88ab-27e75a3d227d"
+  }
+]

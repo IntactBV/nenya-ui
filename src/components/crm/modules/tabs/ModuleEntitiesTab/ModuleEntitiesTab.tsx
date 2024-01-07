@@ -14,6 +14,7 @@ export const ModuleEntitiesTab: FC<TModulePageTabProps> = ({ module, moduleSlug 
 
   return (
     <Stack>
+      <Title order={3} my="lg">List of entities for {moduleSlug.toUpperCase()} module</Title>
       <Table>
         <Table.Thead>
           <Table.Th>Entity</Table.Th>
@@ -23,7 +24,7 @@ export const ModuleEntitiesTab: FC<TModulePageTabProps> = ({ module, moduleSlug 
         </Table.Thead>
         <Table.Tbody>
           {module.entities.map( entity => (
-            <Table.Tr>
+            <Table.Tr key={`tr_${entity.id}`}>
               <Table.Td>
                 <Title order={4}>
                   {entity.name}
@@ -44,7 +45,7 @@ export const ModuleEntitiesTab: FC<TModulePageTabProps> = ({ module, moduleSlug 
           ))}
         </Table.Tbody>
       </Table>
-      entities for {moduleSlug}
+
       {/* {entityDetails && (
         <SimpleGrid
           spacing="xl"
@@ -60,7 +61,7 @@ export const ModuleEntitiesTab: FC<TModulePageTabProps> = ({ module, moduleSlug 
 
       {/* <ModulePagesList moduleId={moduleStruct.id} /> */}
       {/* <CommonDebugger field="moduleStruct" data={moduleStruct} /> */}
-      <pre>module: {JSON.stringify( module, null, 2 )}</pre>
+      {/* <pre>module: {JSON.stringify( module, null, 2 )}</pre> */}
     </Stack>
   );
 };

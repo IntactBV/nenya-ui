@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import { ActionIcon, Group, Text } from '@mantine/core';
-import { GoAlert, GoCheck, GoPencil, GoTrash } from 'react-icons/go';
+import { ActionIcon, Group, Text, Tooltip } from '@mantine/core';
+import { GoAlert, GoCheck, GoEye, GoPencil, GoTrash } from 'react-icons/go';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { useRemoveRecordMutation } from '@uiRepos/records.repo';
@@ -13,6 +13,7 @@ import css from '../../records/RecordsListTable/RecordsListTable.module.css';
 export const ActionsFieldRenderer: FC<any> = ({
   field,
 }) => {
+  const size = 22;
   const dispatch = useAppDispatch();
   const [ performDeleteRecord ] = useRemoveRecordMutation();
   const handleEditClick = () => {
@@ -71,13 +72,24 @@ export const ActionsFieldRenderer: FC<any> = ({
     });
   };
   return (
-    <Group className={css.recordActions} align="end" justify="end" gap="md">
-      <ActionIcon size={40} variant="transparent" onClick={handleEditClick}>
-        <GoPencil size={24} color="grey" />
-      </ActionIcon>
-      <ActionIcon size={40} variant="transparent" onClick={handleDeleteClick}>
-        <GoTrash size={24} color="grey" />
-      </ActionIcon>
+    <Group className={css.recordActions} align="center" justify="end" gap="md">
+      <Tooltip label="View record" position="left" withArrow>
+        <ActionIcon size={size} variant="transparent" onClick={handleEditClick} className={css.actionBtn}>
+          <Link href={`/crm/records/${field.id}`} style={{ padding: 0 }}>
+            <GoEye size={size} color="grey" />
+          </Link>
+        </ActionIcon>
+      </Tooltip>
+      <Tooltip label="Edit record" position="left" withArrow>
+        <ActionIcon size={size} variant="subtle" onClick={handleEditClick} className={css.actionBtn}>
+          <GoPencil size={size} color="grey" />
+        </ActionIcon>
+      </Tooltip>
+      <Tooltip label="Delete record" position="left" withArrow>
+        <ActionIcon size={size} variant="transparent" onClick={handleDeleteClick} className={css.actionBtn}>
+          <GoTrash size={size} color="grey" />
+        </ActionIcon>
+      </Tooltip>
     </Group>
   );
 };

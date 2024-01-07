@@ -34,8 +34,12 @@ export const RecordEditorForm: FC<TRecordEditorFormProps> = ({
   });
 
   const formControls = useMemo(() => attributes.map(( attr: TEntityAttribute ) => {
-    const rendererName = `${capitalize( attr.type )}Renderer`;
+    const rendererName = `${capitalize( attr.type || 'entity' )}Renderer`;
     const AttributeRenderer: any = ( formRenderers as Record<string, any> )[ rendererName ];
+
+    if ( attr.slug === 'avatar' ) {
+      return null;
+    }
 
     return (
       <AttributeRenderer
@@ -51,14 +55,14 @@ export const RecordEditorForm: FC<TRecordEditorFormProps> = ({
     <form onSubmit={form.onSubmit( onFormSubmit )}>
       <Stack>
         {formControls}
-        {entities && entities.map(( entity: any ) => (
+        {/* {entities && entities.map(( entity: any ) => (
           <RecordEditorEntitySelector
             key={entity.id}
             entity={entity}
             moduleId={moduleId}
             props={form.getInputProps( entity.slug )}
           />
-        ))}
+        ))} */}
         <Group justify="flex-end" mt="md">
           <Button type="submit">{editMode ? 'Edit' : 'Add'}</Button>
         </Group>

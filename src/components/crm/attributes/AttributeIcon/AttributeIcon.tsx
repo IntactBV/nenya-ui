@@ -1,16 +1,22 @@
 import { TAttributesType } from '@uiDomain/domain.types';
 import { FC } from 'react';
-import { CiBoxList, CiMail, CiPhone, CiText } from 'react-icons/ci';
+import { CiBoxList, CiDroplet, CiFaceSmile, CiMail, CiMicrochip, CiPhone, CiText } from 'react-icons/ci';
 
 type TAttributeIconProps = {
   attributeType: TAttributesType
 };
 
 export const AttributeIcon: FC<TAttributeIconProps> = ({ attributeType }) => {
-  const size = '1.5rem';
+  const size = '2.5rem';
 
   return (
     <>
+      {attributeType === '' && (
+        <CiDroplet size={size} />
+      )}
+      {attributeType === '_entity' && (
+        <CiMicrochip size={size} />
+      )}
       {attributeType === 'text' && (
         <CiText size={size} />
       )}
@@ -22,6 +28,9 @@ export const AttributeIcon: FC<TAttributeIconProps> = ({ attributeType }) => {
       )}
       {attributeType === 'list' && (
         <CiBoxList size={size} />
+      )}
+      {attributeType === 'avatar' && (
+        <CiFaceSmile size={size} />
       )}
     </>
   );

@@ -20,6 +20,7 @@ import { selectCommnFilters, selectCommonEditedRecord, selectCommonPageShowEditD
 import { setCommonEditedRecord, setCommonPageShowEditDrawer } from '@uiStore/features/common/common.slice';
 import { RecordsListFilters } from '@crmComponents/records/RecordsListFilters/RecordsListFilters';
 import { useGetEntityDetailsQuery } from '@uiRepos/entities.repo';
+import { EEntityFieldType } from '@uiDomain/types';
 import css from './BaseTableListRenderer.module.css';
 
 type TBaseTableListRendererprops = {
@@ -33,8 +34,8 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
   const commonFilters = useAppSelector( selectCommnFilters );
   const accountEmail = useAppSelector( selectAccountEmail );
   const entity = useMemo(() => pageData.entities[ 0 ] || {}, [ pageData ]);
-  const [ createRecord, recordStatus ] = useCreateRecordMutation();
-  const [ editRecord, editRecordStatus ] = useUpdateRecordMutation();
+  const [ createRecord ] = useCreateRecordMutation();
+  const [ editRecord ] = useUpdateRecordMutation();
   const { data: recordsData, isLoading: recordsLoading, isError } = useGetPageRecordsQuery({
     entityId: entity.id,
     moduleId: pageData.module.id,
@@ -59,34 +60,56 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
       }
 
       for ( const attr of entityDetails.attributes ) {
-        if ( !isEmpty( commonFilters.query )
-          && !record[ attr.slug ].toLowerCase().includes( commonFilters.query.toLowerCase())
+        let queryFound = false;
+
+        if ( isEmpty( commonFilters.query )) {
+          queryFound = true;
+        } else if ( !isEmpty( commonFilters.query )
+          && !isEmpty( record[ attr.slug ])
+          && record[ attr.slug ]?.toLowerCase().includes( commonFilters.query.toLowerCase())
         ) {
+          queryFound = true;
+        }
+
+        if ( !queryFound ) {
           found = false;
-          return false;
+          continue;
         }
 
         const entityKeys: string[] = [];
 
-        if ( !isEmpty( entityDetails.parent )) {
-          entityKeys.push( entityDetails.parent.slug );
+        for ( const entityAttr of entityDetails.attributes ) {
+          if ( entityAttr.fieldType === EEntityFieldType.Entity ) {
+            entityKeys.push( entityAttr.slug );
+          }
         }
+
+        if ( isEmpty( entityKeys )) {
+          return queryFound;
+        }
+
+        let entityFound = true;
 
         for ( const key of entityKeys ) {
           if ( isEmpty( commonFilters[ key ])) {
             continue;
           }
 
-          if ( record[ key ]?.id !== commonFilters[ key ]) {
-            found = false;
-            return false;
+          if ( record[ key ] !== commonFilters[ key ]) {
+            entityFound = false;
           }
         }
+
+        if ( queryFound && entityFound ) {
+          return true;
+        }
+
+        found = false;
       }
 
       return found;
     });
-  }, [ recordsData, commonFilters, pageData ]);
+  }, [ recordsData, commonFilters, pageData, entityDetails ]);
 
   const handleAddEntityBtnClick = useCallback(() => {
     dispatch( setCommonPageShowEditDrawer( true ));
@@ -206,6 +229,7 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
           <RecordsListFilters entityId={entity.id} moduleId={pageData.module.id} />
           <ScrollArea h={`${window.innerHeight - 340}px`}>
             <RecordsListTable records={filteredData} entity={entity} />
+            {/* <CommonDebugger field="BaseTablelistRenderer::filteredData" data={filteredData} /> */}
           </ScrollArea>
         </Stack>
       )}
@@ -228,9 +252,9 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
         {/* <ButtonConfigEditor buttonId={buttonId} config={selectedConfig} onClose={handleCloseDrawer} /> */}
       </Drawer>
 
-      {/* <CommonDebugger field="BaseTablelistRenderer::filteredData" data={filteredData} floating /> */}
       {/* <CommonDebugger field="BaseTablelistRenderer::pageData" data={pageData} floating /> */}
       {/* <CommonDebugger field="BaseTablelistRenderer::entityDetails" data={entityDetails} floating /> */}
+      {/* <CommonDebugger field="BaseTablelistRenderer::entity" data={entity} floating /> */}
 
     </Stack>
   );

@@ -101,17 +101,17 @@ export const EntitiesList: FC<IEntitiesListProps> = ({ entities }) => {
       </Table.Td>
       <Table.Td width={220} style={{ textAlign: 'center' }}>
         <Group justify="center">
-          <Tooltip label="Entity details" position="left" withArrow color="blue">
+          <Tooltip label="Entity details" position="left" withArrow>
             <ActionIcon color="teal" size="lg" radius="xl" variant="default" onClick={handleViewClick( item )}>
               <GoEye size="2.125rem" style={{ margin: '.5rem' }} />
             </ActionIcon>
           </Tooltip>
-          <Tooltip label="Edit entity" position="left" withArrow color="blue">
+          <Tooltip label="Edit entity" position="left" withArrow>
             <ActionIcon color="teal" size="lg" radius="xl" variant="default" onClick={handleEditClick( item )}>
               <GoPencil size="2.125rem" style={{ margin: '.5rem' }} />
             </ActionIcon>
           </Tooltip>
-          <Tooltip label="Remove entity" position="left" withArrow color="blue">
+          <Tooltip label="Remove entity" position="left" withArrow>
             <ActionIcon color="teal" size="lg" radius="xl" variant="default" onClick={handleDeleteClick( item )}>
               <GoTrash size="2.125rem" style={{ margin: '.5rem' }} />
             </ActionIcon>

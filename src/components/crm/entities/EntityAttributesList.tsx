@@ -40,7 +40,7 @@ export const EntityAttributesList: FC<TEntityAttributesListProps> = ({ entityDet
 
     performRemoveAttribute({
       idEntity: entityDetails.id,
-      idAttribute: attribute.id,
+      idAttribute: attribute.entityAttributeId,
     });
   };
 
@@ -61,7 +61,7 @@ export const EntityAttributesList: FC<TEntityAttributesListProps> = ({ entityDet
     }
 
     const newOrder = state.map(( item, index ) => ({
-      entityAttributeId: item.entityAttributeId,
+      entityAttributeId: item?.entityAttributeId,
       order: ( index + 1 ) * 10,
     }));
 
@@ -82,6 +82,7 @@ export const EntityAttributesList: FC<TEntityAttributesListProps> = ({ entityDet
 
       <DragDropContext
         onDragEnd={async({ destination, source }) => {
+          // console.log( '### onDragEnd', source, destination );
           await handlers.reorder({ from: source.index, to: destination?.index || 0 });
         }
         }
@@ -105,14 +106,10 @@ export const EntityAttributesList: FC<TEntityAttributesListProps> = ({ entityDet
 
       {showAddForm && (
         <AddEntityAttributeForm
-          onSubmit={({
-            attributeId,
-            isMain,
-          }: TEntityAttributeBaseProps ) => {
+          onSubmit={( params: TEntityAttributeBaseProps ) => {
             performAssignAttributeToEntity({
+              ...params,
               entityId: entityDetails.id,
-              attributeId,
-              isMain,
               order: ( state.length + 1 ) * 10,
             });
             setShowAddForm( false );

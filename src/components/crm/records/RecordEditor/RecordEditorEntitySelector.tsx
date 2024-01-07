@@ -5,7 +5,7 @@ import { sortBy } from 'lodash';
 
 type IRecordEditorEntitySelectorProps = {
   entity: any;
-  moduleId: string;
+  // moduleId: string;
   props?: any;
   showLabel?: boolean;
   withAllOption?: boolean;
@@ -13,7 +13,7 @@ type IRecordEditorEntitySelectorProps = {
 
 export const RecordEditorEntitySelector: FC<IRecordEditorEntitySelectorProps> = ({
   entity,
-  moduleId,
+  // moduleId,
   props,
   showLabel = true,
   withAllOption = false,
@@ -32,7 +32,7 @@ export const RecordEditorEntitySelector: FC<IRecordEditorEntitySelectorProps> = 
     }
 
     return list.map(( record: any ) => (
-      { value: record.id, label: record.name }
+      { value: record.id, label: record.name || '' }
     ));
   }, [ entityRecords ]);
 
@@ -40,12 +40,16 @@ export const RecordEditorEntitySelector: FC<IRecordEditorEntitySelectorProps> = 
     return <div>Loading ...</div>;
   }
 
+  if ( !entity || !entity.name ) {
+    return null;
+  }
+
   return (
     <Select
       searchable
       variant="filled"
-      label={showLabel ? `Select ${entity.name.toLowerCase()}` : null}
-      placeholder={`Select ${entity.name.toLowerCase()}`}
+      label={showLabel ? `Select ${entity.name?.toLowerCase()}` : null}
+      placeholder={`Select ${entity.name?.toLowerCase()}`}
       data={options}
       {...props}
     />

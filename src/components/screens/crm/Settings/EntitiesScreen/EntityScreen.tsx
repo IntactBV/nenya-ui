@@ -1,6 +1,6 @@
 'use client';
 
-import { ActionIcon, Box, Group, Loader, SimpleGrid, Stack, Tabs, Title, Tooltip } from '@mantine/core';
+import { ActionIcon, Box, Group, Loader, Stack, Tabs, Title, Tooltip } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { EntityModal } from '@uiComponents/crm/entities/EntityModal';
 import { IEntity } from '@uiDomain/domain.types';
@@ -11,6 +11,7 @@ import { EntityAttributesList } from '@uiComponents/crm/entities/EntityAttribute
 import { $focusedEntityId } from '@uiDomain/signals/common.signals';
 import { EntityLinkedEntitiesList } from '@uiComponents/crm/entities/EntityLinkedEntitiesList';
 import Link from 'next/link';
+import { CommonPageLoader } from '@uiComponents/common/CommonPageLoader';
 
 type TEntityScreenProps = {
   entitySlug: string;
@@ -20,7 +21,6 @@ export const EntityScreen: FC<TEntityScreenProps> = ({ entitySlug }) => {
   const { data: entityDetails, isLoading, error, isError } = useGetEntityDetailsQuery( entitySlug );
 
   const handleEditClick = ( entity: IEntity ) => () => {
-    console.log( 'Edit', entity );
     modals.open({
       id: 'entityModal',
       title: 'Edit entity',
@@ -38,13 +38,11 @@ export const EntityScreen: FC<TEntityScreenProps> = ({ entitySlug }) => {
 
   useEffect(() => {
     $focusedEntityId.value = entitySlug;
-  });
+  }, []);
 
   if ( isLoading ) {
     return (
-      <Stack>
-        <Group><Loader /></Group>;
-      </Stack>
+      <CommonPageLoader />
     );
   }
 
@@ -55,10 +53,11 @@ export const EntityScreen: FC<TEntityScreenProps> = ({ entitySlug }) => {
       </Stack>
     );
   }
+
   return (
     <Stack w="100%">
       <Group>
-        <Tooltip label="Back to entities list" position="left" withArrow color="blue">
+        <Tooltip label="Back to entities list" position="left" withArrow>
           <Link href="/crm/settings/entities">
             <GoChevronLeft size="2.125rem" style={{ margin: '.5rem' }} />
           </Link>
@@ -69,39 +68,14 @@ export const EntityScreen: FC<TEntityScreenProps> = ({ entitySlug }) => {
           </Title>
           <span>Entity details</span>
         </Stack>
-        <Tooltip label="Entity details" position="right" withArrow color="blue">
+        <Tooltip label="Entity details" position="right" withArrow>
           <ActionIcon size="lg" radius="xl" variant="default" onClick={handleEditClick( entityDetails )}>
             <GoPencil size="2.125rem" style={{ margin: '.5rem' }} />
           </ActionIcon>
         </Tooltip>
       </Group>
       {entityDetails && (
-        <Box>
-          <Tabs defaultValue="attributes" orientation="horizontal">
-            <Tabs.List mb="lg">
-              <Tabs.Tab
-                value="attributes"
-                leftSection={<GoBeaker />}
-              >
-              Attributes
-              </Tabs.Tab>
-              <Tabs.Tab
-                value="entities"
-                leftSection={<GoBook />}
-              >
-              Entities
-              </Tabs.Tab>
-            </Tabs.List>
-
-            <Tabs.Panel value="attributes">
-              <EntityAttributesList entityDetails={entityDetails} />
-            </Tabs.Panel>
-
-            <Tabs.Panel value="entities">
-              <EntityLinkedEntitiesList entities={entityDetails.entities} />
-            </Tabs.Panel>
-          </Tabs>
-        </Box>
+        <EntityAttributesList entityDetails={entityDetails} />
       )}
       {/* <pre>{JSON.stringify( entityDetails, null, 2 )}</pre> */}
     </Stack>

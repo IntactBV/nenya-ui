@@ -89,7 +89,7 @@ export const useNavigation = ( tenantModules: any ) => {
         },
         ...tenantOptions,
         {
-          label: 'Settings',
+          label: 'ADMIN',
           icon: IconAdjustments,
           initiallyOpened: true,
           links: [

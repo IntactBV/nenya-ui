@@ -6,6 +6,8 @@ import { IAttribute } from '@uiDomain/domain.types';
 import { useUpdateEntityAttributeMutation } from '@uiRepos/entities.repo';
 import { Draggable } from '@hello-pangea/dnd';
 import cx from 'clsx';
+import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
+import { EEntityFieldType } from '@uiDomain/types';
 import classes from './DndList.module.css';
 
 type TEntityAttributeCardProps = {
@@ -20,12 +22,12 @@ export const EntityAttributeCard: FC<TEntityAttributeCardProps> = ({
   onRemove,
 }) => {
   const [ updateEntityAttribute ] = useUpdateEntityAttributeMutation();
-  const onSwitchChange = ( e: any ) => updateEntityAttribute({
-    idEntityAttribute: attribute.entityAttributeId,
-    body: {
-      isMain: e.target.checked,
-    },
-  });
+  // const onSwitchChange = ( e: any ) => updateEntityAttribute({
+  //   idEntityAttribute: attribute.entityAttributeId,
+  //   body: {
+  //     isMain: e.target.checked,
+  //   },
+  // });
 
   return (
     <Draggable key={attribute.id} index={index} draggableId={attribute.id}>
@@ -36,7 +38,10 @@ export const EntityAttributeCard: FC<TEntityAttributeCardProps> = ({
           py={5}
           px={15}
           className={
-            cx({ [ classes.itemDragging ]: snapshot.isDragging })
+            cx({
+              [ classes.itemDragging ]: snapshot.isDragging,
+              [ classes.entity ]: attribute.fieldType === EEntityFieldType.Entity,
+            })
           }
           {...provided2.draggableProps}
           {...provided2.dragHandleProps}
@@ -44,27 +49,28 @@ export const EntityAttributeCard: FC<TEntityAttributeCardProps> = ({
         >
           <Group justify="space-between" align="center">
             <Group>
-              <Tooltip label="Remove attribute" position="right" withArrow color="blue">
-                <AttributeIcon attributeType={attribute.type} />
+              <Tooltip label="Remove attribute" position="right" withArrow>
+                <AttributeIcon attributeType={attribute.fieldType === EEntityFieldType.Entity ? '_entity' : attribute.type} />
               </Tooltip>
               <Title order={4}>
-                {attribute.name}
+                {attribute.name} | {attribute.entityAttributeId}
               </Title>
             </Group>
             <Group>
-              <Switch
+              {/* <Switch
                 label="Main"
                 checked={attribute.isMain}
                 onChange={onSwitchChange}
                 style={{ cursor: 'pointer' }}
-              />
-              <Tooltip label="Remove attribute" position="right" withArrow color="blue">
+              /> */}
+              <Tooltip label="Remove attribute" position="right" withArrow>
                 <ActionIcon size="lg" radius="xl" variant="default" onClick={onRemove}>
                   <GoX size="2.125rem" style={{ margin: '.4rem' }} />
                 </ActionIcon>
               </Tooltip>
             </Group>
           </Group>
+          {/* <CommonDebugger field="attr" data={attribute} /> */}
         </Card>
 
       )}

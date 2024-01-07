@@ -82,7 +82,7 @@ export const ModuleScreen: FC<TModuleScreenProps> = ({ moduleSlug }) => {
   return (
     <Stack>
       <Group>
-        <Tooltip label="Back to modules list" position="left" withArrow color="blue">
+        <Tooltip label="Back to modules list" position="left" withArrow>
           <Link href="/crm/settings/modules">
             <GoChevronLeft size="2.125rem" style={{ margin: '.5rem' }} />
           </Link>
@@ -93,7 +93,7 @@ export const ModuleScreen: FC<TModuleScreenProps> = ({ moduleSlug }) => {
           </Title>
           <span>Module details</span>
         </Stack>
-        <Tooltip label="Entity details" position="right" withArrow color="blue">
+        <Tooltip label="Entity details" position="right" withArrow>
           <ActionIcon size="lg" radius="xl" variant="default" onClick={handleEditClick( moduleStruct )}>
             <GoPencil size="2.125rem" style={{ margin: '.5rem' }} />
           </ActionIcon>
@@ -122,7 +122,12 @@ export const ModuleScreen: FC<TModuleScreenProps> = ({ moduleSlug }) => {
           };
           return (
             <Tabs.Panel key={tabData.value} value={tabData.value} pt="xs">
-              <TabPanel module={moduleStruct} moduleId={moduleStruct.id} moduleSlug={moduleSlug} {...attributes} />
+              <TabPanel
+                module={moduleStruct}
+                moduleId={moduleStruct.id}
+                moduleSlug={moduleSlug}
+                {...attributes}
+              />
             </Tabs.Panel>
           );
         })}

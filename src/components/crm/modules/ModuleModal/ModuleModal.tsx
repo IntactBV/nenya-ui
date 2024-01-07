@@ -11,6 +11,7 @@ import { useCreateModuleMutation, useUpdateModuleMutation } from '@uiRepos/modul
 import { slugify } from '@uiDomain/domain.helpers';
 import { useGetActiveEntitiesQuery } from '@uiRepos/entities.repo';
 import * as reactIcons from 'react-icons';
+import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
 
 interface IModuleModalProps {
   editMode: boolean;
@@ -118,7 +119,10 @@ export const ModuleModal: FC<IModuleModalProps> = ({
   onClose,
 }) => {
   const form = useForm<IModule>({
-    initialValues: isNil( module ) ? emptyEntity : { ...module },
+    initialValues: isNil( module ) ? emptyEntity : {
+      ...module,
+      entityIds: module?.entities?.map(( e: IEntity ) => e.id ) || [],
+    },
   });
   const [ performCreateModule, createState ] = useCreateModuleMutation();
   const [ performUpdateModule, updateState ] = useUpdateModuleMutation();
@@ -135,12 +139,23 @@ export const ModuleModal: FC<IModuleModalProps> = ({
 
   const handleFormSubmit = useCallback( async( data: IModule ) => {
     try {
+      let result;
       if ( editMode ) {
-        await performUpdateModule( data );
+        result = await performUpdateModule( data );
       } else {
         delete data?.id;
-        await performCreateModule( data );
+        result = await performCreateModule( data );
       }
+
+      console.log( '##### result', result );
+
+      notifications.show({
+        title: 'Modules manger',
+        message: `The module "${data.name}" has been saved.`,
+        withCloseButton: true,
+        icon: <GoCheck size={20} />,
+        radius: 'md',
+      });
     } catch ( e: any ) {
       console.error( e.message );
     }
@@ -163,21 +178,12 @@ export const ModuleModal: FC<IModuleModalProps> = ({
     });
   }, [ entitiesObject, form.values.entityIds ]);
 
-  useEffect(() => {
-    if ( createState.isUninitialized || createState.status !== 'fulfilled' ) {
-      return;
-    }
+  // useEffect(() => {
+  //   if ( createState.isUninitialized || createState.status !== 'fulfilled' ) {
+  //     return;
+  //   }
 
-    console.log( '[effect1] createState', createState );
-
-    notifications.show({
-      title: 'Modules manger',
-      message: 'The new module has been saved.',
-      withCloseButton: true,
-      icon: <GoCheck size={20} />,
-      radius: 'md',
-    });
-  }, [ createState ]);
+  // }, [ createState ]);
 
   return (
     <Stack>
@@ -286,7 +292,6 @@ export const ModuleModal: FC<IModuleModalProps> = ({
             <Loader size="md" />
             }
           </Group>
-          <pre>{JSON.stringify( entitiesList, null, 2 )}</pre>
         </form>
       )}
     </Stack>

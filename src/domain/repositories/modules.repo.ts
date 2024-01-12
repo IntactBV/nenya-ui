@@ -1,3 +1,4 @@
+import { ModuleAddEntityPopover } from '@crmComponents/modules/tabs/ModuleEntitiesTab/ModuleAddEntityPopover';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_BASE_URL } from '@uiDomain/domain.constants';
 
@@ -71,6 +72,28 @@ export const
         }),
         invalidatesTags: [ modulesTag, moduleStructTag ],
       }),
+      addEntityToModule: builder.mutation({
+        query: ({ moduleId, entityId }: { moduleId: string, entityId: string }) => ({
+          url: `/modules/${moduleId}/entity`,
+          method: 'POST',
+          params: undefined,
+          body: {
+            entityId,
+          },
+        }),
+        invalidatesTags: [ moduleStructTag ],
+      }),
+      removeEntityFromModule: builder.mutation({
+        query: ({ moduleId, entityId }: { moduleId: string, entityId: string }) => ({
+          url: `/modules/${moduleId}/entity`,
+          method: 'DELETE',
+          params: undefined,
+          body: {
+            entityId,
+          },
+        }),
+        invalidatesTags: [ moduleStructTag ],
+      }),
       deleteModule: builder.mutation({
         query: ( data ) => ({
           url: `/modules/${data.id}`,
@@ -137,4 +160,6 @@ export const
     useUpdateModulePageMutation,
     useDeleteModulePageMutation,
     useGetModulePageDetailsQuery,
+    useAddEntityToModuleMutation,
+    useRemoveEntityFromModuleMutation,
   } = modulesRepo;

@@ -6,6 +6,7 @@ import { FC } from 'react';
 import { GoPencil, GoGitCommit, GoTrash, GoCheck, GoGitBranch, GoAlert, GoEye } from 'react-icons/go';
 import { useDeleteEntityMutation } from '@uiRepos/entities.repo';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { EntityModal } from './EntityModal';
 
 interface IEntitiesListProps {
@@ -79,14 +80,14 @@ export const EntitiesList: FC<IEntitiesListProps> = ({ entities }) => {
       <Table.Td>
         <Group gap="sm">
           <GoGitBranch size={30} />
-          <div>
+          <Link href={`/crm/settings/entities/${item.id}`}>
             <Text fz="sm" fw={500}>
               {item.name}
             </Text>
-            <Text fz="xs" c="dimmed">
-              {item.description}
-            </Text>
-          </div>
+          </Link>
+          <Text fz="xs" c="dimmed">
+            {item.description}
+          </Text>
         </Group>
       </Table.Td>
 
@@ -101,17 +102,17 @@ export const EntitiesList: FC<IEntitiesListProps> = ({ entities }) => {
       </Table.Td>
       <Table.Td width={220} style={{ textAlign: 'center' }}>
         <Group justify="center">
-          <Tooltip label="Entity details" position="left" withArrow color="blue">
+          <Tooltip label="Entity details" position="left" withArrow>
             <ActionIcon color="teal" size="lg" radius="xl" variant="default" onClick={handleViewClick( item )}>
               <GoEye size="2.125rem" style={{ margin: '.5rem' }} />
             </ActionIcon>
           </Tooltip>
-          <Tooltip label="Edit entity" position="left" withArrow color="blue">
+          <Tooltip label="Edit entity" position="left" withArrow>
             <ActionIcon color="teal" size="lg" radius="xl" variant="default" onClick={handleEditClick( item )}>
               <GoPencil size="2.125rem" style={{ margin: '.5rem' }} />
             </ActionIcon>
           </Tooltip>
-          <Tooltip label="Remove entity" position="left" withArrow color="blue">
+          <Tooltip label="Remove entity" position="left" withArrow>
             <ActionIcon color="teal" size="lg" radius="xl" variant="default" onClick={handleDeleteClick( item )}>
               <GoTrash size="2.125rem" style={{ margin: '.5rem' }} />
             </ActionIcon>

@@ -10,3 +10,17 @@
 .cardTitle {
   font-weight: bold;
 }
+
+.itemDragging {
+  box-shadow: var(--mantine-shadow-sm);
+}
+
+.symbol {
+  font-size: rem(30px);
+  font-weight: 700;
+  width: rem(60px);
+}
+
+.entity {
+  background-color: var(--mantine-color-dark-8);
+}

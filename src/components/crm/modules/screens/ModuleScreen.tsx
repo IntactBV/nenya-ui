@@ -4,12 +4,13 @@ import { ActionIcon, Group, Loader, Stack, Tabs, Title, Tooltip } from '@mantine
 import { FC, useMemo } from 'react';
 import { GoChevronLeft, GoFile, GoPackageDependencies, GoPencil } from 'react-icons/go';
 import Link from 'next/link';
-import { IModule } from '@uiDomain/domain.types';
+import { IEntity, IModule } from '@uiDomain/domain.types';
 import { modals } from '@mantine/modals';
 import { ModuleModal } from '@uiComponents/crm/modules/ModuleModal/ModuleModal';
 import { useGetModuleStructureQuery } from '@uiRepos/modules.repo';
 import { ModulePagesTab } from '@uiComponents/crm/modules/tabs/ModulePagesTab/ModulePagesTab';
 import { ModuleEntitiesTab } from '@uiComponents/crm/modules/tabs/ModuleEntitiesTab/ModuleEntitiesTab';
+import { CommonPageLoader } from '@uiComponents/common/CommonPageLoader';
 
 type TModuleScreenProps = {
   moduleSlug: string;
@@ -37,13 +38,17 @@ export const ModuleScreen: FC<TModuleScreenProps> = ({ moduleSlug }) => {
 
   const handleEditClick = ( module: IModule ) => () => {
     console.log( 'Edit module', module );
+    const moduleToEdit = {
+      ...module,
+      entityIds: module.entities.map(( entity: IEntity ) => entity.id ),
+    };
     modals.open({
       id: 'entityModal',
       title: 'Edit module',
       children: (
         <ModuleModal
           editMode
-          module={module}
+          module={moduleToEdit}
           onClose={() => {
             modals.closeAll();
           }}
@@ -64,17 +69,13 @@ export const ModuleScreen: FC<TModuleScreenProps> = ({ moduleSlug }) => {
   // });
 
   if ( isLoading ) {
-    return (
-      <Stack>
-        <Group><Loader /></Group>;
-      </Stack>
-    );
+    return ( <CommonPageLoader /> );
   }
 
   if ( isError ) {
     return (
       <Stack>
-        <Group>{error.message}</Group>;
+        <Group>{error.message}</Group>
       </Stack>
     );
   }
@@ -82,7 +83,7 @@ export const ModuleScreen: FC<TModuleScreenProps> = ({ moduleSlug }) => {
   return (
     <Stack>
       <Group>
-        <Tooltip label="Back to modules list" position="left" withArrow color="blue">
+        <Tooltip label="Back to modules list" position="left" withArrow>
           <Link href="/crm/settings/modules">
             <GoChevronLeft size="2.125rem" style={{ margin: '.5rem' }} />
           </Link>
@@ -93,7 +94,7 @@ export const ModuleScreen: FC<TModuleScreenProps> = ({ moduleSlug }) => {
           </Title>
           <span>Module details</span>
         </Stack>
-        <Tooltip label="Entity details" position="right" withArrow color="blue">
+        <Tooltip label="Entity details" position="right" withArrow>
           <ActionIcon size="lg" radius="xl" variant="default" onClick={handleEditClick( moduleStruct )}>
             <GoPencil size="2.125rem" style={{ margin: '.5rem' }} />
           </ActionIcon>
@@ -122,7 +123,12 @@ export const ModuleScreen: FC<TModuleScreenProps> = ({ moduleSlug }) => {
           };
           return (
             <Tabs.Panel key={tabData.value} value={tabData.value} pt="xs">
-              <TabPanel module={moduleStruct} moduleId={moduleStruct.id} moduleSlug={moduleSlug} {...attributes} />
+              <TabPanel
+                module={moduleStruct}
+                moduleId={moduleStruct.id}
+                moduleSlug={moduleSlug}
+                {...attributes}
+              />
             </Tabs.Panel>
           );
         })}

@@ -8,6 +8,7 @@ import { isEmpty, isNil } from 'lodash';
 import * as renderers from '@crmComponents/renderers';
 import { useMemo } from 'react';
 import { CommonPageLoader } from '@uiComponents/common/CommonPageLoader';
+import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
 
 export const ModulePageScreen = () => {
   const { pageId } = useParams();
@@ -62,6 +63,7 @@ export const ModulePageScreen = () => {
           )}
         </>
       )}
+      {/* <CommonDebugger field="Page data" data={data} floating /> */}
     </Stack>
   );
 };

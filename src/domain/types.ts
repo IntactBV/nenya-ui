@@ -41,7 +41,13 @@ export type TRendererProps = {
   pageData: any;
 };
 
+export enum EEntityFieldType {
+  'Attribute' = 1,
+  'Entity' = 2,
+}
+
 export type TEntityAttributeBaseProps = {
-  attributeId: string,
-  isMain: boolean
+  attributeId?: string,
+  entityId?: string,
+  type: EEntityFieldType
 };

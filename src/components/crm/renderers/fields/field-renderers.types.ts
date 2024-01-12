@@ -1,3 +1,4 @@
 export type TFieldRendererProps = {
-  field: any
+  field: any;
+  record?: Record<string, any>;
 };

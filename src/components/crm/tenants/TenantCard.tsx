@@ -1,3 +1,5 @@
+'use client';
+
 import { ActionIcon, Card, Group, Indicator, Menu, Stack, Text, rem } from '@mantine/core';
 import { ITenant } from '@uiDomain/domain.types';
 import Link from 'next/link';
@@ -26,7 +28,15 @@ export const TenantCard: FC<ITenantCardProps> = ({ tenant }) => {
             </ActionIcon>
             <Stack gap={0}>
               <Link href={tenantDetailsUrl} style={{ color: 'inherit' }}>
-                <Indicator inline color="blue" label={`${tenant.moduleIds?.length}`} size={20} offset={3} position="top-end" disabled={tenant.moduleIds?.length === 0}>
+                <Indicator
+                  inline
+                  color="blue"
+                  label={`${tenant.modules?.length}`}
+                  size={20}
+                  offset={3}
+                  position="top-end"
+                  disabled={tenant.modules?.length === 0}
+                >
                   <Text size="lg" fw={500} mr={16}>
                     {tenant.name}
                   </Text>

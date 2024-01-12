@@ -1,24 +1,71 @@
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { GoAlert } from 'react-icons/go';
-import { Loader, SimpleGrid, Stack, Text, Title } from '@mantine/core';
+import { Loader, Stack, Text, Title } from '@mantine/core';
 import { useGetActiveModulesQuery } from '@uiRepos/modules.repo';
-import { useToggleModuleToTenantMutation } from '@uiRepos/tenants.repo';
-import { IModule, ITenant } from '@uiDomain/domain.types';
+import { useToggleModuleToTenantMutation, useUpdateTenantModulesOrderMutation } from '@uiRepos/tenants.repo';
+import { IModule, ITenant, TOrderedItem } from '@uiDomain/domain.types';
+import { DragDropContext, DropResult, Droppable } from '@hello-pangea/dnd';
+import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
+import { sortBy } from 'lodash';
 import { TenantModuleCard } from '../cards/TenantModuleCard';
+
+const sortOrder = ( items: Record<string, number> ) => ( a: any, b: any ) => {
+  const aOrder = items[ a.id ] || 1000;
+  const bOrder = items[ b.id ] || 1000;
+  console.log( aOrder, bOrder );
+  return bOrder - aOrder;
+};
 
 export const TenantModulesTab: FC<{ tenant: ITenant }> = ({ tenant }) => {
   const { tenantId } = useParams();
   const { data: activeModules, isLoading, error, isError } = useGetActiveModulesQuery();
-  const [ preformToggleModule, toggleModuleStatus ] = useToggleModuleToTenantMutation();
+  const [ performToggleModule, toggleModuleStatus ] = useToggleModuleToTenantMutation();
+  const [ performUpdateOrder, orderStatus ] = useUpdateTenantModulesOrderMutation();
+  // const [ items, setItems ] = useState<TOrderedItem[]>( tenant.modules );
+  const items = useMemo(() => tenant.modules.reduce(( acc: Record<string, number>, v, index ) => {
+    acc[ v.id ] = v.order;
+    return acc;
+  }, {}), [ tenant.modules ]);
+  const preparedModules = useMemo(
+    () => {
+      if ( !activeModules ) {
+        return [];
+      }
+      return [ ...activeModules ]?.sort( sortOrder( items ));
+    },
+    [ activeModules, tenant.modules ]
+  );
+
+  const handleDragEnd = async({ destination, source }: DropResult ) => {
+    const initialOrder = preparedModules.map(( item, idx ) => ({
+      id: item.id,
+      name: item.name,
+      newOrder: idx * 10,
+    }));
+    const sourceItem = initialOrder[ source.index ];
+    sourceItem.newOrder = destination.index * 10 - 5;
+    console.log( 'onDragEnd', initialOrder );
+    const newOrder = sortBy( initialOrder, 'newOrder' )
+      .reduce(( acc: Record<string, number>, item: any, idx ) => {
+        acc[ item.id ] = idx * 10;
+        return acc;
+      }, {});
+    console.log( 'newOrder', newOrder );
+    const result = await performUpdateOrder({
+      tenantId,
+      body: newOrder,
+    });
+    console.log( result );
+  };
 
   const toggleModuleSelection = useCallback(( moduleId: string, isSelected: boolean ) => {
-    preformToggleModule({
+    performToggleModule({
       tenantId,
       moduleId,
       isSelected,
     });
-  }, [ tenantId, preformToggleModule ]);
+  }, [ tenantId, performToggleModule ]);
 
   if ( isError ) {
     return (
@@ -39,34 +86,43 @@ export const TenantModulesTab: FC<{ tenant: ITenant }> = ({ tenant }) => {
   }
 
   return (
-    <Stack>
+    <Stack style={{
+      opacity: orderStatus.isLoading ? 0.1 : 1,
+    }}>
 
-      <SimpleGrid
-        cols={3}
-        spacing="lg"
-      // breakpoints={[
-      //   { maxWidth: '86rem', cols: 2, spacing: 'md' },
-      //   { maxWidth: '64rem', cols: 1, spacing: 'sm' },
-      // ]}
+      <DragDropContext
+        onDragEnd={handleDragEnd}
       >
-        {activeModules.map(( module: IModule ) => (
-          <TenantModuleCard
-            key={module.id}
-            module={module}
-            isSelected={tenant.moduleIds?.includes( module.id as string )}
-            onChange={( moduleId: string, isSelected: boolean ) => {
-              toggleModuleSelection(
-                moduleId,
-                isSelected
-              );
-            }}
-          /> ))}
-      </SimpleGrid>
+        <Droppable droppableId="dnd-list" direction="vertical">
+          {( provided ) => (
 
-      {/* <pre>
-     mod: {JSON.stringify( tenant.moduleIds )} <br />
-    toggleModuleStatus: {JSON.stringify( toggleModuleStatus, null, 2 )}
-    </pre> */}
+            <Stack
+              gap="lg"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {preparedModules.map(( module: IModule, index: number ) => (
+                <TenantModuleCard
+                  key={module.id}
+                  module={module}
+                  index={index}
+                  isSelected={tenant.modules.map( tm => tm.id ).includes( module.id as string )}
+                  onChange={( moduleId: string, isSelected: boolean ) => {
+                    toggleModuleSelection(
+                      moduleId,
+                      isSelected
+                    );
+                  }}
+                /> ))}
+              {provided.placeholder}
+            </Stack>
+          )}
+        </Droppable>
+      </DragDropContext>
+
+      {/* <CommonDebugger data={items} field="items" /> */}
+      {/* <CommonDebugger data={tenant} field="tenant" /> */}
+
     </Stack>
   );
 };

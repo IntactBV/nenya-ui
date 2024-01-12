@@ -24,7 +24,7 @@ export const RecordDetailsHeader: FC<TRecordDetailsHeaderProps> = ({
     if ( isNil( record ) || isNil( entity )) {
       return '';
     }
-    const mainAttribute = entity.attributes.find(( attr: any ) => attr.isMain );
+    const mainAttribute = entity.attributes.find(( attr: any ) => ( attr.isMain || attr.slug === 'name' ));
 
     return record.data[ mainAttribute.slug ];
   }, [ record, entity ]);

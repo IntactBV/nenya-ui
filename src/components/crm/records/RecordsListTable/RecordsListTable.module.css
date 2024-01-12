@@ -22,3 +22,13 @@
 .mainAttr:hover {
   text-decoration: underline;
 }
+
+.actionBtn {
+  transition: all 0.2s ease-in-out;
+  opacity: .8;
+  scale: .8;
+}
+.actionBtn:hover {
+  opacity: 1;
+  scale: 1.2;
+}

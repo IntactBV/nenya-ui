@@ -99,12 +99,12 @@ export const AttributesList: FC<IAttributesListProps> = ({ attributes }) => {
       </Table.Td>
       <Table.Td width={220} style={{ textAlign: 'center' }}>
         <Group justify="center">
-          <Tooltip label="Edit attribute" position="left" withArrow color="blue">
+          <Tooltip label="Edit attribute" position="left" withArrow>
             <ActionIcon color="teal" size="lg" radius="xl" variant="default" onClick={handleEditClick( item )}>
               <GoPencil size="2.125rem" style={{ margin: '.5rem' }} />
             </ActionIcon>
           </Tooltip>
-          <Tooltip label="Remove attribute" position="left" withArrow color="blue">
+          <Tooltip label="Remove attribute" position="left" withArrow>
             <ActionIcon color="teal" size="lg" radius="xl" variant="default" onClick={handleDeleteClick( item )}>
               <GoTrash size="2.125rem" style={{ margin: '.5rem' }} />
             </ActionIcon>

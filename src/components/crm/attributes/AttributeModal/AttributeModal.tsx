@@ -8,6 +8,7 @@ import { GoCheck, GoDeviceDesktop, GoUpload } from 'react-icons/go';
 import { ATTRIBUTE_TYPES } from '@uiDomain/domain.constants';
 import { useCreateAttributeMutation, useUpdateAttributeMutation } from '@uiRepos/attributes.repo';
 import { slugify } from '@uiDomain/domain.helpers';
+import { EEntityFieldType } from '@uiDomain/types';
 
 interface IAttributeModalProps {
   editMode: boolean;
@@ -21,6 +22,7 @@ const emptyAttribute: IAttribute = {
   description: '',
   type: 'text',
   options: null,
+  fieldType: EEntityFieldType.Attribute,
 };
 
 export const AttributeModal: FC<IAttributeModalProps> = ({

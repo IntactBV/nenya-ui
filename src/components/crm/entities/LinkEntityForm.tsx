@@ -43,7 +43,7 @@ export const LinkEntityForm: FC<TAddEntityAttributeFormProps> =
     };
 
     return (
-      <Card radius="md" withBorder padding={20} color="blue">
+      <Card radius="md" withBorder padding={20}>
         <Group justify="space-between">
           <Group>
             <Select
@@ -54,7 +54,7 @@ export const LinkEntityForm: FC<TAddEntityAttributeFormProps> =
             />
           </Group>
           <Group mr={5}>
-            <Tooltip label="Add attribute" position="right" withArrow color="blue">
+            <Tooltip label="Add attribute" position="right" withArrow>
               <ActionIcon
                 color="teal"
                 size="lg"
@@ -67,7 +67,7 @@ export const LinkEntityForm: FC<TAddEntityAttributeFormProps> =
                 <GoCheck size="2.125rem" color="green" style={{ margin: '.5rem' }} />
               </ActionIcon>
             </Tooltip>
-            <Tooltip label="Cancel" position="right" withArrow color="blue">
+            <Tooltip label="Cancel" position="right" withArrow>
               <ActionIcon color="teal" size="lg" radius="xl" variant="default" onClick={onCancel}>
                 <GoX size="2.125rem" style={{ margin: '.5rem' }} />
               </ActionIcon>

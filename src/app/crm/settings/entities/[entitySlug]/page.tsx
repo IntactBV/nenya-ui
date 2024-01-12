@@ -1,5 +1,3 @@
-'use client';
-
 import { EntityScreen } from '@uiScreens/crm/Settings/EntitiesScreen/EntityScreen';
 
 export default function CrmEntityPage({ params }: { params: any }) {

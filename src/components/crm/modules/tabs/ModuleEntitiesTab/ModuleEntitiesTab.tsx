@@ -1,8 +1,12 @@
 'use client';
 
-import { Chip, Stack, Switch, Table, Text, Title } from '@mantine/core';
-import { IModule } from '@uiDomain/domain.types';
-import { FC } from 'react';
+import { ActionIcon, Button, Chip, Group, MultiSelect, Popover, Select, Stack, Switch, Table, Text, Title } from '@mantine/core';
+import { IEntity, IModule } from '@uiDomain/domain.types';
+import { useGetActiveEntitiesQuery } from '@uiRepos/entities.repo';
+import { FC, useMemo } from 'react';
+import { GoTrash } from 'react-icons/go';
+import { useRemoveEntityFromModuleMutation } from '@uiRepos/modules.repo';
+import { ModuleAddEntityPopover } from './ModuleAddEntityPopover';
 
 type TModulePageTabProps = {
   module: IModule,
@@ -10,20 +14,29 @@ type TModulePageTabProps = {
 };
 
 export const ModuleEntitiesTab: FC<TModulePageTabProps> = ({ module, moduleSlug }) => {
-  const a = 1;
+  const [ performRemoveEntity ] = useRemoveEntityFromModuleMutation();
+
+  const handleRemoveEntity = ( entityId: string ) => () => {
+    performRemoveEntity({ moduleId: module.id, entityId });
+  };
 
   return (
     <Stack>
+      <Group justify="space-between">
+        <Title order={3} my="lg">List of entities for {moduleSlug.toUpperCase()} module</Title>
+        <ModuleAddEntityPopover module={module} />
+      </Group>
       <Table>
         <Table.Thead>
           <Table.Th>Entity</Table.Th>
           <Table.Th>Description</Table.Th>
           <Table.Th>Status</Table.Th>
           <Table.Th>Attributes</Table.Th>
+          <Table.Th w={50}></Table.Th>
         </Table.Thead>
         <Table.Tbody>
           {module.entities.map( entity => (
-            <Table.Tr>
+            <Table.Tr key={`tr_${entity.id}`}>
               <Table.Td>
                 <Title order={4}>
                   {entity.name}
@@ -40,11 +53,19 @@ export const ModuleEntitiesTab: FC<TModulePageTabProps> = ({ module, moduleSlug 
               <Table.Td>
                 <Chip>{entity.attributes.length}</Chip>
               </Table.Td>
+              <Table.Td>
+                <ActionIcon
+                  variant="subtle"
+                  onClick={handleRemoveEntity( entity.id )}
+                >
+                  <GoTrash />
+                </ActionIcon>
+              </Table.Td>
             </Table.Tr>
           ))}
         </Table.Tbody>
       </Table>
-      entities for {moduleSlug}
+
       {/* {entityDetails && (
         <SimpleGrid
           spacing="xl"
@@ -60,7 +81,7 @@ export const ModuleEntitiesTab: FC<TModulePageTabProps> = ({ module, moduleSlug 
 
       {/* <ModulePagesList moduleId={moduleStruct.id} /> */}
       {/* <CommonDebugger field="moduleStruct" data={moduleStruct} /> */}
-      <pre>module: {JSON.stringify( module, null, 2 )}</pre>
+      {/* <pre>module: {JSON.stringify( module, null, 2 )}</pre> */}
     </Stack>
   );
 };

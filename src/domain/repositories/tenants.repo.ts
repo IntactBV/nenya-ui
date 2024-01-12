@@ -81,6 +81,15 @@ export const
         },
         invalidatesTags: [ tenantsTag, tenantDetailsTag ],
       }),
+      updateTenantModulesOrder: builder.mutation({
+        query: ({ tenantId, body }) => ({
+          url: `/tenants/${tenantId}/update-modules-order`,
+          method: 'POST',
+          params: undefined,
+          body,
+        }),
+        invalidatesTags: [ tenantsTag, tenantDetailsTag ],
+      }),
     }),
   }),
 
@@ -93,4 +102,5 @@ export const
     useUpdateTenantMutation,
     useDeleteTenantMutation,
     useToggleModuleToTenantMutation,
+    useUpdateTenantModulesOrderMutation,
   } = tenantsRepo;

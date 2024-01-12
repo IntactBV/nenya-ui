@@ -6,6 +6,7 @@ import { FC } from 'react';
 import { GoPencil, GoGitCommit, GoTrash, GoCheck, GoGitBranch, GoAlert, GoEye } from 'react-icons/go';
 import { useDeleteEntityMutation } from '@uiRepos/entities.repo';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { EntityModal } from './EntityModal';
 
 interface IEntitiesListProps {
@@ -79,14 +80,14 @@ export const EntitiesList: FC<IEntitiesListProps> = ({ entities }) => {
       <Table.Td>
         <Group gap="sm">
           <GoGitBranch size={30} />
-          <div>
+          <Link href={`/crm/settings/entities/${item.id}`}>
             <Text fz="sm" fw={500}>
               {item.name}
             </Text>
-            <Text fz="xs" c="dimmed">
-              {item.description}
-            </Text>
-          </div>
+          </Link>
+          <Text fz="xs" c="dimmed">
+            {item.description}
+          </Text>
         </Group>
       </Table.Td>
 

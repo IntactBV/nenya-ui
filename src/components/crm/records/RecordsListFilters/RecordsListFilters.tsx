@@ -82,25 +82,26 @@ export const RecordsListFilters: FC<TRecordListFiltersProps> = ({
           />
         </Stack>
 
-        {entityDetails?.attributes.map(( entityAttr: any ) => {
-          if ( entityAttr.fieldType !== EEntityFieldType.Entity ) {
-            return null;
-          }
+        {entityDetails?.attributes.filter(( item: any ) => item.showInList )
+          .map(( entityAttr: any ) => {
+            if ( entityAttr.fieldType !== EEntityFieldType.Entity ) {
+              return null;
+            }
 
-          return (
-            <RecordEditorEntitySelector
-              key={`selector_${entityAttr.id}`}
-              entity={{ id: entityAttr.id, name: entityAttr.name, slug: entityAttr.slug }}
-              showLabel
-              props={{
-                value: commonFilters[ entityAttr.slug ] || '',
-                w: '200',
-                onChange: handleEntityFilterChange( entityAttr ),
-              }}
-              withAllOption
-            />
-          );
-        })}
+            return (
+              <RecordEditorEntitySelector
+                key={`selector_${entityAttr.id}`}
+                entity={{ id: entityAttr.id, name: entityAttr.name, slug: entityAttr.slug }}
+                showLabel
+                props={{
+                  value: commonFilters[ entityAttr.slug ] || '',
+                  w: '150',
+                  onChange: handleEntityFilterChange( entityAttr ),
+                }}
+                withAllOption
+              />
+            );
+          })}
 
         {showClearFiltersButton && (
           <ActionIcon

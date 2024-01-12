@@ -1,8 +1,12 @@
 'use client';
 
-import { Chip, Stack, Switch, Table, Text, Title } from '@mantine/core';
-import { IModule } from '@uiDomain/domain.types';
-import { FC } from 'react';
+import { ActionIcon, Button, Chip, Group, MultiSelect, Popover, Select, Stack, Switch, Table, Text, Title } from '@mantine/core';
+import { IEntity, IModule } from '@uiDomain/domain.types';
+import { useGetActiveEntitiesQuery } from '@uiRepos/entities.repo';
+import { FC, useMemo } from 'react';
+import { GoTrash } from 'react-icons/go';
+import { useRemoveEntityFromModuleMutation } from '@uiRepos/modules.repo';
+import { ModuleAddEntityPopover } from './ModuleAddEntityPopover';
 
 type TModulePageTabProps = {
   module: IModule,
@@ -10,17 +14,25 @@ type TModulePageTabProps = {
 };
 
 export const ModuleEntitiesTab: FC<TModulePageTabProps> = ({ module, moduleSlug }) => {
-  const a = 1;
+  const [ performRemoveEntity ] = useRemoveEntityFromModuleMutation();
+
+  const handleRemoveEntity = ( entityId: string ) => () => {
+    performRemoveEntity({ moduleId: module.id, entityId });
+  };
 
   return (
     <Stack>
-      <Title order={3} my="lg">List of entities for {moduleSlug.toUpperCase()} module</Title>
+      <Group justify="space-between">
+        <Title order={3} my="lg">List of entities for {moduleSlug.toUpperCase()} module</Title>
+        <ModuleAddEntityPopover module={module} />
+      </Group>
       <Table>
         <Table.Thead>
           <Table.Th>Entity</Table.Th>
           <Table.Th>Description</Table.Th>
           <Table.Th>Status</Table.Th>
           <Table.Th>Attributes</Table.Th>
+          <Table.Th w={50}></Table.Th>
         </Table.Thead>
         <Table.Tbody>
           {module.entities.map( entity => (
@@ -40,6 +52,14 @@ export const ModuleEntitiesTab: FC<TModulePageTabProps> = ({ module, moduleSlug 
               </Table.Td>
               <Table.Td>
                 <Chip>{entity.attributes.length}</Chip>
+              </Table.Td>
+              <Table.Td>
+                <ActionIcon
+                  variant="subtle"
+                  onClick={handleRemoveEntity( entity.id )}
+                >
+                  <GoTrash />
+                </ActionIcon>
               </Table.Td>
             </Table.Tr>
           ))}

@@ -12,6 +12,7 @@ export interface IAttribute {
   options: Record<string, any> | null;
   status?: boolean;
   isMain?: boolean;
+  showInList?: boolean;
   order?: number;
   entityAttributeId?: string;
   fieldType: EEntityFieldType;

@@ -45,74 +45,6 @@ interface DndListHandleProps {
   }[];
 }
 
-// export function DndListHandle({ data, onChange }: DndListHandleProps ) {
-//   const { classes, cx } = useStyles();
-//   const [ state, handlers ] = useListState( data );
-
-//   const items = state.map(( item, index ) => (
-//     <Draggable key={item.symbol} index={index} draggableId={item.symbol}>
-//       {( provided: any, snapshot: any ) => (
-//         <div
-//           className={cx( classes.item, { [ classes.itemDragging ]: snapshot.isDragging })}
-//           ref={provided.innerRef}
-//           {...provided.draggableProps}
-//         >
-//           <span {...provided.dragHandleProps} className={classes.dragHandle}>
-//             <GoGrabber size="1.5em" />
-//           </span>
-//           <Text className={classes.symbol}>{item.name}</Text>
-//           {/* <div>
-//             <Text>{item.name}</Text>
-//             <Text color="dimmed" size="sm">
-//               Position: {item.position} • Mass: {item.mass}
-//             </Text>
-//           </div> */}
-//         </div>
-//       )}
-//     </Draggable>
-//   ));
-
-//   useEffect(() => {
-//     if ( isEmpty( state )) {
-//       return;
-//     }
-//     console.log( '##### ordered list ', state );
-//     onChange( state.map( s => s.symbol ));
-//   }, [ state ]);
-
-//   return (
-//     <DragDropContext
-//       onDragEnd={async({ destination, source }) => {
-//         console.log( 'onDragEnd', destination, source );
-//         await handlers.reorder({ from: source.index, to: destination?.index || 0 });
-//       }}
-//     >
-//       <Droppable droppableId="dnd-list" direction="vertical">
-//         {( provided, snapshot ) => {
-//           console.log( 'Droppable', provided, snapshot );
-//           return (
-//             <div {...provided.droppableProps} ref={provided.innerRef}>
-//               {/* {state.map(( val, index ) => {
-//                 return <Box id={val.id} key={index} index={index} title={val.name} className={cx( classes.item, { [ classes.itemDragging ]: snapshot.isDragging })}
-//                   ref={provided.innerRef}
-//                   {...provided.draggableProps}>
-//                   <div {...provided.dragHandleProps} className={classes.dragHandle}>
-//                     <GoGrabber size="2em" stroke={1.5} />
-//                   </div>
-//                   <Text className={classes.symbol}>{val.symbol}</Text>
-
-//                 </Box>
-//               })} */}
-//               {items}
-//               {provided.placeholder}
-//             </div>
-//           );
-//         }}
-//       </Droppable>
-//     </DragDropContext>
-//   );
-// }
-
 export const ModuleModal: FC<IModuleModalProps> = ({
   editMode,
   module,
@@ -121,7 +53,6 @@ export const ModuleModal: FC<IModuleModalProps> = ({
   const form = useForm<IModule>({
     initialValues: isNil( module ) ? emptyEntity : {
       ...module,
-      entityIds: module?.entities?.map(( e: IEntity ) => e.id ) || [],
     },
   });
   const [ performCreateModule, createState ] = useCreateModuleMutation();
@@ -189,7 +120,6 @@ export const ModuleModal: FC<IModuleModalProps> = ({
     <Stack>
       {!isNil( form.values ) && (
         <form onSubmit={form.onSubmit( handleFormSubmit )}>
-
           <TextInput
             size="sm"
             mb="md"
@@ -259,6 +189,7 @@ export const ModuleModal: FC<IModuleModalProps> = ({
             placeholder="Pick entities"
             label="Entities"
             withAsterisk
+            value={form.values?.entityIds}
             {...form.getInputProps( 'entityIds' )}
           />
 
@@ -292,6 +223,7 @@ export const ModuleModal: FC<IModuleModalProps> = ({
             <Loader size="md" />
             }
           </Group>
+          <pre>{JSON.stringify( module, null, 2 )}</pre>
         </form>
       )}
     </Stack>

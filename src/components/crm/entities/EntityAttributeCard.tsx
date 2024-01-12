@@ -22,12 +22,22 @@ export const EntityAttributeCard: FC<TEntityAttributeCardProps> = ({
   onRemove,
 }) => {
   const [ updateEntityAttribute ] = useUpdateEntityAttributeMutation();
-  // const onSwitchChange = ( e: any ) => updateEntityAttribute({
-  //   idEntityAttribute: attribute.entityAttributeId,
-  //   body: {
-  //     isMain: e.target.checked,
-  //   },
-  // });
+  const onSwitchChange = ( e: any ) => {
+    const data = {
+      idEntityAttribute: attribute.entityAttributeId,
+      body: {
+        isMain: e.target.checked,
+      },
+    };
+    console.log( 'onSwitchChange', e.target.checked, data, attribute );
+    updateEntityAttribute( data );
+  };
+  const onListSwitchChange = ( e: any ) => updateEntityAttribute({
+    idEntityAttribute: attribute.entityAttributeId,
+    body: {
+      showInList: e.target.checked,
+    },
+  });
 
   return (
     <Draggable key={attribute.id} index={index} draggableId={attribute.id}>
@@ -48,21 +58,30 @@ export const EntityAttributeCard: FC<TEntityAttributeCardProps> = ({
           ref={provided2.innerRef}
         >
           <Group justify="space-between" align="center">
-            <Group>
+            <Group style={{ minWidth: '25%' }}>
               <Tooltip label="Remove attribute" position="right" withArrow>
                 <AttributeIcon attributeType={attribute.fieldType === EEntityFieldType.Entity ? '_entity' : attribute.type} />
               </Tooltip>
               <Title order={4}>
-                {attribute.name} | {attribute.entityAttributeId}
+                {attribute.name}
               </Title>
             </Group>
             <Group>
-              {/* <Switch
+              <Switch
                 label="Main"
                 checked={attribute.isMain}
                 onChange={onSwitchChange}
                 style={{ cursor: 'pointer' }}
-              /> */}
+              />
+              <Switch
+                label="Show in list"
+                checked={attribute.showInList}
+                disabled={attribute.isMain}
+                onChange={onListSwitchChange}
+                style={{ cursor: 'pointer' }}
+              />
+            </Group>
+            <Group>
               <Tooltip label="Remove attribute" position="right" withArrow>
                 <ActionIcon size="lg" radius="xl" variant="default" onClick={onRemove}>
                   <GoX size="2.125rem" style={{ margin: '.4rem' }} />

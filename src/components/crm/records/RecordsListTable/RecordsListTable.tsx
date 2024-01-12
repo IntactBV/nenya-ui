@@ -34,9 +34,16 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
     }
     return entityDetails.attributes.map(( attr: any ) => attr.slug );
   }, [ entityDetails ]);
+  const columns = useMemo(() => {
+    if ( !entityDetails ) {
+      return [];
+    }
+
+    return entityDetails.attributes?.filter(( attr: any ) => attr.showInList ) || [];
+  }, [ entityDetails ]);
 
   const renderHeader = useMemo(() => {
-    const headerItems = [ ...entityDetails?.attributes || [] ];
+    const headerItems = [ ...columns ];
 
     // if ( !isNil( entityDetails?.parent )) {
     //   headerItems.push({
@@ -87,7 +94,9 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
     const rendererName = (
       attr.fieldType === EEntityFieldType.Entity
     )
-      ? 'EntityFieldRenderer'
+      ? isNil(( fieldRenderers as Record<string, any> )[ `${capitalize( attr.slug )}FieldRenderer` ])
+        ? 'EntityFieldRenderer'
+        : `${capitalize( attr.slug )}FieldRenderer`
       : attr.slug === '_actions'
         ? 'ActionsFieldRenderer'
         : `${capitalize( attr.slug )}FieldRenderer`;
@@ -102,9 +111,10 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
       return null;
     }
 
-    if ( attr.slug === 'name' ) {
+    if ( attr.isMain ) {
       return (
         <Table.Td
+          id={`row_${record.id}_col_${attr.slug}`}
           key={`row_${record.id}_col_${attr.slug}`}
         >
           <Link href={`/crm/records/${record.id}`} className={css.mainAttr}>
@@ -125,6 +135,7 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
 
     return (
       <Table.Td
+        id={`row_${record.id}_col_${attr.slug}`}
         key={`row_${record.id}_col_${attr.slug}`}
       >
         <FieldRenderer
@@ -139,7 +150,7 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
     const rows = records
       .map(( rawRecord: any, recordIndex: number ) => {
         const record = { ...rawRecord };
-        const columns = [ ...entityDetails?.attributes || [] ];
+        const tableColumns = [ ...columns ];
 
         // if ( !isNil( entityDetails?.parent )) {
         //   columns.push({
@@ -155,13 +166,13 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
         //   }
         // }
 
-        columns.push({
+        tableColumns.push({
           slug: '_actions',
         });
 
         return (
           <Table.Tr key={`row_${rawRecord.id}_`} className={css.recordRow}>{
-            columns
+            tableColumns
               .map(( attr: any ) => renderCell( attr, record ))
           }
           </Table.Tr> );

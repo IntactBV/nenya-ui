@@ -54,9 +54,11 @@ export const ModuleCard: FC<IModuleCardProps> = ({ module, onEdit, onDelete }) =
               {!module.status && <GoCircleSlash size={24} color="grey" />}
             </Link>
             <Stack gap={0}>
-              <Title order={4}>
-                {module.name}
-              </Title>
+              <Link href={`/crm/settings/modules/${module.slug}`}>
+                <Title order={4}>
+                  {module.name}
+                </Title>
+              </Link>
               <Text>{module.slug}</Text>
             </Stack>
           </Group>

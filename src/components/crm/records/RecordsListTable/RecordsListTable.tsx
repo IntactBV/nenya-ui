@@ -90,7 +90,7 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
     );
   }, [ entityDetails?.attributes ]);
 
-  const renderCell = ( attr: any, record ) => {
+  const renderCell = ( attr: any, record: any ) => {
     const rendererName = (
       attr.fieldType === EEntityFieldType.Entity
     )

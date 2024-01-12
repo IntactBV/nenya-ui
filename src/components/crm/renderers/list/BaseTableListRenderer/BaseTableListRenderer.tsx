@@ -226,7 +226,7 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
             flexGrow: 1,
           }}
         >
-          <RecordsListFilters entityId={entity.id} moduleId={pageData.module.id} />
+          <RecordsListFilters entityId={entity.id} />
           <ScrollArea h={`${window.innerHeight - 340}px`}>
             <RecordsListTable records={filteredData} entity={entity} />
             {/* <CommonDebugger field="BaseTablelistRenderer::filteredData" data={filteredData} /> */}

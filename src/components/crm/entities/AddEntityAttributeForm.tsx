@@ -3,11 +3,12 @@
 import { ActionIcon, Box, Card, Group, Select, Switch, Title, Tooltip } from '@mantine/core';
 import { IAttribute, IEntity } from '@uiDomain/domain.types';
 import { useGetAllAttributesQuery } from '@uiRepos/attributes.repo';
-import { FC, useMemo, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import { GoCheck, GoX } from 'react-icons/go';
 import { isEmpty } from 'lodash';
 import { EEntityFieldType, TEntityAttributeBaseProps } from '@uiDomain/types';
 import { useGetAllEntitiesQuery } from '@uiRepos/entities.repo';
+import { useDisclosure } from '@mantine/hooks';
 import { AttributeIcon } from '../attributes/AttributeIcon/AttributeIcon';
 
 type TAddEntityAttributeFormProps = {
@@ -19,6 +20,7 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> =
   ({ onSubmit, onCancel }: any ) => {
     const { data: attributes } = useGetAllAttributesQuery();
     const { data: entities } = useGetAllEntitiesQuery();
+    const [ relation, { toggle: toggleRelation } ] = useDisclosure( true );
 
     const [ newAttrType, setNewAttrType ] = useState<EEntityFieldType>(
       EEntityFieldType.Attribute
@@ -62,20 +64,22 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> =
       setNewAttrType( parseInt( type as string, 10 ));
     };
 
-    const handleSave = () => {
+    const handleSave = useCallback(() => {
       const params: any = {
         fieldType: newAttrType,
+        relation,
       };
 
       if ( newAttrType === EEntityFieldType.Attribute ) {
         params.attributeFieldId = selectedAttributeId;
       }
+
       if ( newAttrType === EEntityFieldType.Entity ) {
         params.entityFieldId = selectedEntityId;
       }
 
       onSubmit( params );
-    };
+    }, [ newAttrType, relation, selectedAttributeId, selectedEntityId, onSubmit ]);
 
     // const toggleMain = () => {
     //   setIsMain( !isMain );
@@ -127,9 +131,16 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> =
               />
             )}
 
-          </Group>
+            <Switch
+              size="xl"
+              onLabel="One"
+              offLabel="More"
+              checked={relation}
+              onChange={() => {
+                toggleRelation();
+              }} />
 
-          {/* <Switch label="Main" checked={isMain} onChange={toggleMain} /> */}
+          </Group>
 
           <Group mr={5}>
             <Tooltip
@@ -139,7 +150,6 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> =
               label="Add attribute"
               position="right"
               withArrow
-              color="blue"
             >
               <ActionIcon
                 color="blue"

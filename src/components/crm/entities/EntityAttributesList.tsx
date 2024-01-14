@@ -107,11 +107,14 @@ export const EntityAttributesList: FC<TEntityAttributesListProps> = ({ entityDet
       {showAddForm && (
         <AddEntityAttributeForm
           onSubmit={( params: TEntityAttributeBaseProps ) => {
-            performAssignAttributeToEntity({
+            const enhancedParams = {
               ...params,
               entityId: entityDetails.id,
               order: ( state.length + 1 ) * 10,
-            });
+            };
+            console.log( '### enhancedParams', enhancedParams );
+
+            performAssignAttributeToEntity( enhancedParams );
             setShowAddForm( false );
           }}
           onCancel={() => {

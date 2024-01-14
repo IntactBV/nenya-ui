@@ -1,4 +1,4 @@
-import { ActionIcon, Box, Card, Group, Switch, Title, Tooltip } from '@mantine/core';
+import { ActionIcon, Box, Card, Group, Switch, Text, Title, Tooltip } from '@mantine/core';
 import { FC } from 'react';
 import { GoX } from 'react-icons/go';
 import { AttributeIcon } from '@uiComponents/crm/attributes/AttributeIcon/AttributeIcon';
@@ -29,7 +29,6 @@ export const EntityAttributeCard: FC<TEntityAttributeCardProps> = ({
         isMain: e.target.checked,
       },
     };
-    console.log( 'onSwitchChange', e.target.checked, data, attribute );
     updateEntityAttribute( data );
   };
   const onListSwitchChange = ( e: any ) => updateEntityAttribute({
@@ -66,21 +65,28 @@ export const EntityAttributeCard: FC<TEntityAttributeCardProps> = ({
                 {attribute.name}
               </Title>
             </Group>
-            <Group>
-              <Switch
-                label="Main"
-                checked={attribute.isMain}
-                onChange={onSwitchChange}
-                style={{ cursor: 'pointer' }}
-              />
-              <Switch
-                label="Show in list"
-                checked={attribute.showInList}
-                disabled={attribute.isMain}
-                onChange={onListSwitchChange}
-                style={{ cursor: 'pointer' }}
-              />
-            </Group>
+            {attribute.relation && (
+              <Group>
+                <Switch
+                  label="Main"
+                  checked={attribute.isMain}
+                  onChange={onSwitchChange}
+                  style={{ cursor: 'pointer' }}
+                />
+                <Switch
+                  label="Show in list"
+                  checked={attribute.showInList}
+                  disabled={attribute.isMain}
+                  onChange={onListSwitchChange}
+                  style={{ cursor: 'pointer' }}
+                />
+              </Group>
+            )}
+            {!attribute.relation && (
+              <Group>
+                <Text>Many</Text>
+              </Group>
+            )}
             <Group>
               <Tooltip label="Remove attribute" position="right" withArrow>
                 <ActionIcon size="lg" radius="xl" variant="default" onClick={onRemove}>

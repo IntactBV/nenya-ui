@@ -33,23 +33,24 @@ export const RecordEditorForm: FC<TRecordEditorFormProps> = ({
       }, {}),
   });
 
-  const formControls = useMemo(() => attributes.map(( attr: TEntityAttribute ) => {
-    const rendererName = `${capitalize( attr.type || 'entity' )}Renderer`;
-    const AttributeRenderer: any = ( formRenderers as Record<string, any> )[ rendererName ];
+  const formControls = useMemo(() => attributes.filter(( attr: TEntityAttribute ) => attr.relation )
+    .map(( attr: TEntityAttribute ) => {
+      const rendererName = `${capitalize( attr.type || 'entity' )}Renderer`;
+      const AttributeRenderer: any = ( formRenderers as Record<string, any> )[ rendererName ];
 
-    if ( attr.slug === 'avatar' ) {
-      return null;
-    }
+      if ( attr.slug === 'avatar' ) {
+        return null;
+      }
 
-    return (
-      <AttributeRenderer
-        key={attr.slug}
-        attribute={attr}
-        // form={form}
-        props={form.getInputProps( attr.slug )}
-      />
-    );
-  }), [ attributes, form, formRenderers ]);
+      return (
+        <AttributeRenderer
+          key={attr.slug}
+          attribute={attr}
+          // form={form}
+          props={form.getInputProps( attr.slug )}
+        />
+      );
+    }), [ attributes, form, formRenderers ]);
 
   return (
     <form onSubmit={form.onSubmit( onFormSubmit )}>

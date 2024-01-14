@@ -13,6 +13,7 @@ export interface IAttribute {
   status?: boolean;
   isMain?: boolean;
   showInList?: boolean;
+  relation?: boolean;
   order?: number;
   entityAttributeId?: string;
   fieldType: EEntityFieldType;

@@ -26,6 +26,7 @@ export type TEntityAttribute = {
   name: string;
   description: string;
   type: string;
+  relation: boolean;
   options?: string;
   status: boolean;
 };
@@ -49,5 +50,6 @@ export enum EEntityFieldType {
 export type TEntityAttributeBaseProps = {
   attributeId?: string,
   entityId?: string,
-  type: EEntityFieldType
+  type: EEntityFieldType,
+  relation: boolean,
 };

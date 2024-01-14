@@ -1,6 +1,6 @@
-import { ModuleAddEntityPopover } from '@crmComponents/modules/tabs/ModuleEntitiesTab/ModuleAddEntityPopover';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_BASE_URL } from '@uiDomain/domain.constants';
+import { prepareHeaders } from './repo.helper';
 
 const baseUrl = `${API_BASE_URL}/api/v1/core`;
 
@@ -9,7 +9,10 @@ export const
   moduleStructTag = 'uiModuleStruct',
   modulesRepo: any = createApi({
     reducerPath: 'modulesRepo',
-    baseQuery: fetchBaseQuery({ baseUrl }),
+    baseQuery: fetchBaseQuery({
+      baseUrl,
+      prepareHeaders,
+    }),
     tagTypes: [ modulesTag, moduleStructTag ],
     endpoints: ( builder ) => ({
       getAllModules: builder.query({

@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_BASE_URL } from '@uiDomain/domain.constants';
+import { prepareHeaders } from './repo.helper';
 
 const baseUrl = `${API_BASE_URL}/api/v1/core`;
 
@@ -8,7 +9,10 @@ export const
   entityTag = 'uiEntity',
   entitiesRepo: any = createApi({
     reducerPath: 'entitiesRepo',
-    baseQuery: fetchBaseQuery({ baseUrl }),
+    baseQuery: fetchBaseQuery({
+      baseUrl,
+      prepareHeaders,
+    }),
     tagTypes: [ entitiesTag, entityTag ],
     endpoints: ( builder ) => ({
 

@@ -98,6 +98,7 @@ export const useNavigation = ( tenantModules: any ) => {
             { label: 'Entities', link: '/crm/settings/entities' },
             { label: 'Modules', link: '/crm/settings/modules' },
             { label: 'Tenants', link: '/crm/settings/tenants' },
+            { label: 'Users', link: '/crm/settings/users' },
           ],
         },
       ];

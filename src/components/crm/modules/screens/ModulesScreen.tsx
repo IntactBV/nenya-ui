@@ -37,7 +37,6 @@ export const ModulesScreen = () => {
   }, []);
 
   const handleDeleteButtonClick = useCallback(( module: IModule ) => () => {
-    console.log( '[handleDeleteButtonClick] module', module );
     modals.openConfirmModal({
       title: 'Modals manager',
       children: (

@@ -10,7 +10,7 @@ import classes from './CrmSidebar.module.css';
 
 export function CrmSidebar() {
   const account = useAppSelector( selectAccount );
-  const { data: tenantModules } = useGetTenantModulesQuery( account.tenant.id );
+  const { data: tenantModules } = useGetTenantModulesQuery( account.user?.tenantId );
   const navData = useNavigation( tenantModules );
   const links = navData.value.map(( item ) => <LinksGroup {...item} key={item.label} /> );
 

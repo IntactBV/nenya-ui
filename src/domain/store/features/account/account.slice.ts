@@ -12,6 +12,10 @@ export const accountSlice = createSlice({
 });
 
 // eslint-disable-next-line one-var
-export const { setAccount } = accountSlice.actions;
+export const {
+  setAccount,
+  accountLogout,
+  accountLoginUser,
+} = accountSlice.actions;
 
 export default accountSlice.reducer;

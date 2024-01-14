@@ -12,6 +12,7 @@ const LOCAL_STORAGE = {
 };
 
 const rawAccount = typeof window === 'undefined' ? null : localStorage.getItem( LOCAL_STORAGE.KEYS.ACCOUNT );
+const user = typeof window === 'undefined' ? null : localStorage.getItem( 'user' );
 
 export const
   accountSlideName = 'account';
@@ -28,5 +29,7 @@ export const accountState: AccountState = isNil( rawAccount )
     // await jose.EncryptJWT({ 'urn:example:claim': true })
   }
   : JSON.parse( rawAccount );
+
+accountState.user = isNil( user ) ? null : JSON.parse( user );
 
 export default accountState;

@@ -32,9 +32,11 @@ import {
   IconChevronDown,
 } from '@tabler/icons-react';
 import { isNil } from 'lodash';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useAppSelector } from '@uiStore/hooks';
+import { selectAccount } from '@uiStore/features/account/account.selectors';
 import { useAuth } from '@/src/domain/contexts/AuthProvider';
 import classes from './PublicHeader.module.css';
 
@@ -75,6 +77,7 @@ export function PublicHeader() {
   const [ drawerOpened, { toggle: toggleDrawer, close: closeDrawer } ] = useDisclosure( false );
   const [ linksOpened, { toggle: toggleLinks } ] = useDisclosure( false );
   const theme = useMantineTheme();
+  // const storeAccount = useAppSelector( selectAccount );
   const { currentUser, logout } = useAuth();
   const isAuthenticated = useMemo(() =>
     !isNil( currentUser ), [ currentUser ]
@@ -89,6 +92,10 @@ export function PublicHeader() {
     }
     router.push( '/', { scroll: false });
   }, [ logout ]);
+
+  // useEffect(() => {
+  //   console.log( '### storeAccount: ', storeAccount );
+  // }, [ storeAccount ]);
 
   const links = mockdata.map(( item ) => (
     <UnstyledButton className={classes.subLink} key={item.title}>

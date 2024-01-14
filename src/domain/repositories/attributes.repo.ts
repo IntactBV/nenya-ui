@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_BASE_URL } from '@uiDomain/domain.constants';
+import { prepareHeaders } from './repo.helper';
 
 const baseUrl = `${API_BASE_URL}/api/v1/core`;
 
@@ -9,7 +10,10 @@ export const
   attrTag = 'uiAttributes',
   attributesRepo: any = createApi({
     reducerPath: 'attributesRepo',
-    baseQuery: fetchBaseQuery({ baseUrl }),
+    baseQuery: fetchBaseQuery({
+      baseUrl,
+      prepareHeaders,
+    }),
     tagTypes: [ attrTag ],
     endpoints: ( builder ) => ({
       getAllAttributes: builder.query({

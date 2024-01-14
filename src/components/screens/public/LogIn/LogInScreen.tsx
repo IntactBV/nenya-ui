@@ -16,11 +16,15 @@ import { useForm } from '@mantine/form';
 import Link from 'next/link';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
+import { accountLoginUser, setAccount } from '@uiStore/features/account/account.slice';
+import { useAppDispatch } from '@uiStore/hooks';
+import { IUserImpl } from '@uiStore/features/account/account.types';
 import { TAccountBase } from '@/src/domain/types';
 import { useAuth } from '@/src/domain/contexts/AuthProvider';
 import classes from './LogIn.module.css';
 
 export function LogInScreen() {
+  const dispatch = useAppDispatch();
   const { login } = useAuth();
   const [ error, setError ] = useState<string>( '' );
   const [ isLoading, setIsLoading ] = useState<boolean>( false );
@@ -37,7 +41,22 @@ export function LogInScreen() {
     try {
       setError( '' );
       setIsLoading( true );
-      await login( acc.email, acc.password );
+      const loginResult = await login( acc.email, acc.password );
+      const loggedInUser = loginResult?.user;
+      const user: IUserImpl = {
+        accessToken: loggedInUser?.accessToken,
+        email: loggedInUser?.email,
+        displayName: loggedInUser?.displayName,
+        photoURL: loggedInUser?.photoURL,
+        phoneNumber: loggedInUser?.phoneNumber,
+        providerId: loggedInUser?.providerId,
+        tenantId: '3e439136-f6c2-4e88-83e7-a592b8ae9db7', // loggedInUser?.tenantId,
+        uid: loggedInUser?.uid,
+      };
+      console.log( 'loginResult', loginResult );
+      console.log( 'logged in user', user );
+
+      await dispatch( accountLoginUser( user ));
       router.push( '/crm/dashboard', { scroll: false });
     } catch ( e: any ) {
       setError( e.code );

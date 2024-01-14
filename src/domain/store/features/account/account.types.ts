@@ -11,7 +11,18 @@ export interface IAccountTenant {
   name: string;
 }
 
+export interface IUserImpl {
+  providerId: string;
+  accessToken: string;
+  email: string;
+  displayName: string;
+  uid: string;
+  phoneNumber: string;
+  photoURL: string;
+  tenantId: string;
+}
 export interface AccountState {
+  user: IUserImpl
   email: string;
   tenant: IAccountTenant;
   role: EAccountRole;

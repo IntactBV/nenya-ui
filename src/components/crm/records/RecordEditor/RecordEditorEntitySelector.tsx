@@ -2,6 +2,7 @@ import { FC, useMemo } from 'react';
 import { Select } from '@mantine/core';
 import { useGetPageRecordsQuery, useGetRecordsByModuleQuery, useGetRecordsQuery } from '@uiRepos/records.repo';
 import { sortBy } from 'lodash';
+import { useGetEntityDetailsQuery } from '@uiRepos/entities.repo';
 
 type IRecordEditorEntitySelectorProps = {
   entity: any;
@@ -21,18 +22,28 @@ export const RecordEditorEntitySelector: FC<IRecordEditorEntitySelectorProps> = 
   const { data: entityRecords, isLoading } = useGetRecordsQuery({
     entityId: entity.id,
   });
+  const { data: entityDetails } = useGetEntityDetailsQuery( entity.id );
+
+  const mainSlug = useMemo(() => {
+    const attribute = entityDetails?.attributes?.find(
+      ( attr: any ) => attr.isMain
+    );
+
+    return attribute?.slug || 'name';
+  }, [ entityDetails ]);
+
   const options = useMemo(() => {
-    const list: any[] = sortBy( entityRecords, 'name' );
+    const list: any[] = sortBy( entityRecords, mainSlug );
 
     if ( withAllOption ) {
       list.unshift({
         id: '',
-        name: 'All',
+        [ mainSlug ]: 'All',
       });
     }
 
     return list.map(( record: any ) => (
-      { value: record.id, label: record.name || '' }
+      { value: record.id, label: record[ mainSlug ] || '' }
     ));
   }, [ entityRecords ]);
 

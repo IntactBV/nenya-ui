@@ -43,14 +43,14 @@ export function LogInScreen() {
       setIsLoading( true );
       const loginResult = await login( acc.email, acc.password );
       const loggedInUser = loginResult?.user;
+      const parsedData = JSON.parse( loggedInUser.displayName );
       const user: IUserImpl = {
-        accessToken: loggedInUser?.accessToken,
         email: loggedInUser?.email,
         displayName: loggedInUser?.displayName,
         photoURL: loggedInUser?.photoURL,
         phoneNumber: loggedInUser?.phoneNumber,
         providerId: loggedInUser?.providerId,
-        tenantId: '3e439136-f6c2-4e88-83e7-a592b8ae9db7', // loggedInUser?.tenantId,
+        tenantId: parsedData.tenantId || '3e439136-f6c2-4e88-83e7-a592b8ae9db7',
         uid: loggedInUser?.uid,
       };
       console.log( 'loginResult', loginResult );

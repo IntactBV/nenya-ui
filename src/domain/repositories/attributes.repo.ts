@@ -4,8 +4,6 @@ import { prepareHeaders } from './repo.helper';
 
 const baseUrl = `${API_BASE_URL}/api/v1/core`;
 
-console.log( 'baseURL', baseUrl );
-
 export const
   attrTag = 'uiAttributes',
   attributesRepo: any = createApi({

@@ -2,6 +2,8 @@ import { FC, useMemo } from 'react';
 import Link from 'next/link';
 import { useGetRecordDetailsQuery, useGetRecordsQuery } from '@uiRepos/records.repo';
 import { Button } from '@mantine/core';
+import { useGetEntityDetailsQuery } from '@uiRepos/entities.repo';
+import { IAttribute } from '@uiDomain/domain.types';
 import css from './fields.module.css';
 
 type TFieldRendererProps = {
@@ -22,6 +24,15 @@ export const EntityFieldRenderer: FC<TEntityFieldRendererProps> = ({
     isError: recordErrored,
   } = useGetRecordDetailsQuery( field );
 
+  const { data: entityDetails } = useGetEntityDetailsQuery( entityRecord?.entityId );
+  const mainSlug = useMemo(() => {
+    const mainAttribute: IAttribute = entityDetails?.attributes?.find(
+      ( attr: any ) => attr.isMain
+    );
+
+    return mainAttribute?.slug || 'name';
+  }, [ entityDetails ]);
+
   if ( recordLoading || recordErrored ) {
     return <span>&nbsp;</span>;
   }
@@ -32,7 +43,7 @@ export const EntityFieldRenderer: FC<TEntityFieldRendererProps> = ({
         variant="subtle"
         size="sm"
       >
-        {entityRecord?.data.name}
+        {entityRecord?.data[ mainSlug ]}
       </Button>
     </Link>
   );

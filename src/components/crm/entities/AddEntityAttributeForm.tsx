@@ -121,24 +121,25 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> =
             )}
 
             {newAttrType === EEntityFieldType.Entity && (
-              <Select
-                label="Entity"
-                placeholder="Pick entity"
-                data={entitiesData}
-                onChange={handleEntityChange}
-                value={selectedEntityId}
-                w={200}
-              />
+              <Group gap="md">
+                <Select
+                  label="Entity"
+                  placeholder="Pick entity"
+                  data={entitiesData}
+                  onChange={handleEntityChange}
+                  value={selectedEntityId}
+                  w={200}
+                />
+                <Switch
+                  size="xl"
+                  onLabel="One"
+                  offLabel="More"
+                  checked={relation}
+                  onChange={() => {
+                    toggleRelation();
+                  }} />
+              </Group>
             )}
-
-            <Switch
-              size="xl"
-              onLabel="One"
-              offLabel="More"
-              checked={relation}
-              onChange={() => {
-                toggleRelation();
-              }} />
 
           </Group>
 

@@ -1,20 +1,18 @@
+import { useAuth } from '@uiDomain/contexts/AuthProvider';
 import { isEmpty } from 'lodash';
+import { auth } from '@uiDomain/firebase';
 
-export const prepareHeaders = ( headers: Headers, { getState }: {
+export const prepareHeaders = async( headers: Headers, { getState }: {
     getState: () => any
 }) => {
-  if ( !getState().account ) {
-    console.warn( 'No account found in state!' );
+  const accessToken = await auth.currentUser.getIdToken();
+
+  if ( isEmpty( accessToken )) {
+    console.warn( '[prepareHeaders] No access token found!' );
     return null;
   }
 
-  const { user } = getState().account;
+  headers.set( 'authorization', `Bearer ${accessToken}` );
 
-  if ( isEmpty( user.accessToken )) {
-    console.warn( 'No access token found in state!' );
-    return null;
-  }
-
-  headers.set( 'authorization', `Bearer ${user.accessToken}` );
   return headers;
 };

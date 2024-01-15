@@ -1,6 +1,7 @@
+import { isEmpty } from 'lodash';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_BASE_URL } from '@uiDomain/domain.constants';
-import { isEmpty } from 'lodash';
+import { prepareHeaders } from './repo.helper';
 
 const baseUrl = `${API_BASE_URL}/api/v1/tenanted/records`;
 
@@ -11,20 +12,7 @@ export const
     reducerPath: 'recordsRepo',
     baseQuery: fetchBaseQuery({
       baseUrl,
-      prepareHeaders: ( headers, { getState }: { getState: () => any }) => {
-        if ( !getState().account ) {
-          return null;
-        }
-
-        const { user } = getState().account;
-
-        if ( isEmpty( user.accessToken )) {
-          return null;
-        }
-
-        headers.set( 'authorization', `Bearer ${user.accessToken}` );
-        return headers;
-      },
+      prepareHeaders,
 
       // prepareHeaders: ( headers, { getState }) => {
       //   // const token = ( getState() as RootState ).auth.token
@@ -107,6 +95,20 @@ export const
         }),
         providesTags: [ recordsTag ],
       }),
+      addChildRecord: builder.mutation({
+        query: ( body: {
+          recordId: string,
+          childEntityId: string,
+          slug: string,
+          createdBy: string,
+          data: any,
+        }) => ({
+          url: '/add-child-record',
+          method: 'POST',
+          body,
+        }),
+        invalidatesTags: [ recordDetailsTag ],
+      }),
     }),
   }),
 
@@ -119,4 +121,5 @@ export const
     useUpdateRecordMutation,
     useFilterRecordsMutation,
     useGetRecordsQuery,
+    useAddChildRecordMutation,
   } = recordsRepo;

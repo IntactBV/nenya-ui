@@ -26,9 +26,12 @@ export type TEntityAttribute = {
   name: string;
   description: string;
   type: string;
+  isMain?: boolean;
+  showInList?: boolean;
   relation: boolean;
   options?: string;
   status: boolean;
+  fieldType?: EEntityFieldType;
 };
 
 export type TModulePage = {

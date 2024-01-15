@@ -13,7 +13,6 @@ export interface IAccountTenant {
 
 export interface IUserImpl {
   providerId: string;
-  accessToken: string;
   email: string;
   displayName: string;
   uid: string;

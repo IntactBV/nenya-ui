@@ -19,8 +19,8 @@ const accountReducers = {
     console.log( '[logout]' );
     state.user = null;
     state.email = '';
-    state.tenant = '';
-    state.role = '';
+    // state.tenant = '';
+    // state.role = '';
   },
 };
 

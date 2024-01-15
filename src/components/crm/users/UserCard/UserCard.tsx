@@ -4,6 +4,7 @@ import { Button, Card, Stack, Title } from '@mantine/core';
 import { useAuth } from '@uiDomain/contexts/AuthProvider';
 import app, { auth } from '@uiDomain/firebase';
 import { useSetUserTenantMutation } from '@uiRepos/users.repo';
+import { FC } from 'react';
 
 type TUserCardProps = {
   user: any;

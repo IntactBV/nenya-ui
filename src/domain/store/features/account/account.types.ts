@@ -9,6 +9,7 @@ export interface IAccountTenant {
   id: string;
   slug: string;
   name: string;
+  icon?: string;
 }
 
 export interface IUserImpl {

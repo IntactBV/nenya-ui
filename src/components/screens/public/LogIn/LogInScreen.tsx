@@ -38,6 +38,7 @@ export function LogInScreen() {
   });
 
   const handleFormSubmit = useCallback( async( acc: TAccountBase ) => {
+    console.log( 'Submitting form...' );
     try {
       setError( '' );
       setIsLoading( true );
@@ -50,11 +51,9 @@ export function LogInScreen() {
         photoURL: loggedInUser?.photoURL,
         phoneNumber: loggedInUser?.phoneNumber,
         providerId: loggedInUser?.providerId,
-        tenantId: parsedData.tenantId || '3e439136-f6c2-4e88-83e7-a592b8ae9db7',
+        tenantId: parsedData?.tenantId || '3e439136-f6c2-4e88-83e7-a592b8ae9db7',
         uid: loggedInUser?.uid,
       };
-      console.log( 'loginResult', loginResult );
-      console.log( 'logged in user', user );
 
       await dispatch( accountLoginUser( user ));
       router.push( '/crm/dashboard', { scroll: false });

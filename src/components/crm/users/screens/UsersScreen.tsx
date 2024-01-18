@@ -1,12 +1,17 @@
 'use client';
 
-import { SimpleGrid, Stack } from '@mantine/core';
+import { Drawer, SimpleGrid, Stack } from '@mantine/core';
 import { PageHeader } from '@uiComponents/common/PageHeader';
 import { useGetAllUsersQuery } from '@uiRepos/users.repo';
 import { NoData } from '@uiComponents/common/NoData';
+import { useTranslation } from 'react-i18next';
+import { useDisclosure } from '@mantine/hooks';
 import { UserCard } from '../UserCard/UserCard';
+import { UserEditor } from '../UserEditor/UserEditor';
 
 export const UsersScreen = () => {
+  const { t } = useTranslation();
+  const [ showDrawer, { toggle: toggleDrawer } ] = useDisclosure();
   const {
     data: users,
     isLoading: usersLoading,
@@ -19,8 +24,10 @@ export const UsersScreen = () => {
       {users?.length > 0 && (
         <>
           <PageHeader
-            title="Users"
+            title={t( 'user.plural' )}
             description="List of users"
+            buttonLabel={t( 'buttons.add_user' )}
+            buttonClickHandler={toggleDrawer}
           />
 
           <SimpleGrid
@@ -38,9 +45,13 @@ export const UsersScreen = () => {
       {users?.length === 0 && (
         <NoData
           buttonLabel="Add the first tenant"
-          description="No userss found"
+          description="No users found"
         />
       )}
+
+      <Drawer opened={showDrawer} onClose={toggleDrawer} size="md" padding="md" title={t( 'user.singular' )} position="right">
+        <UserEditor />
+      </Drawer>
     </Stack>
   );
 };

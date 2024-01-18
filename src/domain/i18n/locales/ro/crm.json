@@ -1,0 +1,37 @@
+{
+  "language": {
+    "singular": "Limba",
+    "plural": "Limbi"
+  },
+  "user": {
+    "singular": "Utilizator",
+    "plural": "Utilizatori"
+  },
+  "buttons": {
+    "add": "Adaugă",
+    "edit": "Editează",
+    "delete": "Șterge",
+    "add_user": "Adaugă utilizator",
+    "edit_user": "Editează utilizator"
+  },
+  "roles": {
+    "admin": "Administrator",
+    "editor": "Editor",
+    "operator": "Operator",
+    "agent": "Agent",
+    "visitor": "Vizitator"
+  },
+  "placeholders": {
+    "confirm_password": "Confirmă parola",
+    "select_tenant": "Selectează client",
+    "select_role": "Selectează rol"
+  },
+  "tenant": {
+    "singular": "Client",
+    "plural": "Clienți"
+  },
+  "role": "Rol",
+  "name": "Nume",
+  "email": "E-mail",
+  "password": "Parolă"
+}

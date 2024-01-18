@@ -12,4 +12,9 @@ export default withBundleAnalyzer({
   experimental: {
     optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
   },
+  // i18n: {
+  //   locales: ['en', 'ro'],
+  //   localeDetection: false,
+  //   defaultLocale: 'en',
+  // },
 });

@@ -19,11 +19,13 @@ import { useRouter } from 'next/navigation';
 import { accountLoginUser, setAccount } from '@uiStore/features/account/account.slice';
 import { useAppDispatch } from '@uiStore/hooks';
 import { IUserImpl } from '@uiStore/features/account/account.types';
+import { useTranslation } from 'react-i18next';
 import { TAccountBase } from '@/src/domain/types';
 import { useAuth } from '@/src/domain/contexts/AuthProvider';
 import classes from './LogIn.module.css';
 
 export function LogInScreen() {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { login } = useAuth();
   const [ error, setError ] = useState<string>( '' );
@@ -38,7 +40,6 @@ export function LogInScreen() {
   });
 
   const handleFormSubmit = useCallback( async( acc: TAccountBase ) => {
-    console.log( 'Submitting form...' );
     try {
       setError( '' );
       setIsLoading( true );
@@ -51,7 +52,9 @@ export function LogInScreen() {
         photoURL: loggedInUser?.photoURL,
         phoneNumber: loggedInUser?.phoneNumber,
         providerId: loggedInUser?.providerId,
+        tenant: parsedData?.tenant || 'alpha',
         tenantId: parsedData?.tenantId || '3e439136-f6c2-4e88-83e7-a592b8ae9db7',
+        role: parsedData?.role || 'operator',
         uid: loggedInUser?.uid,
       };
 
@@ -69,7 +72,7 @@ export function LogInScreen() {
       <form onSubmit={form.onSubmit( handleFormSubmit )}>
         <Paper className={classes.form} radius={0} p={30} pt={80}>
           <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
-            Autentificare Nenya Digital
+            {t( 'login' )}
           </Title>
 
           {( !isEmpty( error )) && (
@@ -104,19 +107,19 @@ export function LogInScreen() {
             }}
           />
 
-          <Checkbox label="Pastrează-mă logat" mt="xl" size="md" />
+          {/* <Checkbox label="Pastrează-mă logat" mt="xl" size="md" /> */}
 
           <Button type="submit" fullWidth mt="xl" size="md" disabled={isLoading}>
-            Autentificare &nbsp;
+            {t( 'login' )} &nbsp;
             {isLoading && <Loader size="xs" />}
           </Button>
 
-          <Text ta="center" mt="md">
+          {/* <Text ta="center" mt="md">
             Nu ai cont?{' '}
             <Link href="/public/signup">
               Inregistrează-te!
             </Link>
-          </Text>
+          </Text> */}
         </Paper>
       </form>
     </div>

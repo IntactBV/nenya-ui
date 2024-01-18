@@ -1,7 +1,16 @@
 export type TAccountBase = {
     email: string;
-    password: string;
+    password?: string;
     confirm?: string
+};
+
+export type TAccount = TAccountBase & {
+  id?: string;
+  tenantIds: string[];
+  name: string;
+  status: boolean;
+  role: EAccountRoles;
+  avatar: string;
 };
 
 export interface CanvasAttributes {
@@ -15,9 +24,12 @@ export interface CanvasAttributes {
 }
 
 export enum EAccountRoles {
+  APP_ADMIN = 'appAdmin',
   ADMIN = 'admin',
   EDITOR = 'editor',
-  AGENT = 'agent'
+  AGENT = 'agent',
+  OPERATOR = 'operator',
+  VISITOR = 'visitor',
 }
 
 export type TEntityAttribute = {

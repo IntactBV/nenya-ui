@@ -19,7 +19,9 @@ export interface IUserImpl {
   uid: string;
   phoneNumber: string;
   photoURL: string;
+  tenant: string;
   tenantId: string;
+  role: string;
 }
 export interface AccountState {
   user: IUserImpl

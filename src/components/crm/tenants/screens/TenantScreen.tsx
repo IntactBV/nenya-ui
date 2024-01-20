@@ -2,10 +2,11 @@
 
 import { FC } from 'react';
 import { GoAlert } from 'react-icons/go';
-import { Loader, Stack, Text, Title } from '@mantine/core';
+import { Stack, Text, Title } from '@mantine/core';
 import { useGetTenantQuery } from '@uiRepos/tenants.repo';
 import { PageHeader } from '@uiComponents/common/PageHeader';
 import { useParams } from 'next/navigation';
+import { CommonPageLoader } from '@uiComponents/common/CommonPageLoader';
 import { TenantTabs } from '../tabs/TenantTabs';
 
 export const TenantScreen: FC = () => {
@@ -24,9 +25,7 @@ export const TenantScreen: FC = () => {
 
   if ( isLoading ) {
     return (
-      <Stack align="center" h={600} justify="center">
-        <Loader size="xl" />
-      </Stack>
+      <CommonPageLoader />
     );
   }
 

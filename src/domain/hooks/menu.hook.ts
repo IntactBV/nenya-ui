@@ -12,7 +12,7 @@ import { computed } from '@preact/signals-react';
 import { isEmpty, isNil } from 'lodash';
 import { $userData } from '@uiSignals/common.signals';
 import { useAuth } from '@uiDomain/contexts/AuthProvider';
-import { EAccountRoles } from '@/src/domain/types';
+import { EAccountRoles } from '@uiStore/features/account/account.types';
 
 const mockdata = [
   { label: 'Dashboard', icon: IconGauge },
@@ -65,9 +65,10 @@ type TNavItem = {
 
 export const useNavigation = ( tenantModules: any ) => {
   const { currentUser } = useAuth();
-  const userRole = isNil( currentUser )
-    ? EAccountRoles.VISITOR
-    : JSON.parse( currentUser?.displayName )?.role || EAccountRoles.OPERATOR;
+  const userRole = EAccountRoles.APP_ADMIN;
+  // const userRole = isNil( currentUser )
+  //   ? EAccountRoles.VISITOR
+  //   : JSON.parse( currentUser?.displayName )?.role || EAccountRoles.OPERATOR;
 
   const $navData = computed(() => {
     if ( !tenantModules ) {

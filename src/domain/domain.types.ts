@@ -1,5 +1,5 @@
 import { ATTRIBUTE_TYPES } from './domain.constants';
-import { EAccountRoles, EEntityFieldType } from './types';
+import { EEntityFieldType } from './types';
 
 export type TAttributesType = typeof ATTRIBUTE_TYPES[ number ];
 

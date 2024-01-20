@@ -22,11 +22,41 @@ export const
         }),
         providesTags: [ usersTag ],
       }),
+      getUserDetails: builder.query({
+        query: ( uid: string ) => ({
+          url: `/users/${uid}/user-details`,
+          method: 'GET',
+        }),
+        providesTags: [ userDetailsTag ],
+      }),
       setUserTenant: builder.mutation({
         query: ( data ) => ({
           url: '/users/user-tenant',
           method: 'POST',
           body: data,
+        }),
+        invalidatesTags: [ usersTag ],
+      }),
+      createUser: builder.mutation({
+        query: ( body: any ) => ({
+          url: '/users/user',
+          method: 'POST',
+          body,
+        }),
+        invalidatesTags: [ usersTag ],
+      }),
+      deleteUser: builder.mutation({
+        query: ( uid: string ) => ({
+          url: `/users/${uid}`,
+          method: 'DELETE',
+        }),
+        invalidatesTags: [ usersTag ],
+      }),
+      updateUser: builder.mutation({
+        query: ( body ) => ({
+          url: `/users/${body.uid}`,
+          method: 'PATCH',
+          body,
         }),
         invalidatesTags: [ usersTag ],
       }),
@@ -36,4 +66,8 @@ export const
   {
     useGetAllUsersQuery,
     useSetUserTenantMutation,
+    useCreateUserMutation,
+    useDeleteUserMutation,
+    useLazyGetUserDetailsQuery,
+    useUpdateUserMutation,
   } = usersRepo;

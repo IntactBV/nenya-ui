@@ -11,6 +11,7 @@ import { IModule } from '@uiDomain/domain.types';
 import { notifications } from '@mantine/notifications';
 import { ModuleCard } from '@uiComponents/crm/modules/ModuleCard';
 import { ModuleModal } from '@uiComponents/crm/modules/ModuleModal/ModuleModal';
+import { CommonPageLoader } from '@uiComponents/common/CommonPageLoader';
 
 export const ModulesScreen = () => {
   const { data: modules, isLoading, error, isError } = useGetAllModulesQuery();
@@ -85,9 +86,7 @@ export const ModulesScreen = () => {
 
   if ( isLoading ) {
     return (
-      <Stack align="center" h={600} justify="center">
-        <Loader size="xl" />
-      </Stack>
+      <CommonPageLoader />
     );
   }
 

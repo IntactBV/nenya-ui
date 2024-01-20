@@ -3,10 +3,6 @@
     "singular": "Limba",
     "plural": "Limbi"
   },
-  "user": {
-    "singular": "Utilizator",
-    "plural": "Utilizatori"
-  },
   "buttons": {
     "add": "Adaugă",
     "edit": "Editează",
@@ -28,9 +24,15 @@
   },
   "tenant": {
     "singular": "Client",
-    "plural": "Clienți"
+    "plural": "Clienți",
+    "users": "Utilizatori"
   },
-  "role": "Rol",
+  "user": {
+    "singular": "Utilizator",
+    "plural": "Utilizatori",
+    "add": "Adaug utilizator"
+  },
+ "role": "Rol",
   "name": "Nume",
   "email": "E-mail",
   "password": "Parolă"

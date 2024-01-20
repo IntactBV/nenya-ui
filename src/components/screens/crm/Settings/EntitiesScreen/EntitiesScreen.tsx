@@ -7,6 +7,7 @@ import { PageHeader } from '@uiComponents/common/PageHeader';
 import { useGetAllEntitiesQuery } from '@uiRepos/entities.repo';
 import { EntitiesList } from '@uiComponents/crm/entities/EntitiesList';
 import { EntityModal } from '@uiComponents/crm/entities/EntityModal';
+import { CommonPageLoader } from '@uiComponents/common/CommonPageLoader';
 
 export const EntitiesScreen = () => {
   const { data: entities, isLoading, error, isError } = useGetAllEntitiesQuery();
@@ -38,9 +39,7 @@ export const EntitiesScreen = () => {
 
   if ( isLoading ) {
     return (
-      <Stack align="center" h={600} justify="center">
-        <Loader size="xl" />
-      </Stack>
+      <CommonPageLoader />
     );
   }
 

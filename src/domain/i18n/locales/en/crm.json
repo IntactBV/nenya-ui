@@ -3,10 +3,6 @@
     "singular": "Language",
     "plural": "Languages"
   },
-  "user": {
-    "singular": "User",
-    "plural": "Users"
-  },
   "buttons": {
     "add": "Add",
     "edit": "Edit",
@@ -27,7 +23,13 @@
   },
   "tenant":{
     "singular": "Client",
-    "plural": "Clients"
+    "plural": "Clients",
+    "users": "Users"
+  },
+  "user": {
+    "singular": "User",
+    "plural": "Users",
+    "add": "Add user"
   },
   "role": "Role",
   "name": "Name",

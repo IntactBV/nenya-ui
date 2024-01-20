@@ -3,7 +3,6 @@ import { useGetTenantModulesQuery } from '@uiRepos/tenants.repo';
 import { isEmpty } from 'lodash';
 import { useAppSelector } from '@uiStore/hooks';
 import { selectAccount } from '@uiStore/features/account/account.selectors';
-// import { UserButton } from '@crmComponents/page/UserButton/UserButton';
 import { LinksGroup } from '@crmComponents/page/NavbarLinksGroup/NavbarLinksGroup';
 import { useNavigation } from '@/src/domain/hooks/menu.hook';
 import classes from './CrmSidebar.module.css';

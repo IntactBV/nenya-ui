@@ -72,7 +72,11 @@ export const TenantUsersTab: FC = () => {
       </SimpleGrid>
 
       <Drawer opened={showDrawer} onClose={toggleDrawer} size="md" padding="md" title={t( 'user.singular' )} position="right">
-        <UserEditor onSave={handleSave} account={selectedUser} tenantId={params.tenantId} />
+        <UserEditor
+          onSave={handleSave}
+          account={selectedUser}
+          tenantId={params.tenantId as string}
+        />
       </Drawer>
 
     </Stack>

@@ -59,7 +59,7 @@ export const CrmPage: FC<PropsWithChildren> = ({
           <Group h="100%" px="md">
             <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom="sm" size="sm" />
             <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom="sm" size="sm" />
-            <CrmLogo sub="manager" />
+            <CrmLogo sub={storeAccount.tenant.role} />
           </Group>
           <Group mr="lg">
             <Avatar onClick={toggleDrawer}>

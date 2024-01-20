@@ -8,7 +8,7 @@ export type TAccountBase = {
 
 export type TAccount = TAccountBase & {
   uid?: string;
-  tenantIds: string[];
+  tenantIds?: string[];
   name: string;
   displayName?: string;
   status?: boolean;

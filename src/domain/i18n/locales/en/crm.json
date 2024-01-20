@@ -1,0 +1,38 @@
+{
+  "language": {
+    "singular": "Language",
+    "plural": "Languages"
+  },
+  "buttons": {
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add_user": "Add user",
+    "edit_user": "Edit user"
+  },
+  "roles": {
+    "admin": "Administrator",
+    "editor": "Editor",
+    "operator": "Operator",
+    "agent": "Agent",
+    "visitor": "Vizitator"
+  },
+  "placeholders": {
+    "confirm_password": "Confirmă parola",
+    "select_tenant": "Select client"
+  },
+  "tenant":{
+    "singular": "Client",
+    "plural": "Clients",
+    "users": "Users"
+  },
+  "user": {
+    "singular": "User",
+    "plural": "Users",
+    "add": "Add user"
+  },
+  "role": "Role",
+  "name": "Name",
+  "email": "E-mail",
+  "password": "Password"
+}

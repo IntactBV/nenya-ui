@@ -47,6 +47,7 @@
     "docker",
     "theme",
     "records",
-    "entities"
+    "entities",
+    "i18n"
   ]
 }

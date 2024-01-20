@@ -20,7 +20,6 @@ import {
   useMantineTheme,
   Title,
 } from '@mantine/core';
-import { MantineLogo } from '@mantine/ds';
 import { useDisclosure } from '@mantine/hooks';
 import {
   IconNotification,
@@ -37,6 +36,8 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAppSelector } from '@uiStore/hooks';
 import { selectAccount } from '@uiStore/features/account/account.selectors';
+import Image from 'next/image';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/src/domain/contexts/AuthProvider';
 import classes from './PublicHeader.module.css';
 
@@ -74,6 +75,7 @@ const mockdata = [
 ];
 
 export function PublicHeader() {
+  const { t } = useTranslation();
   const [ drawerOpened, { toggle: toggleDrawer, close: closeDrawer } ] = useDisclosure( false );
   const [ linksOpened, { toggle: toggleLinks } ] = useDisclosure( false );
   const theme = useMantineTheme();
@@ -122,17 +124,27 @@ export function PublicHeader() {
     <Box pb={120}>
       <header className={classes.header}>
         <Group justify="space-between" h="100%">
+          <Group>
 
-          <Link href="/" style={{ textDecoration: 'none' }}>
-            <Title order={1}>
-              <Text inherit variant="gradient" component="span" gradient={{ from: 'white', to: 'violet' }}>
+            <Image
+              src="/favicon.png"
+              alt="Nenya Digital"
+              width={48}
+              height={48}
+              style={{ borderRadius: '10px' }}
+            />
+
+            <Link href="/" style={{ textDecoration: 'none' }}>
+              <Title order={1}>
+                <Text inherit variant="text" component="span">
             nenya.
-              </Text>
-              <Text inherit variant="gradient" component="span" gradient={{ from: 'violet', to: 'white' }}>
+                </Text>
+                <Text inherit variant="text" component="span">
             digital
-              </Text>
-            </Title>
-          </Link>
+                </Text>
+              </Title>
+            </Link>
+          </Group>
 
           {/* <MantineLogo size={30} /> */}
 
@@ -248,8 +260,8 @@ export function PublicHeader() {
           <Divider my="sm" />
 
           <Group justify="center" grow pb="xl" px="md">
-            <Button component="a" href="/public/login" variant="default">Autentificare</Button>
-            <Button component="a" href="/public/signup">Inregistrare</Button>
+            <Button component="a" href="/public/login" variant="default">{t( 'login' )}</Button>
+            <Button component="a" href="/public/signup">{t( 'signup' )}</Button>
           </Group>
         </ScrollArea>
       </Drawer>

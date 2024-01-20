@@ -7,6 +7,7 @@ import { GoAlert } from 'react-icons/go';
 import { useGetAllAttributesQuery } from '@uiRepos/attributes.repo';
 import { AttributeModal } from '@uiComponents/crm/attributes/AttributeModal';
 import { AttributesList } from '@uiComponents/crm/attributes/AttributesList';
+import { CommonPageLoader } from '@uiComponents/common/CommonPageLoader';
 
 export const AttributesScreen = () => {
   const { data: attributes, isLoading, error, isError } = useGetAllAttributesQuery();
@@ -38,9 +39,7 @@ export const AttributesScreen = () => {
 
   if ( isLoading ) {
     return (
-      <Stack align="center" h={600} justify="center">
-        <Loader size="xl" />
-      </Stack>
+      <CommonPageLoader />
     );
   }
 

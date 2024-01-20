@@ -16,6 +16,8 @@ export const {
   setAccount,
   accountLogout,
   accountLoginUser,
+  setAccountTenants,
+  setAccountTenant,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

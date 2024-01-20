@@ -6,6 +6,10 @@
   text-decoration: none;
 }
 
+.logoImg {
+  border-radius: 10px;
+}
+
 .title {
   letter-spacing: rem(-1px);
   font-size: 1.6rem;

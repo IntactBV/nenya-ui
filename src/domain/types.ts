@@ -1,7 +1,20 @@
+import { EAccountRoles } from '@uiStore/features/account/account.types';
+
 export type TAccountBase = {
     email: string;
-    password: string;
+    password?: string;
     confirm?: string
+};
+
+export type TAccount = TAccountBase & {
+  uid?: string;
+  tenantIds?: string[];
+  name: string;
+  displayName?: string;
+  status?: boolean;
+  role?: EAccountRoles;
+  avatar?: string;
+  tenantAccounts?: any[];
 };
 
 export interface CanvasAttributes {
@@ -12,12 +25,6 @@ export interface CanvasAttributes {
   category: string;
   title: string;
   props?: Record<string, any>;
-}
-
-export enum EAccountRoles {
-  ADMIN = 'admin',
-  EDITOR = 'editor',
-  AGENT = 'agent'
 }
 
 export type TEntityAttribute = {

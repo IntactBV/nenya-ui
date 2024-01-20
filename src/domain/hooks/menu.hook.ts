@@ -9,9 +9,10 @@ import {
   IconUsersGroup,
 } from '@tabler/icons-react';
 import { computed } from '@preact/signals-react';
-import { isEmpty } from 'lodash';
+import { isEmpty, isNil } from 'lodash';
 import { $userData } from '@uiSignals/common.signals';
-import { EAccountRoles } from '@/src/domain/types';
+import { useAuth } from '@uiDomain/contexts/AuthProvider';
+import { EAccountRoles } from '@uiStore/features/account/account.types';
 
 const mockdata = [
   { label: 'Dashboard', icon: IconGauge },
@@ -63,6 +64,12 @@ type TNavItem = {
 };
 
 export const useNavigation = ( tenantModules: any ) => {
+  const { currentUser } = useAuth();
+  const userRole = EAccountRoles.APP_ADMIN;
+  // const userRole = isNil( currentUser )
+  //   ? EAccountRoles.VISITOR
+  //   : JSON.parse( currentUser?.displayName )?.role || EAccountRoles.OPERATOR;
+
   const $navData = computed(() => {
     if ( !tenantModules ) {
       tenantModules = [];
@@ -86,9 +93,15 @@ export const useNavigation = ( tenantModules: any ) => {
           label: 'Dashboard',
           icon: IconGauge,
           link: '/',
+          links: [
+            { label: 'Overview', link: '/crm/dashboard' },
+          ],
         },
         ...tenantOptions,
-        {
+      ];
+
+      if ( userRole === EAccountRoles.APP_ADMIN ) {
+        adminData.push({
           label: 'ADMIN',
           icon: IconAdjustments,
           initiallyOpened: true,
@@ -100,8 +113,8 @@ export const useNavigation = ( tenantModules: any ) => {
             { label: 'Tenants', link: '/crm/settings/tenants' },
             { label: 'Users', link: '/crm/settings/users' },
           ],
-        },
-      ];
+        });
+      }
       return adminData;
     }
     return mockdata;

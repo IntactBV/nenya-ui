@@ -19,8 +19,6 @@ export const
         query: () => ({
           url: '/tenants',
           method: 'GET',
-          data: undefined,
-          params: undefined,
         }),
         providesTags: [ tenantsTag ],
       }),
@@ -28,11 +26,17 @@ export const
         query: ( tenantId ) => ({
           url: `/tenants/${tenantId}`,
           method: 'GET',
-          data: undefined,
-          params: undefined,
         }),
         providesTags: [ tenantDetailsTag ],
       }),
+      getTenantUsers: builder.query({
+        query: ( tenantId: string ) => ({
+          url: `/tenants/${tenantId}/tenant-users`,
+          method: 'GET',
+        }),
+        providesTags: [ tenantsTag ],
+      }),
+
       getTenantModules: builder.query({
         query: ( tenantId ) => ({
           url: `/tenants/${tenantId}/tenant-modules`,
@@ -107,4 +111,5 @@ export const
     useDeleteTenantMutation,
     useToggleModuleToTenantMutation,
     useUpdateTenantModulesOrderMutation,
+    useGetTenantUsersQuery,
   } = tenantsRepo;

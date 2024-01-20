@@ -8,6 +8,7 @@ import { IModule, ITenant, TOrderedItem } from '@uiDomain/domain.types';
 import { DragDropContext, DropResult, Droppable } from '@hello-pangea/dnd';
 import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
 import { sortBy } from 'lodash';
+import { CommonPageLoader } from '@uiComponents/common/CommonPageLoader';
 import { TenantModuleCard } from '../cards/TenantModuleCard';
 
 const sortOrder = ( items: Record<string, number> ) => ( a: any, b: any ) => {
@@ -79,9 +80,7 @@ export const TenantModulesTab: FC<{ tenant: ITenant }> = ({ tenant }) => {
 
   if ( isLoading ) {
     return (
-      <Stack align="center" h={600} justify="center">
-        <Loader size="xl" />
-      </Stack>
+      <CommonPageLoader />
     );
   }
 

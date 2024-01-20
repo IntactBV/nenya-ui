@@ -14,6 +14,7 @@ import * as renderers from '@crmComponents/renderers';
 import { RENDERER_NAMES } from '@uiDomain/domain.constants';
 import { useParams } from 'next/navigation';
 import { useAppSelector } from '@uiStore/hooks';
+import { t } from 'i18next';
 
 type TModulePage = {
   id: string;
@@ -180,7 +181,7 @@ export const ModulePageModal: FC<TModulePageModalProps> = ({
             mb="md"
             data={entitiesData}
             placeholder="Pick entities"
-            label="Entities"
+            label={t( 'tenant.plural' )}
             withAsterisk
             {...form.getInputProps( 'entityIds' )}
           />

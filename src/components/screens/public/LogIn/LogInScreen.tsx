@@ -16,19 +16,23 @@ import { useForm } from '@mantine/form';
 import Link from 'next/link';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
-import { accountLoginUser, setAccount } from '@uiStore/features/account/account.slice';
+import { accountLoginUser, setAccount, setAccountTenants } from '@uiStore/features/account/account.slice';
 import { useAppDispatch } from '@uiStore/hooks';
-import { IUserImpl } from '@uiStore/features/account/account.types';
+import { EAccountRoles, IUserImpl } from '@uiStore/features/account/account.types';
+import { useTranslation } from 'react-i18next';
+import { useLazyGetUserDetailsQuery } from '@uiRepos/users.repo';
 import { TAccountBase } from '@/src/domain/types';
 import { useAuth } from '@/src/domain/contexts/AuthProvider';
 import classes from './LogIn.module.css';
 
 export function LogInScreen() {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { login } = useAuth();
   const [ error, setError ] = useState<string>( '' );
   const [ isLoading, setIsLoading ] = useState<boolean>( false );
   const router = useRouter();
+  const [ requestUserDetails ] = useLazyGetUserDetailsQuery();
 
   const form = useForm<TAccountBase>({
     initialValues: {
@@ -38,25 +42,36 @@ export function LogInScreen() {
   });
 
   const handleFormSubmit = useCallback( async( acc: TAccountBase ) => {
-    console.log( 'Submitting form...' );
     try {
       setError( '' );
       setIsLoading( true );
       const loginResult = await login( acc.email, acc.password );
+      const userResult = await requestUserDetails( loginResult?.user?.uid );
+      const userDetails = userResult?.data;
+      const userTenant = isEmpty( userDetails?.tenantAccounts )
+        ? []
+        : userDetails?.tenantAccounts[ 0 ];
+
       const loggedInUser = loginResult?.user;
-      const parsedData = JSON.parse( loggedInUser.displayName );
       const user: IUserImpl = {
         email: loggedInUser?.email,
         displayName: loggedInUser?.displayName,
         photoURL: loggedInUser?.photoURL,
         phoneNumber: loggedInUser?.phoneNumber,
         providerId: loggedInUser?.providerId,
-        tenantId: parsedData?.tenantId || '3e439136-f6c2-4e88-83e7-a592b8ae9db7',
+        tenant: userTenant.tenantSlug,
+        tenantId: userTenant.tenantId,
+        tenantName: userTenant.tenantName,
+        tenantSlug: userTenant.tenantSlug,
+        role: userTenant.role as EAccountRoles,
         uid: loggedInUser?.uid,
       };
-
-      await dispatch( accountLoginUser( user ));
-      router.push( '/crm/dashboard', { scroll: false });
+      await dispatch( setAccountTenants( userDetails?.tenantAccounts ));
+      await dispatch( accountLoginUser({
+        user,
+        tenant: userDetails?.tenantAccounts[ 0 ] || {},
+      }));
+      router.push( '/crm/dashboard' );
     } catch ( e: any ) {
       setError( e.code );
     }
@@ -69,7 +84,7 @@ export function LogInScreen() {
       <form onSubmit={form.onSubmit( handleFormSubmit )}>
         <Paper className={classes.form} radius={0} p={30} pt={80}>
           <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
-            Autentificare Nenya Digital
+            {t( 'login' )}
           </Title>
 
           {( !isEmpty( error )) && (
@@ -104,19 +119,19 @@ export function LogInScreen() {
             }}
           />
 
-          <Checkbox label="Pastrează-mă logat" mt="xl" size="md" />
+          {/* <Checkbox label="Pastrează-mă logat" mt="xl" size="md" /> */}
 
           <Button type="submit" fullWidth mt="xl" size="md" disabled={isLoading}>
-            Autentificare &nbsp;
+            {t( 'login' )} &nbsp;
             {isLoading && <Loader size="xs" />}
           </Button>
 
-          <Text ta="center" mt="md">
+          {/* <Text ta="center" mt="md">
             Nu ai cont?{' '}
             <Link href="/public/signup">
               Inregistrează-te!
             </Link>
-          </Text>
+          </Text> */}
         </Paper>
       </form>
     </div>

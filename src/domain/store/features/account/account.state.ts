@@ -1,6 +1,6 @@
 // import { LOCAL_STORAGE } from '@scDomain/constants';
 import { isNil } from 'lodash';
-import { AccountState, EAccountRole } from './account.types';
+import { AccountState, EAccountRoles } from './account.types';
 // import * as jose from 'jose'
 
 const APP_PREFIX = 'sc';
@@ -18,15 +18,9 @@ export const
   accountSlideName = 'account';
 export const accountState: AccountState = isNil( rawAccount )
   ? {
-    email: 'gabi@bitvice.ro',
-    tenant: {
-      id: '3e439136-f6c2-4e88-83e7-a592b8ae9db7',
-      name: 'Alpha',
-      slug: 'alpha',
-    },
-    role: EAccountRole.ADMIN,
-    token: '',
-    // await jose.EncryptJWT({ 'urn:example:claim': true })
+    email: '',
+    tenant: {},
+    role: EAccountRoles.VISITOR,
   }
   : JSON.parse( rawAccount );
 

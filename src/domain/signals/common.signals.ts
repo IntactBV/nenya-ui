@@ -1,6 +1,6 @@
 import { signal } from '@preact/signals-react';
 import { LOCAL_STORAGE } from '@uiDomain/domain.constants';
-import { EAccountRoles } from '@/src/domain/types';
+import { EAccountRoles } from '@uiStore/features/account/account.types';
 
 export const $userData = signal<{ role: EAccountRoles }>({
   role: EAccountRoles.ADMIN,

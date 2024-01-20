@@ -1,0 +1,4 @@
+.main {
+  background: -webkit-linear-gradient(-25deg, transparent 60%, var(--mantine-primary-color-9) 100%);
+  background: linear-gradient(155deg, transparent 0%, #5f3dc450 100%);
+}

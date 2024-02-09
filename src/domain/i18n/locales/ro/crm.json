@@ -136,6 +136,51 @@
       "ProjectsListRenderer": "Listă proiecte"
     }
   },
+  "app": {
+    "settings": {
+      "admin": {
+        "overview": "Vizualizare generală",
+        "title": "Setarile aplicatiei",
+        "description": "Setarile aplicatiei sunt folosite pentru a configura aplicatia in modul dorit de administratorul acesteia.",
+        "desc_en": "This is the place where admin can manage application structure",
+        "attributes": {
+          "title": "Atribute",
+          "description": "Atributele sunt folosite pentru a configura entitatile aplicatiei.",
+          "button": "Gestionați atributele"
+        },
+        "entities": {
+          "title": "Entități",
+          "description": "Entitatile sunt folosite pentru a configura modulele aplicatiei.",
+          "button": "Gestionați entitățile"
+        },
+        "modules": {
+          "title": "Module",
+          "description": "Modulele sunt folosite pentru a configura aplicatia finala.",
+          "button": "Gestionați modulele"
+        },
+        "tenants": {
+          "title": "Clienți",
+          "description": "Clienții sunt folosiți pentru a configura utilizatorii aplicatiei.",
+          "button": "Gestionați clienții"
+        },
+        "realms": {
+          "title": "Aplicații",
+          "description": "Aplicațiile sunt folosite pentru livra modulele sub diferite forme.",
+          "button": "Gestionați aplicațiile"
+        },
+        "users": {
+          "title": "Utilizatori",
+          "description": "Utilizatorii sunt folosiți pentru a configura accesul la aplicatie.",
+          "button": "Gestionați utilizatorii"
+        },
+        "reports": {
+          "title": "Rapoarte",
+          "description": "Rapoartele sunt folosite pentru vizualizarea datelor.",
+          "button": "Vizualizați rapoartele"
+        }
+      }
+    }
+  },
   "role": "Rol",
   "name": "Nume",
   "email": "E-mail",

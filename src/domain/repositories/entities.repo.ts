@@ -98,6 +98,15 @@ export const
         invalidatesTags: [ entityTag ],
       }),
 
+      updateAttributeOfEntity: builder.mutation({
+        query: ( body ) => ({
+          url: '/entities/fields/field-of-entity',
+          method: 'PATCH',
+          body,
+        }),
+        invalidatesTags: [ entityTag ],
+      }),
+
       linkEntity: builder.mutation({
         query: ( data: { idEntity:string, idChild: string }) => ({
           url: `/entities/${data.idEntity}/entity/${data.idChild}/link-entity`,
@@ -151,4 +160,5 @@ export const
     useUnlinkEntityMutation,
     useUpdateEntityAttributeMutation,
     useUpdateEntityAttributesOrdersMutation,
+    useUpdateAttributeOfEntityMutation,
   } = entitiesRepo;

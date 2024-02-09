@@ -42,7 +42,7 @@ export const UserEditor: FC<TUserEditorProps> = ({
 }) => {
   const { t } = useTranslation();
   const userAccount = useAppSelector( selectAccount );
-  const [ accounts, setAccounts ] = useState<any>( account.tenantAccounts );
+  const [ accounts, setAccounts ] = useState<any>( account?.tenantAccounts || []);
   const editMode = useMemo(() => !!account, [ account ]);
   const { data: tenants, isLoading: tenantsLoading } = useGetAllTenantsQuery();
   const [ performCreateUser, createStatus ] = useCreateUserMutation();
@@ -76,7 +76,7 @@ export const UserEditor: FC<TUserEditorProps> = ({
       label: t( `roles.${EAccountRoles.VISITOR}` ),
     } ];
 
-    if ( userAccount.user.role === EAccountRoles.APP_ADMIN ) {
+    if ( userAccount.tenant.role === EAccountRoles.APP_ADMIN ) {
       options.unshift({
         value: EAccountRoles.APP_ADMIN,
         label: t( `roles.${EAccountRoles.APP_ADMIN}` ),
@@ -213,7 +213,7 @@ export const UserEditor: FC<TUserEditorProps> = ({
           <Stack gap="md">
             <Text>{t( 'tenant.plural' )}</Text>
             {accounts?.map(( acc: any ) => (
-              <Card key={acc.tenantId} radius={10}>
+              <Card key={acc.tenantId} radius={10} className="ndCard">
                 <Group justify="space-between">
                   <Title order={4}>
                     {acc.tenantName}
@@ -242,22 +242,26 @@ export const UserEditor: FC<TUserEditorProps> = ({
         )}
 
         <Group justify="space-between" mt="md">
-          <Button
-            variant="subtle"
-            onClick={toggle}
-          >
-          Assing New Tenant
-          </Button>
+          <span>
+            {isEmpty( tenantId ) && (
+              <Button
+                variant="subtle"
+                onClick={toggle}
+              >
+              Assing New Tenant
+              </Button>
+            )}
+          </span>
 
           {( !createStatus.isLoading && !updateStatus.isLoading ) && <Button type="submit">{editMode ? 'Edit' : 'Add'}</Button>}
           {( createStatus.isLoading || updateStatus.isLoading ) && <Loader variant="oval" />}
         </Group>
       </Stack>
-      <pre>
+      {/* <pre>
         tenant: {tenantId}<br />
         form: {JSON.stringify( form, null, 2 )}<br />
         account: {JSON.stringify( account, null, 2 )}
-      </pre>
+      </pre> */}
     </form>
   );
 };

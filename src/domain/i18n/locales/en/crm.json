@@ -31,6 +31,10 @@
     "plural": "Users",
     "add": "Add user"
   },
+  "organization": {
+    "singular": "Organization",
+    "plural": "Organizations"
+  },
   "role": "Role",
   "name": "Name",
   "email": "E-mail",

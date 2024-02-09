@@ -32,8 +32,113 @@
     "plural": "Utilizatori",
     "add": "Adaug utilizator"
   },
- "role": "Rol",
+  "organization": {
+    "singular": "Organizație",
+    "plural": "Organizații"
+  },
+  "attributes": {
+    "names": {
+      "avatar": "Avatar",
+      "cui": "CUI",
+      "department": "Departament",
+      "description": "Descriere",
+      "e-mail": "E-mail",
+      "name": "Denumire",
+      "first-name": "Prenume",
+      "last-name": "Nume",
+      "full-name": "Nume complet",
+      "judet": "Județ",
+      "localitate": "Localitate",
+      "nrreg": "Nr. Reg. Com.",
+      "phone": "Telefon",
+      "position": "Poziție",
+      "employee": "Angajat",
+      "estimate": "Estimare",
+      "hours": "Ore",
+      "weight-percent": "Procent pondere",
+      "deadline": "Termen limită",
+      "user": "Utilizator"
+    },
+    "types": {
+      "text": "Text",
+      "number": "Număr",
+      "email": "E-mail",
+      "boolean": "Logic",
+      "date": "Dată",
+      "date-time": "Dată și oră",
+      "select": "Select",
+      "multiselect": "Select multiplu",
+      "textarea": "Textarea",
+      "avatar": "Avatar",
+      "html": "HTML",
+      "markdown": "Markdown",
+      "phone": "Telefon",
+      "color": "Culoare",
+      "image": "Imagine",
+      "file": "Fișier",
+      "date-range": "Interval dată",
+      "date-time-range": "Interval dată și oră",
+      "time": "Oră",
+      "time-range": "Interval oră",
+      "user": "Utilizator",
+      "list": "Listă"
+    },
+    "tt": {
+      "edit": "Editează atribut",
+      "remove": "Șterge atribut"
+    },
+    "main": "Principal",
+    "showInList": "Afișează în listă",
+    "singular": "Atribut",
+    "plural": "Atribute",
+    "select": {
+      "placeholder": "Alege un atribut"
+    }
+  },
+  "entities": {
+    "names": {
+      "employee": "Angajat",
+      "department": "Departament",
+      "project-estimate": "Estimare",
+      "project-task": "Sarcină",
+      "project-type": "Tip proiect",
+      "organization": "Organizație"
+    },
+    "singular": "Entitate",
+    "plural": "Entități",
+    "select": {
+      "placeholder": "Alege o entitate"
+    },
+    "cards": {
+      "addField": {
+        "title": "Adăugare câmp",
+        "description": "Adaugă un câmp nou în entitatea curentă"
+      },
+      "editField": {
+        "title": "Modificare câmp",
+        "description": "Modificare câmp din entitatea curentă"
+      }
+    }
+  },
+  "derived": {
+    "singular": "Derivat",
+    "plural": "Derivate",
+    "percent": "Procent"
+  },
+  "fields": {
+    "type": "Tip câmp",
+    "label": "Etichetă"
+  },
+  "renderers": {
+    "list": {
+      "BaseTableListRenderer": "Listă cu tabel",
+      "BaseDebuggerListRenderer": "Listă depanare",
+      "ProjectsListRenderer": "Listă proiecte"
+    }
+  },
+  "role": "Rol",
   "name": "Nume",
   "email": "E-mail",
-  "password": "Parolă"
+  "password": "Parolă",
+  "records": "Înregistrări"
 }

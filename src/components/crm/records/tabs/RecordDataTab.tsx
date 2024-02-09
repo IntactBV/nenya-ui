@@ -4,6 +4,7 @@ import { IAttribute, IEntity } from '@uiDomain/domain.types';
 import { TEntityAttribute } from '@uiDomain/types';
 import { isEmpty } from 'lodash';
 import { FC, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type TRecordDataTabProps = {
   record: Record<string, any>;
@@ -11,6 +12,7 @@ type TRecordDataTabProps = {
 };
 
 export const RecordDataTab: FC<TRecordDataTabProps> = ({ record, entity }) => {
+  const { t } = useTranslation();
   const attrsToDisplay = useMemo(() => {
     if ( !entity || !entity.attributes ) {
       return [];
@@ -25,11 +27,11 @@ export const RecordDataTab: FC<TRecordDataTabProps> = ({ record, entity }) => {
   }, [ entity, record.data ]);
 
   return (
-    <Card mr="lg">
+    <Card mr="lg" className="ndCard">
       <Stack gap="md">
         {attrsToDisplay.map(( attr: IAttribute ) => (
           <Group gap="md" key={`record_attr_${attr.id}`}>
-            <Text fw="bold">{attr.name}:</Text>
+            <Text fw="bold">{t( `attributes.names.${attr.slug}` )}:</Text>
             <Text>{record.data[ attr.slug ]}</Text>
           </Group>
         ))}

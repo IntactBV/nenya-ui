@@ -26,7 +26,7 @@ export function SettingsScreen() {
         spacing={{ base: 10, sm: 'xl' }}
         verticalSpacing={{ base: 'md', sm: 'xl' }}
       >
-        <Card className={css.card}>
+        <Card className="ndCard">
           <Title>Attributes</Title>
           <Text>List of supported attributes</Text>
 
@@ -37,7 +37,7 @@ export function SettingsScreen() {
           </Group>
         </Card>
 
-        <Card className={css.card}>
+        <Card className="ndCard">
           <Title>Entities</Title>
           <Text>List of supported entities</Text>
           <Group justify="end">
@@ -47,7 +47,7 @@ export function SettingsScreen() {
           </Group>
         </Card>
 
-        <Card className={css.card}>
+        <Card className="ndCard">
           <Title>Modules</Title>
           <Text>List of supported modules</Text>
           <Group justify="end">
@@ -57,7 +57,7 @@ export function SettingsScreen() {
           </Group>
         </Card>
 
-        <Card className={css.card}>
+        <Card className="ndCard">
           <Title>Tenants</Title>
           <Text>List of application tenants</Text>
           <Group justify="end">
@@ -67,7 +67,7 @@ export function SettingsScreen() {
           </Group>
         </Card>
 
-        <Card className={css.card}>
+        <Card className="ndCard">
           <Title>Users</Title>
           <Text>List of application users</Text>
           <Group justify="end">

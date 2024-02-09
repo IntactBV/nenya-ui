@@ -66,7 +66,7 @@ export const RecordsListFilters: FC<TRecordListFiltersProps> = ({
   }
 
   return (
-    <Card>
+    <Card className="ndCard">
       <Group>
         <GoFilter size={20} />
         <Text>Filters</Text>

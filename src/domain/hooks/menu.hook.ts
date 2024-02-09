@@ -68,7 +68,7 @@ export const useNavigation = ( tenantModules: any ) => {
   const userRole = EAccountRoles.APP_ADMIN;
   // const userRole = isNil( currentUser )
   //   ? EAccountRoles.VISITOR
-  //   : JSON.parse( currentUser?.displayName )?.role || EAccountRoles.OPERATOR;
+  //   : currentUser?.role || EAccountRoles.OPERATOR;
 
   const $navData = computed(() => {
     if ( !tenantModules ) {

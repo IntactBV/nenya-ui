@@ -4,6 +4,7 @@ import { isEmpty } from 'lodash';
 import { useAppSelector } from '@uiStore/hooks';
 import { selectAccount } from '@uiStore/features/account/account.selectors';
 import { LinksGroup } from '@crmComponents/page/NavbarLinksGroup/NavbarLinksGroup';
+import { useMemo } from 'react';
 import { useNavigation } from '@/src/domain/hooks/menu.hook';
 import classes from './CrmSidebar.module.css';
 
@@ -11,7 +12,9 @@ export function CrmSidebar() {
   const account = useAppSelector( selectAccount );
   const { data: tenantModules } = useGetTenantModulesQuery( account.tenant?.tenantId );
   const navData = useNavigation( tenantModules );
-  const links = navData.value.map(( item ) => <LinksGroup {...item} key={item.label} /> );
+  const links = useMemo(() => navData.value.map(
+    ( item ) => <LinksGroup {...item} key={item.label} />
+  ), [ navData.value ]);
 
   return (
     <nav className={classes.navbar}>

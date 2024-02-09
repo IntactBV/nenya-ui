@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, useCallback, useEffect, useMemo } from 'react';
 import { Button, Group, Loader, Select, Stack, Switch, TextInput, MultiSelect } from '@mantine/core';
 import { ITenant } from '@uiDomain/domain.types';
@@ -7,8 +9,11 @@ import { isNil } from 'lodash';
 import { GoCheck } from 'react-icons/go';
 import { slugify } from '@uiDomain/domain.helpers';
 import { useCreateTenantMutation } from '@uiRepos/tenants.repo';
+import { useTranslation } from 'react-i18next';
+import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
 
 interface IAddTenantModalProps {
+  tenant?: ITenant;
   onClose: () => void
 }
 
@@ -18,13 +23,18 @@ const emptyEntity: ITenant = {
   name: '',
   description: '',
   status: true,
+  color: '',
+  logo: '',
 };
 
 export const AddTenantModal: FC<IAddTenantModalProps> = ({
+  tenant,
   onClose,
 }) => {
+  const { t } = useTranslation();
+  const editMode = useMemo(() => !isNil( tenant ), [ tenant ]);
   const form = useForm<ITenant>({
-    initialValues: emptyEntity,
+    initialValues: editMode ? emptyEntity : tenant,
   });
   const [ performCreateTenant, createState ] = useCreateTenantMutation();
 
@@ -53,59 +63,84 @@ export const AddTenantModal: FC<IAddTenantModalProps> = ({
     });
   }, [ createState ]);
 
-  return ( <Stack>
-    {!isNil( form.values ) && (
-      <form onSubmit={form.onSubmit( handleFormSubmit )}>
+  return (
+    <Stack>
+      {!isNil( form.values ) && (
+        <form onSubmit={form.onSubmit( handleFormSubmit )}>
 
-        <TextInput
-          size="sm"
-          mb="md"
-          label="Name"
-          placeholder="name"
-          {...form.getInputProps( 'name' )}
-          onBlur={( e ) => {
-            const slug = slugify( e.target.value );
+          <TextInput
+            size="sm"
+            mb="md"
+            label="Name"
+            placeholder="name"
+            {...form.getInputProps( 'name' )}
+            onBlur={( e ) => {
+              const slug = slugify( e.target.value );
 
-            form.setValues({ slug });
-          }}
-        />
+              form.setValues({ slug });
+            }}
+          />
 
-        <TextInput
-          size="sm"
-          mb="md"
-          label="Slug"
-          placeholder="slug"
-          {...form.getInputProps( 'slug' )}
-        />
+          <TextInput
+            size="sm"
+            mb="md"
+            label="Slug"
+            placeholder="slug"
+            {...form.getInputProps( 'slug' )}
+          />
 
-        <TextInput
-          size="sm"
-          mb="md"
-          label="Description"
-          placeholder="description"
-          {...form.getInputProps( 'description' )}
-        />
+          <TextInput
+            size="sm"
+            mb="md"
+            label="Description"
+            placeholder="description"
+            {...form.getInputProps( 'description' )}
+          />
 
-        <Switch
-          size="md"
-          mb="md"
-          label="Enabled"
-          checked={form.values?.status}
-          {...form.getInputProps( 'status' )}
-        />
+          <TextInput
+            size="sm"
+            mb="md"
+            label={t( 'logo' )}
+            placeholder="https://"
+            {...form.getInputProps( 'logo' )}
+          />
 
-        <Group justify="end" mt="md">
-          {( !createState.isLoading ) &&
+          <Select
+            size="sm"
+            mb="md"
+            label={t( 'color' )}
+            placeholder="color"
+            data={[
+              { value: 'red', label: 'Red' },
+              { value: 'green', label: 'Green' },
+              { value: 'blue', label: 'Blue' },
+              { value: 'violet', label: 'Violet' },
+              { value: 'orange', label: 'Orange' },
+            ]}
+            {...form.getInputProps( 'color' )}
+          />
+
+          <Switch
+            size="md"
+            mb="md"
+            label="Enabled"
+            checked={form.values?.status}
+            {...form.getInputProps( 'status' )}
+          />
+
+          <Group justify="end" mt="md">
+            {( !createState.isLoading ) &&
         <Button variant="outline" size="md" type="submit" leftSection={<GoCheck size={20} />}>
           Add Tenant
         </Button>
-          }
-          {( createState.isLoading ) &&
+            }
+            {( createState.isLoading ) &&
             <Loader size="md" />
-          }
-        </Group>
+            }
+          </Group>
 
-      </form>
-    )}
-  </Stack> );
+        </form>
+      )}
+    </Stack>
+  );
 };

@@ -17,7 +17,7 @@ export const TenantCard: FC<ITenantCardProps> = ({ tenant }) => {
   );
 
   return (
-    <Card withBorder shadow="md" p="md">
+    <Card withBorder shadow="md" p="md" className="ndCard">
       <Card.Section p="sm">
         <Group justify="space-between">
           <Group>

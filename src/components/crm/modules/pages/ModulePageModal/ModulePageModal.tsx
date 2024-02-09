@@ -11,10 +11,11 @@ import { useCreateModuleMutation, useCreateModulePageMutation, useUpdateModuleMu
 import { GoCheck } from 'react-icons/go';
 import { modals } from '@mantine/modals';
 import * as renderers from '@crmComponents/renderers';
-import { RENDERER_NAMES } from '@uiDomain/domain.constants';
+// import { RENDERER_NAMES } from '@uiDomain/domain.constants';
 import { useParams } from 'next/navigation';
 import { useAppSelector } from '@uiStore/hooks';
-import { t } from 'i18next';
+import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
+import { useTranslation } from 'react-i18next';
 
 type TModulePage = {
   id: string;
@@ -56,6 +57,7 @@ export const ModulePageModal: FC<TModulePageModalProps> = ({
   page,
   // onClose,
 }) => {
+  const { t } = useTranslation();
   const { moduleSlug } = useParams();
   const form = useForm<TModulePage>({
     initialValues: isNil( page ) ? emptyEntity : {
@@ -76,6 +78,12 @@ export const ModulePageModal: FC<TModulePageModalProps> = ({
       value: item.id,
       label: item.name,
     })) || [], [ entities ]);
+
+  const renderersOptions = useMemo(() =>
+    Object.keys( renderers ).map(( key: string ) => ({
+      label: t( `renderers.list.${key}` ),
+      value: key,
+    })), []);
 
   const handleFormSubmit = useCallback( async( data: TModulePage ) => {
     // const result: any = null;
@@ -140,10 +148,7 @@ export const ModulePageModal: FC<TModulePageModalProps> = ({
 
           <Select
             mb="md"
-            data={Object.keys( renderers ).map(( key: string ) => ({
-              label: RENDERER_NAMES[ key ],
-              value: key,
-            }))}
+            data={renderersOptions}
             placeholder="Page type"
             label="Page type"
             {...form.getInputProps( 'pageType' )}
@@ -167,7 +172,7 @@ export const ModulePageModal: FC<TModulePageModalProps> = ({
             placeholder="icon"
             {...form.getInputProps( 'icon' )}
             onBlur={( e ) => {
-              const newIconType = e.target.value.substring( 0, 2 ).toLowerCase();
+              const newIconType = e.target.value.substring( 0, 2 )?.toLowerCase() || '';
               console.log( newIconType );
               if ( isEmpty( form.values.iconType ) || form.values.iconType !== newIconType ) {
                 form.setValues({

@@ -54,8 +54,7 @@ export const RecordDetailsTabs: FC<TRecordListFiltersProps> = ({
   return (
     <div className={css.wrapper}>
       <Tabs
-        color="violet"
-        variant="outline"
+        variant="default"
         value={activeTab}
         onChange={setActiveTab}
         pl="lg"

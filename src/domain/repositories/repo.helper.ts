@@ -6,6 +6,7 @@ export const prepareHeaders = async( headers: Headers, { getState }: {
     getState: () => any
 }) => {
   const accessToken = await auth.currentUser.getIdToken();
+  const { account } = getState();
 
   if ( isEmpty( accessToken )) {
     console.warn( '[prepareHeaders] No access token found!' );
@@ -13,6 +14,9 @@ export const prepareHeaders = async( headers: Headers, { getState }: {
   }
 
   headers.set( 'authorization', `Bearer ${accessToken}` );
+  headers.set( 'Content-Type', 'application/json' );
+  headers.set( 'Accept', 'application/json' );
+  headers.set( 'X-Tenant', account.tenant.tenantSlug );
 
   return headers;
 };

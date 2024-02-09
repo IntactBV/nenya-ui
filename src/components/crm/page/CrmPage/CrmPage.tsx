@@ -1,6 +1,6 @@
 'use client';
 
-import { AppShell, Avatar, Burger, Drawer, Group } from '@mantine/core';
+import { AppShell, Avatar, Badge, Burger, Drawer, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { FC, PropsWithChildren, useEffect } from 'react';
 import { CrmLogo } from '@uiComponents/crm/page/CrmLogo';
@@ -62,8 +62,12 @@ export const CrmPage: FC<PropsWithChildren> = ({
             <CrmLogo sub={storeAccount.tenant.role} />
           </Group>
           <Group mr="lg">
-            <Avatar onClick={toggleDrawer}>
-              00
+            <Badge variant="dot">
+              {storeAccount.tenant.role}
+            </Badge>
+
+            <Avatar onClick={toggleDrawer} color="#f99000">
+              {storeAccount.user?.displayName?.split( ' ' ).map( i => i[ 0 ]) || '00' }
             </Avatar>
           </Group>
         </Group>
@@ -71,6 +75,7 @@ export const CrmPage: FC<PropsWithChildren> = ({
 
       <AppShell.Navbar p="md">
         <CrmSidebar />
+        {/* Sidebar */}
       </AppShell.Navbar>
 
       <AppShell.Main
@@ -85,7 +90,7 @@ export const CrmPage: FC<PropsWithChildren> = ({
 
       {/* <Notifications color="orange" /> */}
       <Drawer
-        title="User Drawer"
+        title={storeAccount.user?.displayName}
         position="right"
         opened={drawerOpened}
         onClose={toggleDrawer}

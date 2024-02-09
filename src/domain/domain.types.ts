@@ -15,8 +15,9 @@ export interface IAttribute {
   showInList?: boolean;
   relation?: boolean;
   order?: number;
-  entityAttributeId?: string;
+  entityFieldId?: string;
   fieldType: EEntityFieldType;
+  label?: string;
 }
 
 export interface IEntity {
@@ -53,4 +54,6 @@ export interface ITenant {
   description?: string;
   status?: boolean;
   modules?: TOrderedItem[];
+  color?: string;
+  logo?: string;
 }

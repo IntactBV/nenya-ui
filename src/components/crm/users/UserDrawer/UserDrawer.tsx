@@ -48,7 +48,6 @@ export const UserDrawer: FC<TUserDrawerProps> = ({
 
       <Group justify="space-between" style={{ width: '100%' }}>
         <Text>{t( 'organization.singular' )}</Text>
-        <CommonDebugger data={account} field="acc" />
         <Select
           placeholder="Select language"
           data={account.tenantAccounts.map( ta => ({

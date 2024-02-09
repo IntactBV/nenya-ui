@@ -1,9 +1,12 @@
+'use client';
+
+import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ActionIcon, Badge, Group, ScrollArea, Table, Text, Tooltip } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { IAttribute } from '@uiDomain/domain.types';
 import { useDeleteAttributeMutation } from '@uiRepos/attributes.repo';
-import { FC } from 'react';
 import { GoPencil, GoGitCommit, GoTrash, GoCheck } from 'react-icons/go';
 import { AttributeModal } from '../AttributeModal/AttributeModal';
 
@@ -11,13 +14,13 @@ interface IAttributesListProps {
   attributes: any[];
 }
 export const AttributesList: FC<IAttributesListProps> = ({ attributes }) => {
+  const { t } = useTranslation();
   const [ performDeleteAttribute, deleteState ] = useDeleteAttributeMutation();
 
   const handleEditClick = ( attribute: IAttribute ) => () => {
-    console.log( 'Edit', attribute );
     modals.open({
       id: 'attrModal',
-      title: 'Edit attribute',
+      title: `${t( 'edit' )} ${t( 'attribute' )}`,
       children: (
         <AttributeModal
           editMode
@@ -32,19 +35,19 @@ export const AttributesList: FC<IAttributesListProps> = ({ attributes }) => {
 
   const handleDeleteClick = ( item: IAttribute ) => () => {
     modals.openConfirmModal({
-      title: 'Attributes manager',
+      title: t( 'attributes.manager' ),
       children: (
         <Text size="sm">
                     Please confirm that you want to remove attribute <b>{item.name}</b>
         </Text>
       ),
-      labels: { confirm: 'Confirm', cancel: 'Cancel' },
+      labels: { confirm: t( 'confirm' ), cancel: t( 'cancel' ) },
       // onCancel: () => console.log( 'Cancel' ),
       onConfirm: async() => {
         try {
           await performDeleteAttribute({ id: item.id });
           notifications.show({
-            title: 'Attributes manger',
+            title: t( 'attributes.manager' ),
             message: `The attribute "${item.name}" has been removed.`,
             withCloseButton: true,
             color: 'orange',
@@ -54,7 +57,7 @@ export const AttributesList: FC<IAttributesListProps> = ({ attributes }) => {
           });
         } catch ( e: any ) {
           notifications.show({
-            title: 'Attributes manger',
+            title: t( 'attributes.manager' ),
             message: `Could not remove attribute "${item.name}".`,
             withCloseButton: true,
             color: 'red',
@@ -74,20 +77,22 @@ export const AttributesList: FC<IAttributesListProps> = ({ attributes }) => {
           <GoGitCommit size={32} />
           <div>
             <Text fz="sm" fw={500}>
-              {item.name}
+              {t( `attributes.names.${item.slug}` )}
             </Text>
-            <Text fz="xs" c="dimmed">
-              {item.description}
-            </Text>
+            <Badge size="xs">
+              {item.slug}
+            </Badge>
           </div>
         </Group>
       </Table.Td>
 
       <Table.Td width={150} align="center">
         {/* <Select data={attributeTypes} defaultValue={item.type} variant="unstyled" /> */}
-        {item.type}
+        <Badge variant="outline">
+          {t( `attributes.types.${item.type}` )}
+        </Badge>
       </Table.Td>
-      <Table.Td align="center">{JSON.stringify( item.options )}</Table.Td>
+      {/* <Table.Td align="center"></Table.Td> */}
       <Table.Td width={150}>
         {item.status ? (
           <Badge fullWidth>Active</Badge>
@@ -119,9 +124,9 @@ export const AttributesList: FC<IAttributesListProps> = ({ attributes }) => {
       <Table miw={800} verticalSpacing="md" stickyHeader>
         <Table.Thead>
           <Table.Tr>
-            <th>Attribute</th>
+            <th>{t()}</th>
             <th style={{ textAlign: 'center' }}>Type</th>
-            <th style={{ textAlign: 'center' }}>Options</th>
+            {/* <th style={{ textAlign: 'center' }}>Options</th> */}
             <th style={{ textAlign: 'center' }}>Status</th>
             <th style={{ textAlign: 'center' }}>Actions</th>
           </Table.Tr>

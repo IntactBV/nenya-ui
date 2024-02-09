@@ -43,7 +43,7 @@ export const LinkEntityForm: FC<TAddEntityAttributeFormProps> =
     };
 
     return (
-      <Card radius="md" withBorder padding={20}>
+      <Card radius="md" withBorder padding={20} className="ndCard">
         <Group justify="space-between">
           <Group>
             <Select

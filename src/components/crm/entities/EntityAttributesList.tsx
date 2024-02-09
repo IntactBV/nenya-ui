@@ -1,12 +1,13 @@
 import { Button, Group, Stack, Title } from '@mantine/core';
 import { TEntityAttributeBaseProps } from '@uiDomain/types';
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { GoPlus } from 'react-icons/go';
 import { IAttribute } from '@uiDomain/domain.types';
-import { useAssignAttributeToEntityMutation, useRemoveEntityAttributeMutation, useUpdateEntityAttributesOrdersMutation } from '@uiRepos/entities.repo';
-import { isEmpty, sortBy } from 'lodash';
+import { useAssignAttributeToEntityMutation, useRemoveEntityAttributeMutation, useUpdateAttributeOfEntityMutation, useUpdateEntityAttributesOrdersMutation } from '@uiRepos/entities.repo';
+import { isEmpty, isNil, sortBy } from 'lodash';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { useListState } from '@mantine/hooks';
+import { useTranslation } from 'react-i18next';
 import { EntityAttributeCard } from './EntityAttributeCard';
 import { AddEntityAttributeForm } from './AddEntityAttributeForm';
 
@@ -23,12 +24,15 @@ type TEntityAttributesListProps = {
 };
 
 export const EntityAttributesList: FC<TEntityAttributesListProps> = ({ entityDetails }) => {
+  const { t } = useTranslation();
   const [ showAddForm, setShowAddForm ] = useState( false );
+  const [ fieldToEdit, setFieldToEdit ] = useState<any>( null );
   const [ performRemoveAttribute ] = useRemoveEntityAttributeMutation();
   const [ performAssignAttributeToEntity ] = useAssignAttributeToEntityMutation();
   const [ performUpdateOrders ] = useUpdateEntityAttributesOrdersMutation();
+  const [ performUpdateField ] = useUpdateAttributeOfEntityMutation();
   const [ state, handlers ] = useListState( sortBy( entityDetails.attributes.map( item => ({
-    entityAttributeId: item.entityAttributeId,
+    entityFieldId: item.entityFieldId,
     order: item.order,
   })), 'order' ));
   const [ isInitialize, setInitialized ] = useState( false );
@@ -40,7 +44,7 @@ export const EntityAttributesList: FC<TEntityAttributesListProps> = ({ entityDet
 
     performRemoveAttribute({
       idEntity: entityDetails.id,
-      idAttribute: attribute.entityAttributeId,
+      idAttribute: attribute.entityFieldId,
     });
   };
 
@@ -48,36 +52,40 @@ export const EntityAttributesList: FC<TEntityAttributesListProps> = ({ entityDet
     setShowAddForm( true );
   };
 
+  const handleEditField = useCallback(( attribute: any ) => () => {
+    setFieldToEdit( attribute );
+  }, []);
+
   useEffect(() => {
     if ( isEmpty( state )) {
       setShowAddForm( true );
     }
   }, []);
 
-  useEffect(() => {
-    if ( !isInitialize ) {
-      setInitialized( true );
-      return;
-    }
+  // useEffect(() => {
+  //   if ( !isInitialize ) {
+  //     setInitialized( true );
+  //     return;
+  //   }
 
-    const newOrder = state.map(( item, index ) => ({
-      entityAttributeId: item?.entityAttributeId,
-      order: ( index + 1 ) * 10,
-    }));
+  //   const newOrder = state.map(( item, index ) => ({
+  //     entityFieldId: item?.entityFieldId,
+  //     order: ( index + 1 ) * 10,
+  //   }));
 
-    state.forEach(( item, index ) => handlers.setItem( index, {
-      ...item,
-      order: ( index + 1 ) * 10,
-    }));
+  //   state.forEach(( item, index ) => handlers.setItem( index, {
+  //     ...item,
+  //     order: ( index + 1 ) * 10,
+  //   }));
 
-    setInitialized( false );
-    performUpdateOrders( newOrder );
-  }, [ state ]);
+  //   setInitialized( false );
+  //   performUpdateOrders( newOrder );
+  // }, [ state ]);
 
   return (
     <Stack gap="md">
       <Title order={3}>
-        Attributes
+        {t( 'attributes.plural' )}
       </Title>
 
       <DragDropContext
@@ -91,12 +99,36 @@ export const EntityAttributesList: FC<TEntityAttributesListProps> = ({ entityDet
           {( provided ) => (
             <Stack {...provided.droppableProps} ref={provided.innerRef} gap="lg">
               {entityDetails.attributes.map(( attribute: IAttribute, index: number ) => (
-                <EntityAttributeCard
-                  key={attribute.id}
-                  index={index}
-                  attribute={attribute}
-                  onRemove={handleRemoveAttribute( attribute )}
-                />
+                <div key={`x${index}`}>
+                  {( fieldToEdit && fieldToEdit.id === attribute.id ) && (
+                    <AddEntityAttributeForm
+                      onSubmit={async( params: TEntityAttributeBaseProps ) => {
+                        const enhancedParams = {
+                          ...params,
+                          entityId: entityDetails.id,
+                          order: ( state.length + 1 ) * 10,
+                        };
+
+                        await performUpdateField( enhancedParams );
+                        setFieldToEdit( null );
+                      }}
+                      onCancel={() => {
+                        setFieldToEdit( null );
+                      }}
+                      attribute={{ ...attribute }}
+                    />
+                  )}
+                  {( !fieldToEdit || fieldToEdit.id !== attribute.id ) && (
+                    <EntityAttributeCard
+                      key={attribute.id}
+                      index={index}
+                      attribute={attribute}
+                      onRemove={handleRemoveAttribute( attribute )}
+                      onEdit={handleEditField( attribute )}
+                      disableEdit={!isNil( fieldToEdit )}
+                    />
+                  )}
+                </div>
               ))}
               {provided.placeholder}
             </Stack>

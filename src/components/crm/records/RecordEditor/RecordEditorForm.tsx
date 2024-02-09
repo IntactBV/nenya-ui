@@ -36,7 +36,8 @@ export const RecordEditorForm: FC<TRecordEditorFormProps> = ({
   const formControls = useMemo(() => attributes.filter(( attr: TEntityAttribute ) => attr.relation )
     .map(( attr: TEntityAttribute ) => {
       const rendererName = `${capitalize( attr.type || 'entity' )}Renderer`;
-      const AttributeRenderer: any = ( formRenderers as Record<string, any> )[ rendererName ];
+      const AttributeRenderer: any = ( formRenderers as Record<string, any> )[ rendererName ]
+        || formRenderers.TextRenderer;
 
       if ( attr.slug === 'avatar' ) {
         return null;

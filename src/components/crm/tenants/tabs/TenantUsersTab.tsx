@@ -58,7 +58,6 @@ export const TenantUsersTab: FC = () => {
           {t( 'user.add' )}
         </Button>
       </Group>
-      Tenant users {JSON.stringify( params )}
       {/* <CommonDebugger data={tenantUsers} field="tenant users" /> */}
 
       <SimpleGrid

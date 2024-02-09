@@ -7,7 +7,7 @@ import { isEmpty, isNil } from 'lodash';
 import * as CI from 'react-icons/ci';
 import { notifications } from '@mantine/notifications';
 import { useDeleteModulePageMutation } from '@uiRepos/modules.repo';
-import { RENDERER_NAMES } from '@uiDomain/domain.constants';
+import { useTranslation } from 'react-i18next';
 import { ModulePageModal } from '../ModulePageModal/ModulePageModal';
 
 type TModulePagesListProps = {
@@ -23,6 +23,7 @@ IconsData.CI = CI;
 // }
 
 export const ModulePagesList: FC<TModulePagesListProps> = ({ moduleId, pages }) => {
+  const { t } = useTranslation();
   const [ performDeleteModulePage ] = useDeleteModulePageMutation();
   const handleEditClick = ( page: any ) => () => {
     modals.open({
@@ -120,7 +121,7 @@ export const ModulePagesList: FC<TModulePagesListProps> = ({ moduleId, pages }) 
                   { page.description }
                 </TableTd>
                 <TableTd>
-                  {isNil( RENDERER_NAMES ) ? 'unknown' : RENDERER_NAMES[ page.pageType ]}
+                  { t( `renderers.list.${page.pageType}` ) }
                 </TableTd>
                 <TableTd>
                   { page.status.toString() }

@@ -3,11 +3,12 @@ import React from 'react';
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 import StoreProvider from '@uiDomain/contexts/StoreProvider';
 import { AuthProvider } from '@uiDomain/contexts/AuthProvider';
-import { theme } from '../../theme';
+import { theme } from '@uiDomain/themes/theme-orange';
 import '../../assets/scss/style.scss';
 
 import { dir } from 'i18next';
 import { languages } from '@uiDomain/i18n/settings';
+import { ThemeProvider } from '@uiDomain/contexts/ThemeProvider';
 
 export const metadata = {
   title: 'Nenya Digital',
@@ -30,13 +31,13 @@ export default function RootLayout({ children, params: { lng } }: { children: an
         />
       </head>
       <body>
-        <MantineProvider theme={theme} defaultColorScheme="dark">
-          <AuthProvider>
-            <StoreProvider>
+        <AuthProvider>
+          <StoreProvider>
+            <ThemeProvider>
               {children}
-            </StoreProvider>
-          </AuthProvider>
-        </MantineProvider>
+            </ThemeProvider>
+          </StoreProvider>
+        </AuthProvider>
       </body>
     </html>
   );

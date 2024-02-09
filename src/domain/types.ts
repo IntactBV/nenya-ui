@@ -55,6 +55,7 @@ export type TRendererProps = {
 export enum EEntityFieldType {
   'Attribute' = 1,
   'Entity' = 2,
+  'Derived' = 3,
 }
 
 export type TEntityAttributeBaseProps = {
@@ -62,4 +63,5 @@ export type TEntityAttributeBaseProps = {
   entityId?: string,
   type: EEntityFieldType,
   relation: boolean,
+  label: string;
 };

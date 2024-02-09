@@ -8,7 +8,6 @@ import { ActionIcon, Badge, Card, Group, Loader, Stack, Text, Title } from '@man
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { useDeleteUserMutation } from '@uiRepos/users.repo';
-import css from '@uiComponents/common/Card.module.css';
 
 type TUserCardProps = {
   user: any;
@@ -62,12 +61,11 @@ export const UserCard: FC<TUserCardProps> = ({
   };
 
   return (
-    <Card style={{ opacity: deleteStatus.isLoading ? 0.4 : 1 }} className={css.card}>
+    <Card style={{ opacity: deleteStatus.isLoading ? 0.4 : 1 }} className="ndCard">
       <Stack>
         <Group justify="space-between" align="start">
           <Stack gap="xs">
             <Title order={4}>{user.name}</Title>
-            <Text>{user.uid}</Text>
             {!isEmpty( user.role ) && (
               <Badge
                 radius="xl"
@@ -82,7 +80,7 @@ export const UserCard: FC<TUserCardProps> = ({
           {!deleteStatus.isLoading && (
             <Stack>
 
-              <Group gap="xs" className={css.actions}>
+              <Group gap="xs" className="ndActions">
                 {showEdit && (
                   <ActionIcon
                     variant="subtle"

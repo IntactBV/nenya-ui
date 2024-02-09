@@ -223,7 +223,7 @@ export const ModuleModal: FC<IModuleModalProps> = ({
             <Loader size="md" />
             }
           </Group>
-          <pre>{JSON.stringify( module, null, 2 )}</pre>
+          {/* <pre>{JSON.stringify( module, null, 2 )}</pre> */}
         </form>
       )}
     </Stack>

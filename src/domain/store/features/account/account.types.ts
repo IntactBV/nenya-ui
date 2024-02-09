@@ -27,6 +27,8 @@ export type TAccountTenant = {
   tenantName?: string;
   role: string;
   avatar?: string;
+  logo?: string;
+  color?: string;
 };
 export interface AccountState {
   user: IUserImpl

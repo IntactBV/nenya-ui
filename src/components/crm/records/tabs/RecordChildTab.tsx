@@ -1,14 +1,14 @@
 import { Button, Card, Drawer, Group, Stack, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
 import { NoData } from '@uiComponents/common/NoData';
-import { IEntity } from '@uiDomain/domain.types';
 import { EEntityFieldType, TEntityAttribute } from '@uiDomain/types';
 import { isEmpty, isNil } from 'lodash';
-import { FC, useMemo, useState } from 'react';
+import { FC, useState } from 'react';
 import { useAddChildRecordMutation } from '@uiRepos/records.repo';
 import { useGetEntityDetailsQuery } from '@uiRepos/entities.repo';
 import { GoPlus } from 'react-icons/go';
+import { useTranslation } from 'react-i18next';
+import { EntityFieldRenderer } from '@crmComponents/renderers/fields';
 import { RecordEditor } from '../RecordEditor/RecordEditor';
 import css from '../../renderers/list/BaseTableListRenderer/BaseTableListRenderer.module.css';
 
@@ -18,6 +18,7 @@ type TRecordChildTabProps = {
 };
 
 export const RecordChildTab: FC<TRecordChildTabProps> = ({ record, attribute }) => {
+  const { t } = useTranslation();
   const [ showDrawer, { toggle: toggleDrawer, close: closeDrawer } ] = useDisclosure( false );
   const [ selectedRecord, setSelectedRecord ] = useState<any>( null );
   const [ performAddChildRecord, addChildStatus ] = useAddChildRecordMutation();
@@ -50,7 +51,7 @@ export const RecordChildTab: FC<TRecordChildTabProps> = ({ record, attribute }) 
       {!isNil( record?.data ) && !isEmpty( record.data[ attribute.slug ]) && (
         <Stack>
           <Group justify="space-between" mr="lg">
-            <Title>Activities</Title>
+            <Title>{t( 'records' )}</Title>
             <Button
               variant="outline"
               leftSection={<GoPlus />}
@@ -59,12 +60,24 @@ export const RecordChildTab: FC<TRecordChildTabProps> = ({ record, attribute }) 
             </Button>
           </Group>
           {record.data[ attribute.slug ].map(( childRecord: any, index:number ) => (
-            <Card key={`${attribute.slug}_card_${index}`} mr="lg">
+            <Card key={`${attribute.slug}_card_${index}`} mr="lg" className="ndCard">
               <Stack gap="md">
                 {entityDetails?.attributes?.map(( attr: any ) => (
                   <Group gap="sm" key={`content_${index}_${attr.id}`}>
-                    <Text fw="bold">{attr.name}</Text>
-                    <Text>{childRecord[ attr.slug ]}</Text>
+                    <Text fw="bold">{t( `${
+                      attr.fieldType === EEntityFieldType.Attribute
+                        ? 'attributes'
+                        : 'entities'
+                    }.names.${attr.slug}` )}
+                    </Text>
+                    {attr.fieldType === EEntityFieldType.Attribute && (
+                      <Text>
+                        {childRecord[ attr.slug ]}
+                      </Text>
+                    )}
+                    {attr.fieldType === EEntityFieldType.Entity && (
+                      <EntityFieldRenderer field={childRecord[ attr.slug ]} />
+                    )}
                   </Group>
                 ))}
               </Stack>

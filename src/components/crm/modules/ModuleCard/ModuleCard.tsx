@@ -45,6 +45,7 @@ export const ModuleCard: FC<IModuleCardProps> = ({ module, onEdit, onDelete }) =
       style={{
         opacity: module.status ? 1 : 0.3,
       }}
+      className="ndCard"
     >
       <Card.Section p="sm">
         <Group justify="space-between">

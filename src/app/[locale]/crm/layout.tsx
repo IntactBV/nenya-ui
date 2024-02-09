@@ -30,7 +30,7 @@ const CrmLayout: FC<{
          {children}
        </CrmPage>
 
-       <Notifications color="orange" />
+       <Notifications />
 
      </LocaleProvider>
    );

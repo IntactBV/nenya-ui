@@ -7,12 +7,9 @@ interface ITenantEntityModalProps {
 }
 
 export const TenantEntityModal: FC<ITenantEntityModalProps> = ({
-  entity
-}) => {
-  return (
-    <Stack>
-      123
-      <pre>{JSON.stringify( entity, null, 2 )}</pre>
-    </Stack>
-  );
-}
+  entity,
+}) => (
+  <Stack>
+    {/* <pre>{JSON.stringify( entity, null, 2 )}</pre> */}
+  </Stack>
+);

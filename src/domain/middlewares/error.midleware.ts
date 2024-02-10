@@ -5,7 +5,9 @@ import { accountLogout } from '@uiStore/features/account/account.slice';
 /**
  * Log a warning and show a toast!
  */
-export const rtkQueryErrorLogger: Middleware = ( api: MiddlewareAPI ) => ( next ) => ( action ) => {
+export const rtkQueryErrorLogger: Middleware = (
+  api: MiddlewareAPI
+) => ( next ) => ( action: any ) => {
   if ( isRejectedWithValue( action )) {
     console.warn( 'We got a rejected action!', action );
     if ( action.payload?.status === 403 ) {

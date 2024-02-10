@@ -148,7 +148,11 @@
         "attributes": {
           "title": "Atribute",
           "description": "Atributele sunt folosite pentru a configura entitatile aplicatiei.",
-          "button": "Gestionați atributele"
+          "button": "Gestionați atributele",
+          "name": "Denumire",
+          "type": "Tip atribut",
+          "status": "Status",
+          "actions": "Acțiuni"
         },
         "entities": {
           "title": "Entități",

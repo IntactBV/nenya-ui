@@ -48,6 +48,7 @@
     "theme",
     "records",
     "entities",
-    "i18n"
+    "i18n",
+    "realms"
   ]
 }

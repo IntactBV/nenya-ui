@@ -50,7 +50,7 @@ export const UserDrawer: FC<TUserDrawerProps> = ({
         <Text>{t( 'organization.singular' )}</Text>
         <Select
           placeholder="Select language"
-          data={account.tenantAccounts.map( ta => ({
+          data={account.tenantAccounts?.map( ta => ({
             value: ta.tenantId,
             label: ta.tenantName,
           }))}

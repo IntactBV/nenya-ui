@@ -7,6 +7,8 @@
     "add": "Adaugă",
     "edit": "Editează",
     "delete": "Șterge",
+    "cancel": "Anulează",
+    "confirm": "Confirmă",
     "add_user": "Adaugă utilizator",
     "edit_user": "Editează utilizator"
   },
@@ -134,6 +136,91 @@
       "BaseTableListRenderer": "Listă cu tabel",
       "BaseDebuggerListRenderer": "Listă depanare",
       "ProjectsListRenderer": "Listă proiecte"
+    }
+  },
+  "app": {
+    "settings": {
+      "admin": {
+        "overview": "Vizualizare generală",
+        "title": "Setarile aplicatiei",
+        "description": "Setarile aplicatiei sunt folosite pentru a configura aplicatia in modul dorit de administratorul acesteia.",
+        "desc_en": "This is the place where admin can manage application structure",
+        "attributes": {
+          "title": "Atribute",
+          "description": "Atributele sunt folosite pentru a configura entitatile aplicatiei.",
+          "button": "Gestionați atributele",
+          "name": "Denumire",
+          "type": "Tip atribut",
+          "status": "Status",
+          "actions": "Acțiuni"
+        },
+        "entities": {
+          "title": "Entități",
+          "description": "Entitatile sunt folosite pentru a configura modulele aplicatiei.",
+          "button": "Gestionați entitățile"
+        },
+        "modules": {
+          "title": "Module",
+          "description": "Modulele sunt folosite pentru a configura aplicatia finala.",
+          "button": "Gestionați modulele"
+        },
+        "tenants": {
+          "title": "Clienți",
+          "description": "Clienții sunt folosiți pentru a configura utilizatorii aplicatiei.",
+          "button": "Gestionați clienții"
+        },
+        "realms": {
+          "title": "Aplicații",
+          "description": "Aplicațiile sunt folosite pentru livra modulele sub diferite forme.",
+          "button": "Gestionați aplicațiile",
+          "btnAdd": "Adaugă aplicație",
+          "btnEdit": "Modifică aplicație",
+          "menu": {
+            "details": "Detalii",
+            "edit": "Editează",
+            "delete": "Șterge",
+            "disable": "Dezactivează"
+          },
+          "noData": {
+            "title": "Nu există aplicații",
+            "description": "Nu există aplicații definite in acest moment."
+          },
+          "modalAdd": {
+            "title": "Adăugare aplicație",
+            "name": "Denumire",
+            "slug": "Prescurtare",
+            "description": "Descriere",
+            "server": "Server",
+            "enabled": "Activ"
+          },
+          "modalEdit": {
+            "title": "Modificare aplicație"
+          },
+          "notifications": {
+            "title": "Administrație aplicații",
+            "add": "Aplicația a fost adăugată cu succes.",
+            "edit": "Aplicația a fost modificată cu succes.",
+            "deleted": "Aplicația a fost ștearsă cu succes.",
+            "deletedError": "Aplicația nu a putut fi ștearsă.",
+            "disable": "Aplicația a fost dezactivată cu succes.",
+            "confirmDelete": "Sunteți sigur că doriți să ștergeți această aplicație?"
+          }
+        },
+        "users": {
+          "title": "Utilizatori",
+          "description": "Utilizatorii sunt folosiți pentru a configura accesul la aplicatie.",
+          "button": "Gestionați utilizatorii",
+          "noData": {
+            "title": "Nu există utilizatori",
+            "description": "Nu există utilizatori în această aplicație."
+          }
+        },
+        "reports": {
+          "title": "Rapoarte",
+          "description": "Rapoartele sunt folosite pentru vizualizarea datelor.",
+          "button": "Vizualizați rapoartele"
+        }
+      }
     }
   },
   "role": "Rol",

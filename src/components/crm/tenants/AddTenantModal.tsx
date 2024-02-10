@@ -11,6 +11,7 @@ import { slugify } from '@uiDomain/domain.helpers';
 import { useCreateTenantMutation } from '@uiRepos/tenants.repo';
 import { useTranslation } from 'react-i18next';
 import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
+import { useGetAllRealmsQuery } from '@uiRepos/realms.repo';
 
 interface IAddTenantModalProps {
   tenant?: ITenant;
@@ -25,6 +26,7 @@ const emptyEntity: ITenant = {
   status: true,
   color: '',
   logo: '',
+  realm: '',
 };
 
 export const AddTenantModal: FC<IAddTenantModalProps> = ({
@@ -36,10 +38,10 @@ export const AddTenantModal: FC<IAddTenantModalProps> = ({
   const form = useForm<ITenant>({
     initialValues: editMode ? emptyEntity : tenant,
   });
+  const { data: realms, isLoading: realmsLoading } = useGetAllRealmsQuery();
   const [ performCreateTenant, createState ] = useCreateTenantMutation();
 
   const handleFormSubmit = useCallback( async( data: ITenant ) => {
-    console.log( data );
     try {
       delete data?.id;
       await performCreateTenant( data );
@@ -51,7 +53,6 @@ export const AddTenantModal: FC<IAddTenantModalProps> = ({
 
   useEffect(() => {
     if ( createState.isUninitialized || createState.status !== 'fulfilled' ) {
-      console.log( 'out', createState.status );
       return;
     }
     notifications.show({
@@ -67,6 +68,20 @@ export const AddTenantModal: FC<IAddTenantModalProps> = ({
     <Stack>
       {!isNil( form.values ) && (
         <form onSubmit={form.onSubmit( handleFormSubmit )}>
+
+          {realmsLoading && <Loader size="md" />}
+          {!realmsLoading && (
+            <Select
+              mb="md"
+              data={realms.map(( m:any ) => ({
+                label: m.name,
+                value: m.id,
+              }))}
+              placeholder="Realm"
+              label="Realm"
+              {...form.getInputProps( 'realm' )}
+            />
+          )}
 
           <TextInput
             size="sm"

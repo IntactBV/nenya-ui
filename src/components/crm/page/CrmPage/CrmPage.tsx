@@ -14,11 +14,13 @@ import { useRouter } from 'next/navigation';
 import { isNil } from 'lodash';
 import { UserDrawer } from '@crmComponents/users/UserDrawer/UserDrawer';
 import { accountLogout } from '@uiStore/features/account/account.slice';
+import { useTranslation } from 'react-i18next';
 import css from './CrmPage.module.css';
 
 export const CrmPage: FC<PropsWithChildren> = ({
   children,
 }) => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [ mobileOpened, { toggle: toggleMobile } ] = useDisclosure( false );
   const [ desktopOpened, { toggle: toggleDesktop } ] = useDisclosure( true );
@@ -42,6 +44,10 @@ export const CrmPage: FC<PropsWithChildren> = ({
       performLogout();
     }
   }, [ storeAccount.email ]);
+
+  if ( !storeAccount.tenant ) {
+    return null;
+  }
 
   return (
 

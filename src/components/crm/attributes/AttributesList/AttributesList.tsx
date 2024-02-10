@@ -124,11 +124,11 @@ export const AttributesList: FC<IAttributesListProps> = ({ attributes }) => {
       <Table miw={800} verticalSpacing="md" stickyHeader>
         <Table.Thead>
           <Table.Tr>
-            <th>{t()}</th>
-            <th style={{ textAlign: 'center' }}>Type</th>
+            <th>{t( 'attributes.name' )}</th>
+            <th style={{ textAlign: 'center' }}>{t( 'attributes.type' )}</th>
             {/* <th style={{ textAlign: 'center' }}>Options</th> */}
-            <th style={{ textAlign: 'center' }}>Status</th>
-            <th style={{ textAlign: 'center' }}>Actions</th>
+            <th style={{ textAlign: 'center' }}>{t( 'attributes.status' )}</th>
+            <th style={{ textAlign: 'center' }}>{t( 'attributes.actions' )}</th>
           </Table.Tr>
         </Table.Thead>
         <tbody>{rows}</tbody>

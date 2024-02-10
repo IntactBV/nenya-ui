@@ -4,21 +4,24 @@ import { Title, Text, Stack, SimpleGrid, Card, Group, Button } from '@mantine/co
 import Link from 'next/link';
 import { useAuth } from '@uiDomain/contexts/AuthProvider';
 import css from '@uiComponents/common/Card.module.css';
+import { useTranslation } from 'react-i18next';
 import classes from './SettingsScreen.module.css';
 
 export function SettingsScreen() {
+  const { t } = useTranslation();
+
   const { currentUser } = useAuth();
 
   return (
     <Stack>
-      <Title className={classes.title} ta="center" mt={100}>
+      <Title className={classes.title} ta="center" mt={20}>
         <Text inherit variant="gradient" component="span" gradient={{ from: 'white', to: 'violet' }}>
-          Settings
+          {t( 'app.settings.admin.title' )}
         </Text>
       </Title>
 
       <Text c="dimmed" ta="center" size="lg" mx="auto" my="xl">
-        This is the place where admin can manage application structure
+        {t( 'app.settings.admin.description' )}
       </Text>
 
       <SimpleGrid
@@ -27,52 +30,72 @@ export function SettingsScreen() {
         verticalSpacing={{ base: 'md', sm: 'xl' }}
       >
         <Card className="ndCard">
-          <Title>Attributes</Title>
-          <Text>List of supported attributes</Text>
+          <Title>{t( 'app.settings.admin.attributes.title' )}</Title>
+          <Text>{t( 'app.settings.admin.attributes.description' )}</Text>
 
           <Group justify="end">
             <Link href="/crm/settings/attributes">
-              <Button variant="subtle">Manage attributes</Button>
+              <Button variant="subtle">{t( 'app.settings.admin.attributes.button' )}</Button>
             </Link>
           </Group>
         </Card>
 
         <Card className="ndCard">
-          <Title>Entities</Title>
-          <Text>List of supported entities</Text>
+          <Title>{t( 'app.settings.admin.entities.title' )}</Title>
+          <Text>{t( 'app.settings.admin.entities.description' )}</Text>
           <Group justify="end">
             <Link href="/crm/settings/entities">
-              <Button variant="subtle">Manage entities</Button>
+              <Button variant="subtle">{t( 'app.settings.admin.entities.button' )}</Button>
             </Link>
           </Group>
         </Card>
 
         <Card className="ndCard">
-          <Title>Modules</Title>
-          <Text>List of supported modules</Text>
+          <Title>{t( 'app.settings.admin.modules.title' )}</Title>
+          <Text>{t( 'app.settings.admin.modules.description' )}</Text>
           <Group justify="end">
             <Link href="/crm/settings/modules">
-              <Button variant="subtle">Manage modules</Button>
+              <Button variant="subtle">{t( 'app.settings.admin.modules.button' )}</Button>
             </Link>
           </Group>
         </Card>
 
         <Card className="ndCard">
-          <Title>Tenants</Title>
-          <Text>List of application tenants</Text>
+          <Title>{t( 'app.settings.admin.tenants.title' )}</Title>
+          <Text>{t( 'app.settings.admin.tenants.description' )}</Text>
           <Group justify="end">
             <Link href="/crm/settings/tenants">
-              <Button variant="subtle">Manage tenants</Button>
+              <Button variant="subtle">{t( 'app.settings.admin.tenants.button' )}</Button>
             </Link>
           </Group>
         </Card>
 
         <Card className="ndCard">
-          <Title>Users</Title>
-          <Text>List of application users</Text>
+          <Title>{t( 'app.settings.admin.realms.title' )}</Title>
+          <Text>{t( 'app.settings.admin.realms.description' )}</Text>
           <Group justify="end">
-            <Link href="/crm/settings/tenants">
-              <Button variant="subtle">Manage users</Button>
+            <Link href="/crm/settings/realms">
+              <Button variant="subtle">{t( 'app.settings.admin.realms.button' )}</Button>
+            </Link>
+          </Group>
+        </Card>
+
+        <Card className="ndCard">
+          <Title>{t( 'app.settings.admin.users.title' )}</Title>
+          <Text>{t( 'app.settings.admin.users.description' )}</Text>
+          <Group justify="end">
+            <Link href="/crm/settings/users">
+              <Button variant="subtle">{t( 'app.settings.admin.users.button' )}</Button>
+            </Link>
+          </Group>
+        </Card>
+
+        <Card className="ndCard">
+          <Title>{t( 'app.settings.admin.reports.title' )}</Title>
+          <Text>{t( 'app.settings.admin.reports.description' )}</Text>
+          <Group justify="end">
+            <Link href="/crm/settings/users">
+              <Button variant="subtle">{t( 'app.settings.admin.reports.button' )}</Button>
             </Link>
           </Group>
         </Card>

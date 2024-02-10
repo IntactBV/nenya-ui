@@ -56,4 +56,5 @@ export interface ITenant {
   modules?: TOrderedItem[];
   color?: string;
   logo?: string;
+  realm?: string;
 }

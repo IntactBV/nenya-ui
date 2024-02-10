@@ -65,3 +65,12 @@ export type TEntityAttributeBaseProps = {
   relation: boolean,
   label: string;
 };
+
+export type TRealm = {
+  id?: string;
+  slug: string;
+  name: string;
+  description: string;
+  server: string;
+  status: boolean;
+};

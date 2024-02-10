@@ -45,6 +45,10 @@ export const CrmPage: FC<PropsWithChildren> = ({
     }
   }, [ storeAccount.email ]);
 
+  if ( !storeAccount.tenant ) {
+    return null;
+  }
+
   return (
 
     <AppShell

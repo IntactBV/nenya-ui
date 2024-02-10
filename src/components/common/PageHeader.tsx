@@ -7,7 +7,7 @@ import { GoChevronLeft, GoPlus } from 'react-icons/go';
 
 interface IPageHeaderProps {
   title: string;
-  description: string;
+  description: string | JSX.Element;
   buttonLabel?: string;
   buttonClickHandler?: () => void;
   backButtonUrl?: string;

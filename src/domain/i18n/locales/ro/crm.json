@@ -7,6 +7,8 @@
     "add": "Adaugă",
     "edit": "Editează",
     "delete": "Șterge",
+    "cancel": "Anulează",
+    "confirm": "Confirmă",
     "add_user": "Adaugă utilizator",
     "edit_user": "Editează utilizator"
   },
@@ -166,12 +168,48 @@
         "realms": {
           "title": "Aplicații",
           "description": "Aplicațiile sunt folosite pentru livra modulele sub diferite forme.",
-          "button": "Gestionați aplicațiile"
+          "button": "Gestionați aplicațiile",
+          "btnAdd": "Adaugă aplicație",
+          "btnEdit": "Modifică aplicație",
+          "menu": {
+            "details": "Detalii",
+            "edit": "Editează",
+            "delete": "Șterge",
+            "disable": "Dezactivează"
+          },
+          "noData": {
+            "title": "Nu există aplicații",
+            "description": "Nu există aplicații definite in acest moment."
+          },
+          "modalAdd": {
+            "title": "Adăugare aplicație",
+            "name": "Denumire",
+            "slug": "Prescurtare",
+            "description": "Descriere",
+            "server": "Server",
+            "enabled": "Activ"
+          },
+          "modalEdit": {
+            "title": "Modificare aplicație"
+          },
+          "notifications": {
+            "title": "Administrație aplicații",
+            "add": "Aplicația a fost adăugată cu succes.",
+            "edit": "Aplicația a fost modificată cu succes.",
+            "deleted": "Aplicația a fost ștearsă cu succes.",
+            "deletedError": "Aplicația nu a putut fi ștearsă.",
+            "disable": "Aplicația a fost dezactivată cu succes.",
+            "confirmDelete": "Sunteți sigur că doriți să ștergeți această aplicație?"
+          }
         },
         "users": {
           "title": "Utilizatori",
           "description": "Utilizatorii sunt folosiți pentru a configura accesul la aplicatie.",
-          "button": "Gestionați utilizatorii"
+          "button": "Gestionați utilizatorii",
+          "noData": {
+            "title": "Nu există utilizatori",
+            "description": "Nu există utilizatori în această aplicație."
+          }
         },
         "reports": {
           "title": "Rapoarte",

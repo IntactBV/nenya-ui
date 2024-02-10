@@ -19,6 +19,8 @@ export interface IUserImpl {
   tenantName?: string;
   tenantSlug?: string;
   role: EAccountRoles;
+  realmSlug?: string;
+  realmId?: string;
 }
 
 export type TAccountTenant = {

@@ -36,7 +36,7 @@ export const UsersScreen = () => {
       label: tenant.name,
     }));
 
-    options.unshift({
+    options?.unshift({
       value: '',
       label: 'All',
     });

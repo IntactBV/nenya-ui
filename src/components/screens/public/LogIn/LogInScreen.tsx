@@ -47,6 +47,7 @@ export function LogInScreen() {
       setIsLoading( true );
       const loginResult = await login( acc.email, acc.password );
       const userResult = await requestUserDetails( loginResult?.user?.uid );
+      console.log( 'user result', userResult );
       const userDetails = userResult?.data;
       const userTenant = isEmpty( userDetails?.tenantAccounts )
         ? []
@@ -63,6 +64,8 @@ export function LogInScreen() {
         tenantId: userTenant.tenantId,
         tenantName: userTenant.tenantName,
         tenantSlug: userTenant.tenantSlug,
+        realmSlug: userTenant.realmSlug,
+        realmId: userTenant.realmId,
         role: userTenant.role as EAccountRoles,
         uid: loggedInUser?.uid,
       };

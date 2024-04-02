@@ -65,7 +65,10 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> = ({
       return;
     }
     const attr = attributes.find(( a: IAttribute ) => ( a.id === selectedAttributeId ));
-    setFieldLabel( t( `attributes.names.${attr?.slug}` ));
+
+    if ( isEmpty( fieldLabel ) && !isEmpty( attr?.slug )) {
+      setFieldLabel( t( `attributes.names.${attr?.slug}` ));
+    }
     // eslint-disable-next-line consistent-return
     return attr;
   }, [ selectedAttributeId ]);
@@ -77,7 +80,10 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> = ({
   const handleEntityChange = ( id: string | null ) => {
     selectEntityId( id as string );
     const entity = entities?.find(( e: IEntity ) => ( e.id === id ));
-    setFieldLabel( t( `entities.names.${entity?.slug}` ));
+
+    if ( isEmpty( fieldLabel ) && !isEmpty( entity?.slug )) {
+      setFieldLabel( t( `entities.names.${entity?.slug}` ));
+    }
   };
 
   const handleTypeChange = ( type: string | null ) => {

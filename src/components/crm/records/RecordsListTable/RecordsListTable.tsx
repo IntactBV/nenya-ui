@@ -81,7 +81,7 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
                   style={{ textAlign: attr.align || 'left' }}
                   w={attr.slug === 'avatar' ? 40 : 'auto'}
                 >
-                  {slugsToHide.includes( attr.slug ) ? '' : attr.name}
+                  {slugsToHide.includes( attr.slug ) ? '' : attr.label}
                 </Table.Th>
               ))
           }

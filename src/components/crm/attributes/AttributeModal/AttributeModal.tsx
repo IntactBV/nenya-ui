@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect } from 'react';
-import { Button, Group, Loader, Select, Stack, Switch, TextInput } from '@mantine/core';
+import { Button, Group, Loader, MultiSelect, Select, Stack, Switch, TextInput } from '@mantine/core';
 import { IAttribute } from '@uiDomain/domain.types';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
@@ -9,6 +9,8 @@ import { ATTRIBUTE_TYPES } from '@uiDomain/domain.constants';
 import { useCreateAttributeMutation, useUpdateAttributeMutation } from '@uiRepos/attributes.repo';
 import { EEntityFieldType } from '@uiDomain/types';
 import { useTranslation } from 'react-i18next';
+import { TagsSelector } from '@uiComponents/tags/TagsSelector/TagsSelector';
+import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
 
 interface IAttributeModalProps {
   editMode: boolean;
@@ -40,6 +42,7 @@ export const AttributeModal: FC<IAttributeModalProps> = ({
 
   const handleFormSubmit = useCallback( async( data: IAttribute ) => {
     try {
+      data.status = !!data.status;
       if ( editMode ) {
         await performUpdateAttribute( data );
       } else {
@@ -66,19 +69,6 @@ export const AttributeModal: FC<IAttributeModalProps> = ({
       radius: 'md',
     });
   }, [ createState.status ]);
-
-  // useEffect(() => {
-  //   if ( updateState.isUninitialized || updateState.status !== 'fulfilled' ) {
-  //     return;
-  //   }
-  //   notifications.show({
-  //     title: 'Attributes manger',
-  //     message: 'The attribute has been updated.',
-  //     withCloseButton: true,
-  //     icon: <GoCheck size={20} />,
-  //     radius: 'md',
-  //   });
-  // }, [ updateState.status ]);
 
   return (
     <Stack gap="sm">
@@ -112,6 +102,10 @@ export const AttributeModal: FC<IAttributeModalProps> = ({
             {...form.getInputProps( 'description' )}
           />
 
+          <TagsSelector
+            {...form.getInputProps( 'tags' )}
+          />
+
           <Switch size="md" label="Enabled" checked={form.values?.status} {...form.getInputProps( 'status' )} />
 
           <Group justify="right" mt="md">
@@ -128,5 +122,6 @@ export const AttributeModal: FC<IAttributeModalProps> = ({
           </Group>
         </form>
       )}
+      {/* <CommonDebugger data={form.values} field="form" /> */}
     </Stack> );
 };

@@ -1,4 +1,4 @@
-import { EntityScreen } from '@uiScreens/crm/Settings/EntitiesScreen/EntityScreen';
+import { EntityScreen } from '@crmComponents/entities/EntitiesScreen/EntityScreen';
 
 export default function CrmEntityPage({ params }: { params: any }) {
   return (

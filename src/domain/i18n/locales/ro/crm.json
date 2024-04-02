@@ -4,12 +4,12 @@
     "plural": "Limbi"
   },
   "buttons": {
-    "add": "Adaugă",
+    "add": "Adaug",
     "edit": "Editează",
     "delete": "Șterge",
     "cancel": "Anulează",
     "confirm": "Confirmă",
-    "add_user": "Adaugă utilizator",
+    "add_user": "Adaug utilizator",
     "edit_user": "Editează utilizator"
   },
   "roles": {
@@ -45,6 +45,7 @@
       "department": "Departament",
       "description": "Descriere",
       "e-mail": "E-mail",
+      "email": "E-mail",
       "name": "Denumire",
       "first-name": "Prenume",
       "last-name": "Nume",
@@ -53,13 +54,15 @@
       "localitate": "Localitate",
       "nrreg": "Nr. Reg. Com.",
       "phone": "Telefon",
+      "tel": "Telefon",
       "position": "Poziție",
       "employee": "Angajat",
       "estimate": "Estimare",
       "hours": "Ore",
       "weight-percent": "Procent pondere",
       "deadline": "Termen limită",
-      "user": "Utilizator"
+      "user": "Utilizator",
+      "persoana": "Persoană"
     },
     "types": {
       "text": "Text",
@@ -114,7 +117,7 @@
     "cards": {
       "addField": {
         "title": "Adăugare câmp",
-        "description": "Adaugă un câmp nou în entitatea curentă"
+        "description": "Adaug un câmp nou în entitatea curentă"
       },
       "editField": {
         "title": "Modificare câmp",
@@ -149,15 +152,29 @@
           "title": "Atribute",
           "description": "Atributele sunt folosite pentru a configura entitatile aplicatiei.",
           "button": "Gestionați atributele",
-          "name": "Denumire",
+          "name": "Denumire atribut",
           "type": "Tip atribut",
           "status": "Status",
-          "actions": "Acțiuni"
+          "actions": "Acțiuni",
+          "tags": "Etichete",
+          "manager": "Gestionare atribute",
+          "confirmRemove": "Sunteți sigur că doriți să ștergeți acest atribut?",
+          "btnAdd": "Adaug atribut",
+          "noData": {
+            "title": "Nu există aplicații",
+            "description": "Nu există aplicații definite in acest moment.",
+            "btnAdd": "Adaug prima entitate"
+          }
         },
         "entities": {
           "title": "Entități",
           "description": "Entitatile sunt folosite pentru a configura modulele aplicatiei.",
-          "button": "Gestionați entitățile"
+          "button": "Gestionați entitățile",
+          "btnAdd": "Adaug entitate",
+          "noData": {
+            "title": "Nu există entitiăți",
+            "description": "Nu există entități definite in acest moment."
+          }
         },
         "modules": {
           "title": "Module",
@@ -173,7 +190,7 @@
           "title": "Aplicații",
           "description": "Aplicațiile sunt folosite pentru livra modulele sub diferite forme.",
           "button": "Gestionați aplicațiile",
-          "btnAdd": "Adaugă aplicație",
+          "btnAdd": "Adaug aplicație",
           "btnEdit": "Modifică aplicație",
           "menu": {
             "details": "Detalii",
@@ -227,5 +244,9 @@
   "name": "Nume",
   "email": "E-mail",
   "password": "Parolă",
-  "records": "Înregistrări"
+  "records": "Înregistrări",
+  "tags": {
+    "singular": "Etichetă",
+    "plural": "Etichete"
+  }
 }

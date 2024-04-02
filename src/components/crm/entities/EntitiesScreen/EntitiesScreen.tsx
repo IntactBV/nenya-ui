@@ -1,23 +1,25 @@
+import { useCallback } from 'react';
+import { GoAlert } from 'react-icons/go';
 import { Loader, Stack, Text, Title } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { NoData } from '@uiComponents/common/NoData';
 import { PageHeader } from '@uiComponents/common/PageHeader';
-import { useCallback } from 'react';
-import { GoAlert } from 'react-icons/go';
-import { useGetAllAttributesQuery } from '@uiRepos/attributes.repo';
-import { AttributeModal } from '@uiComponents/crm/attributes/AttributeModal';
-import { AttributesList } from '@uiComponents/crm/attributes/AttributesList';
+import { useGetAllEntitiesQuery } from '@uiRepos/entities.repo';
+import { EntitiesList } from '@uiComponents/crm/entities/EntitiesList';
+import { EntityModal } from '@uiComponents/crm/entities/EntityModal';
 import { CommonPageLoader } from '@uiComponents/common/CommonPageLoader';
+import { useTranslation } from 'react-i18next';
 
-export const AttributesScreen = () => {
-  const { data: attributes, isLoading, error, isError } = useGetAllAttributesQuery();
+export const EntitiesScreen = () => {
+  const { t } = useTranslation();
+  const { data: entities, isLoading, error, isError } = useGetAllEntitiesQuery();
 
   const handleAddButtonClick = useCallback(( editMode = false ) => {
     modals.open({
-      id: 'attrModal',
-      title: `${editMode ? 'Edit' : 'Add'} attribute`,
+      id: 'entityModal',
+      title: `${editMode ? 'Edit' : 'Add'} entity`,
       children: (
-        <AttributeModal
+        <EntityModal
           editMode={editMode}
           onClose={() => {
             modals.closeAll();
@@ -45,24 +47,24 @@ export const AttributesScreen = () => {
 
   return (
     <>
-      {attributes?.length > 0 && (
+      {entities?.length > 0 && (
         <Stack>
           <PageHeader
-            title="Attributes"
-            description="List of attributes"
-            buttonLabel="Add attribute"
+            title={t( 'entities.plural' )}
+            description={t( 'app.settings.admin.entities.description' )}
+            buttonLabel={t( 'app.settings.admin.entities.btnAdd' )}
             buttonClickHandler={() => {
               handleAddButtonClick();
             }}
           />
-          <AttributesList attributes={attributes} />
-          {/* <CommonDebugger field="attributes" data={attributes} /> */}
+          <EntitiesList entities={entities} />
         </Stack>
       )}
-      {attributes?.length === 0 && (
+      {entities?.length === 0 && (
         <NoData
-          buttonLabel="Add the first attribute"
-          description="No attributes found"
+          title={t( 'app.settings.admin.entities.noData.title' )}
+          description={t( 'app.settings.admin.entities.noData.description' )}
+          buttonLabel={t( 'app.settings.admin.entities.noData.btnAdd' )}
           buttonClickHandler={() => {
             handleAddButtonClick();
           }}

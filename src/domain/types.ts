@@ -31,6 +31,7 @@ export type TEntityAttribute = {
   id: string;
   slug: string;
   name: string;
+  label: string;
   description: string;
   type: string;
   isMain?: boolean;
@@ -73,4 +74,8 @@ export type TRealm = {
   description: string;
   server: string;
   status: boolean;
+};
+
+export type TTag = {
+  id: string;
 };

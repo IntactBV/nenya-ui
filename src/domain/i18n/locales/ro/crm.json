@@ -171,6 +171,7 @@
           "description": "Entitatile sunt folosite pentru a configura modulele aplicatiei.",
           "button": "Gestionați entitățile",
           "btnAdd": "Adaug entitate",
+          "name": "Denumire entitate",
           "noData": {
             "title": "Nu există entitiăți",
             "description": "Nu există entități definite in acest moment."

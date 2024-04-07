@@ -186,7 +186,10 @@
         "tenants": {
           "title": "Clienți",
           "description": "Clienții sunt folosiți pentru a configura utilizatorii aplicatiei.",
-          "button": "Gestionați clienții"
+          "listDescription": "Lista de clienți ai aplicatiei.",
+          "button": "Gestionați clienții",
+          "btnAdd": "Adaug client",
+          "name": "Denumire client"
         },
         "realms": {
           "title": "Aplicații",

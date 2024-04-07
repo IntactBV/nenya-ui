@@ -101,7 +101,6 @@ export const ModulesScreen = () => {
       //   ( tag: string ) => tags.includes( tag )
       // );
       // const typeMatch = isEmpty( filterTypes ) || filterTypes.includes( type );
-      console.log( 'filterName', filterName, 'name', name, nameMatch );
 
       return nameMatch;
     });

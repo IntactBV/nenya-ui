@@ -3,7 +3,7 @@ import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { IAttribute, IEntity } from '@uiDomain/domain.types';
 import { FC } from 'react';
-import { GoPencil, GoGitCommit, GoTrash, GoCheck, GoGitBranch, GoAlert, GoEye } from 'react-icons/go';
+import { GoPencil, GoTrash, GoCheck, GoGitBranch, GoAlert, GoEye } from 'react-icons/go';
 import { useDeleteEntityMutation } from '@uiRepos/entities.repo';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';

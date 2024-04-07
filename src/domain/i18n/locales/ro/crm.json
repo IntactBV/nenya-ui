@@ -180,7 +180,8 @@
         "modules": {
           "title": "Module",
           "description": "Modulele sunt folosite pentru a configura aplicatia finala.",
-          "button": "Gestionați modulele"
+          "button": "Gestionați modulele",
+          "name": "Denumire modul"
         },
         "tenants": {
           "title": "Clienți",

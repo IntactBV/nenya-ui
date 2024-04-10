@@ -42,7 +42,7 @@ export const EntityRenderer: FC<TFormRendererProps> = ({ attribute, props, form 
         data={options}
         {...props}
       />
-      <pre>{JSON.stringify( attribute, null, 2 )}</pre>
+      {/* <pre>{JSON.stringify( attribute, null, 2 )}</pre> */}
     </>
   );
 };

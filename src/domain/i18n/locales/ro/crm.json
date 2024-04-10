@@ -62,7 +62,8 @@
       "weight-percent": "Procent pondere",
       "deadline": "Termen limită",
       "user": "Utilizator",
-      "persoana": "Persoană"
+      "persoana": "Persoană",
+      "organization": "Organizație"
     },
     "types": {
       "text": "Text",
@@ -107,7 +108,9 @@
       "project-estimate": "Estimare",
       "project-task": "Sarcină",
       "project-type": "Tip proiect",
-      "organization": "Organizație"
+      "organization": "Organizație",
+      "industry": "Domeniu de activitate",
+      "persoana": "Persoana"
     },
     "singular": "Entitate",
     "plural": "Entități",

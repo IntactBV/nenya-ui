@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react';
 import Link from 'next/link';
 import { useGetRecordDetailsQuery, useGetRecordsQuery } from '@uiRepos/records.repo';
-import { Button } from '@mantine/core';
+import { Button, Group } from '@mantine/core';
 import { useGetEntityDetailsQuery } from '@uiRepos/entities.repo';
 import { IAttribute } from '@uiDomain/domain.types';
 import css from './fields.module.css';
@@ -22,6 +22,7 @@ export const EntityFieldRenderer: FC<TEntityFieldRendererProps> = ({
     data: entityRecord,
     isLoading: recordLoading,
     isError: recordErrored,
+    error
   } = useGetRecordDetailsQuery( field );
 
   const { data: entityDetails } = useGetEntityDetailsQuery( entityRecord?.entityId );
@@ -34,17 +35,12 @@ export const EntityFieldRenderer: FC<TEntityFieldRendererProps> = ({
   }, [ entityDetails ]);
 
   if ( recordLoading || recordErrored ) {
-    return <span>&nbsp;</span>;
+    return <span>&nbsp;{JSON.stringify(error)}</span>;
   }
 
   return (
-    <Link href={`/crm/records/${entityRecord?.id}`}>
-      <Button
-        variant="subtle"
-        size="sm"
-      >
-        {entityRecord?.data[ mainSlug ]}
-      </Button>
+    <Link href={`/crm/records/${entityRecord?.id}`} className={css.link}>
+      {entityRecord?.data[ mainSlug ]}
     </Link>
   );
 };

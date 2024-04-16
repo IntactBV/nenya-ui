@@ -109,6 +109,17 @@ export const
         }),
         invalidatesTags: [ recordDetailsTag ],
       }),
+
+      getRecordRelations: builder.query({
+        query: ({
+          recordId,
+          entityId
+         }) => ({
+          url: `/${recordId}/entity/${entityId}/record-relations`,
+          method: 'GET',
+        }),
+      }),
+
     }),
   }),
 
@@ -122,4 +133,5 @@ export const
     useFilterRecordsMutation,
     useGetRecordsQuery,
     useAddChildRecordMutation,
+    useGetRecordRelationsQuery,
   } = recordsRepo;

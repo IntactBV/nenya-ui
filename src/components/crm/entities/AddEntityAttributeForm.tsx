@@ -39,7 +39,9 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> = ({
   const editMode = useMemo(() => !isEmpty( attribute ), [ attribute ]);
 
   const [ newAttrType, setNewAttrType ] = useState<EEntityFieldType>(
-    isEmpty( attribute ) ? EEntityFieldType.Attribute : attribute.fieldType ||
+    isEmpty( attribute ) 
+      ? EEntityFieldType.Attribute 
+      : attribute.fieldType ||
     EEntityFieldType.Attribute
   );
     // const [ isMain, setIsMain ] = useState( false );
@@ -134,6 +136,9 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> = ({
             : t( 'entities.cards.addField.title' )
           }
         </Title>
+        <pre>
+          {JSON.stringify( attribute, null, 2 )}
+        </pre>
         <Group justify="space-between">
           <Group>
 
@@ -160,6 +165,7 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> = ({
                 data={attributesData}
                 onChange={handleAttributeChange}
                 w={200}
+                value={attribute?.id || selectedAttributeId}
                 disabled={editMode}
               />
             )}

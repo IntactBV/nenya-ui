@@ -44,6 +44,7 @@
       "cui": "CUI",
       "department": "Departament",
       "description": "Descriere",
+      "date": "Data",
       "e-mail": "E-mail",
       "email": "E-mail",
       "name": "Denumire",
@@ -63,7 +64,9 @@
       "deadline": "Termen limită",
       "user": "Utilizator",
       "persoana": "Persoană",
-      "organization": "Organizație"
+      "organization": "Organizație",
+      "moment": "Moment",
+      "industry": "Domeniu de activitate"
     },
     "types": {
       "text": "Text",
@@ -110,7 +113,19 @@
       "project-type": "Tip proiect",
       "organization": "Organizație",
       "industry": "Domeniu de activitate",
-      "persoana": "Persoana"
+      "persoana": "Persoana",
+      "notes": "Notițe"
+    },
+    "plurals": {
+      "employee": "Angajați",
+      "department": "Departamente",
+      "project-estimate": "Estimări",
+      "project-task": "Sarcini",
+      "project-type": "Tipuri proiect",
+      "organization": "Organizații",
+      "industry": "Domenii de activitate",
+      "persoana": "Persoane",
+      "notes": "Notițe"
     },
     "singular": "Entitate",
     "plural": "Entități",

@@ -5,8 +5,9 @@ import { FC, PropsWithChildren, useMemo } from 'react';
 import { $isDarkMode } from '@uiDomain/signals/common.signals';
 import { isNil } from 'lodash';
 import { CommonPageLoader } from '@uiComponents/common/CommonPageLoader';
-import { useGetEntityDetailsQuery } from '@uiRepos/entities.repo';
+import { useGetEntityDetailsQuery, useGetEntityRelationsQuery } from '@uiRepos/entities.repo';
 import css from './RecordDetailsHeader.module.css';
+import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
 
 type TRecordDetailsHeaderProps = PropsWithChildren & {
   record: any;

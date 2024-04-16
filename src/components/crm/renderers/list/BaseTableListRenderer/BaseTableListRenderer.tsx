@@ -4,13 +4,11 @@
 
 import { ModulePageHeader } from '@crmComponents/modules/pages/ModulePageHeader/ModulePageHeader';
 import { Box, Button, Drawer, Group, ScrollArea, Stack } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import { isEmpty, isNil, isNull } from 'lodash';
 import { FC, useCallback, useMemo, useState } from 'react';
 import { GoAlert, GoCheck, GoPlus, GoX } from 'react-icons/go';
 import { NoData } from '@uiComponents/common/NoData';
 import { RecordEditor } from '@crmComponents/records/RecordEditor/RecordEditor';
-import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
 import { useCreateRecordMutation, useGetPageRecordsQuery, useUpdateRecordMutation } from '@uiRepos/records.repo';
 import { useAppDispatch, useAppSelector } from '@uiStore/hooks';
 import { selectAccountEmail } from '@uiStore/features/account/account.selectors';

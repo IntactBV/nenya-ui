@@ -77,6 +77,7 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
               .filter(( attr: any ) => !slugsToHide.includes( attr.slug ))
               .map(( attr: any ) => (
                 <Table.Th
+                  data-attr={JSON.stringify( attr )}
                   key={`header_${attr.slug}`}
                   style={{ textAlign: attr.align || 'left' }}
                   w={attr.slug === 'avatar' ? 40 : 'auto'}

@@ -112,7 +112,14 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> = ({
     }
 
     onSubmit( params );
-  }, [ newAttrType, relation, selectedAttributeId, selectedEntityId, onSubmit, fieldLabel ]);
+  }, [ 
+    newAttrType, 
+    relation, 
+    selectedAttributeId, 
+    selectedEntityId, 
+    onSubmit, 
+    fieldLabel
+  ]);
 
   // const toggleMain = () => {
   //   setIsMain( !isMain );
@@ -136,9 +143,7 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> = ({
             : t( 'entities.cards.addField.title' )
           }
         </Title>
-        <pre>
-          {JSON.stringify( attribute, null, 2 )}
-        </pre>
+
         <Group justify="space-between">
           <Group>
 

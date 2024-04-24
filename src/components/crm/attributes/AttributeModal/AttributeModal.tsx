@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect } from 'react';
-import { Button, Group, Loader, MultiSelect, Select, Stack, Switch, TextInput } from '@mantine/core';
+import { Button, Group, Loader, MultiSelect, Select, Stack, Switch, TextInput, Textarea } from '@mantine/core';
 import { IAttribute } from '@uiDomain/domain.types';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
@@ -100,6 +100,14 @@ export const AttributeModal: FC<IAttributeModalProps> = ({
             label="Description"
             placeholder="description"
             {...form.getInputProps( 'description' )}
+          />
+          
+          <Textarea
+            size="sm"
+            mb="md"
+            label="Options"
+            placeholder="options"
+            {...form.getInputProps( 'options' )}
           />
 
           <TagsSelector

@@ -2,18 +2,16 @@ import { FC } from 'react';
 import { TFieldRendererProps } from './field-renderers.types';
 import Link from 'next/link';
 import { Group, Text } from '@mantine/core';
-import { GoMegaphone } from 'react-icons/go';
+import { GoDeviceMobile, GoGlobe } from 'react-icons/go';
+import { PiPhoneLight } from 'react-icons/pi';
 import css from './fields.module.css';
 
-export const PhoneFieldRenderer: FC<TFieldRendererProps> = ({ field }) => {
+export const WebsiteFieldRenderer: FC<TFieldRendererProps> = ({ field }) => {
   const a = 1;
   return (
-  <Link 
-    href={`mailto:${field}`} 
-    className={css.link}
-  >
+  <Link href={`https://${field}`} className={css.link}>
     <Group gap="xs" align="center">
-      <GoMegaphone size={14} />
+      <GoGlobe size={18} />
       <Text>
         {field}
       </Text>

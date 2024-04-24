@@ -1,0 +1,78 @@
+._5min {
+  display: block;
+  width: 100%;
+  height: 10px;
+  background-color: #ff000050;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ff0000;
+  }
+}
+
+.hour {
+  display: block;
+  width: 100%;
+  height: 120px;
+  /* background-color: #0000ff50; */
+  text-align: center;
+  padding-top: 5px;
+  font-size: 12px;
+  /* border-bottom: #ffffff50 1px solid; */
+}
+
+.fix {
+  /* border-top: #ffffff50 1px solid; */
+  margin-top: 2px;
+}
+
+.horizontalHour {
+  flex: 1;
+  font-size: .8rem;
+  font-weight: bold;
+}
+
+.horizontalSidebar {
+  width: 200px;
+  min-height: 2rem;
+}
+
+.horizontalCell {
+  display: flex;
+  flex-direction: row;
+  background-color: #aaaaaa10;
+  min-height: 2rem;
+  flex: 1;
+  transition: background-color 0.8s;
+  cursor: pointer;
+
+  
+  &:hover {
+    background-color: #888888;
+    border-radius: 3px;
+  }
+  
+}
+
+.horizontalCellActions {
+  opacity: 0.5;
+  transition: opacity 0.8s ease;
+  
+  &:hover {
+    opacity: 1;
+  }
+}
+
+
+
+.horizontalCell:hover .horizontalCellActions {
+  opacity: 1;
+}
+
+
+.horizontalFix {
+  /* margin-left: 2px; */
+  box-shadow: inset 1px 0px 1px #00000050;
+}
+
+

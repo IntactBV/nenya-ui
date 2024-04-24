@@ -110,6 +110,15 @@ export const
         invalidatesTags: [ recordDetailsTag ],
       }),
 
+      setRecordParent: builder.mutation({
+        query: ( body ) => ({
+          url: '/record-parent',
+          method: 'POST',
+          body,
+        }),
+        invalidatesTags: [ recordDetailsTag, recordsTag ],
+      }),
+
       getRecordRelations: builder.query({
         query: ({
           recordId,
@@ -133,5 +142,7 @@ export const
     useFilterRecordsMutation,
     useGetRecordsQuery,
     useAddChildRecordMutation,
+    useSetRecordParentMutation,
     useGetRecordRelationsQuery,
+    useLazyGetRecordDetailsQuery
   } = recordsRepo;

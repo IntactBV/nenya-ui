@@ -47,6 +47,7 @@
       "date": "Data",
       "e-mail": "E-mail",
       "email": "E-mail",
+      "functie": "Functia",
       "name": "Denumire",
       "first-name": "Prenume",
       "last-name": "Nume",
@@ -66,7 +67,13 @@
       "persoana": "Persoană",
       "organization": "Organizație",
       "moment": "Moment",
-      "industry": "Domeniu de activitate"
+      "industry": "Domeniu de activitate",
+      "website": "Website",
+      "durata-min": "Durata în minute",
+      "interval-ora": "Interval oră",
+      "ora-min": "Oră minut",
+      "color": "Culoare",
+      "dow": "Ziua săptămânii"
     },
     "types": {
       "text": "Text",
@@ -101,11 +108,19 @@
     "singular": "Atribut",
     "plural": "Atribute",
     "select": {
-      "placeholder": "Alege un atribut"
+      "placeholder": "Alege un atribut",
+      "dow_1": "Luni",
+      "dow_2": "Marți",
+      "dow_3": "Miercuri",
+      "dow_4": "Joi",
+      "dow_5": "Vineri",
+      "dow_6": "Sâmbătă",
+      "dow_7": "Duminică"
     }
   },
   "entities": {
     "names": {
+      "contact": "Contact",
       "employee": "Angajat",
       "department": "Departament",
       "project-estimate": "Estimare",
@@ -114,7 +129,11 @@
       "organization": "Organizație",
       "industry": "Domeniu de activitate",
       "persoana": "Persoana",
-      "notes": "Notițe"
+      "notes": "Notițe",
+      "specializare": "Specializare",
+      "medic": "Medic",
+      "servicii-med": "Servicii medicale",
+      "dow": "Ziua saptamanii"
     },
     "plurals": {
       "employee": "Angajați",
@@ -129,6 +148,8 @@
     },
     "singular": "Entitate",
     "plural": "Entități",
+    "details": "Detalii entitate",
+    "edit": "Editează entitate",
     "select": {
       "placeholder": "Alege o entitate"
     },
@@ -156,7 +177,8 @@
     "list": {
       "BaseTableListRenderer": "Listă cu tabel",
       "BaseDebuggerListRenderer": "Listă depanare",
-      "ProjectsListRenderer": "Listă proiecte"
+      "ProjectsListRenderer": "Listă proiecte",
+      "BookingWeekListRenderer": "Listă saptamnală programări"
     }
   },
   "app": {

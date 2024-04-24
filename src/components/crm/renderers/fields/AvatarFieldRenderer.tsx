@@ -13,7 +13,7 @@ export const AvatarFieldRenderer: FC<TFieldRendererProps> = ({ field, record }) 
       ( f: string ) => !isNil( record[ f ])
     );
     const [ first, last ] = record?.[ sourceField ]?.split( ' ' ) || [ '', '' ];
-    return `${first[ 0 ]}${last[ 0 ]}`;
+    return `${first[ 0 ]}${last?.[ 0 ] || ''}`;
   }, [ record ]);
   return (
     <Avatar>

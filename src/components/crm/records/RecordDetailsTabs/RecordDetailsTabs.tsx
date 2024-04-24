@@ -93,11 +93,11 @@ export const RecordDetailsTabs: FC<TRecordListFiltersProps> = ({
             </Tabs.Tab>
           ))}
 
-          {entityRelations?.map(( rel: any ) => (
+          {/* {entityRelations?.map(( rel: any ) => (
             <Tabs.Tab key={`tab_rel_${rel.id}`} value={rel.slug}>
               {t(`entities.plurals.${rel.slug}`)}
             </Tabs.Tab>
-          ))}
+          ))} */}
 
         </Tabs.List>
 
@@ -128,7 +128,7 @@ export const RecordDetailsTabs: FC<TRecordListFiltersProps> = ({
           </Tabs.Panel>
         ))}
 
-          {entityRelations?.map(( relEntity: any ) => (
+          {/* {entityRelations?.map(( relEntity: any ) => (
             <Tabs.Panel key={`tab_rel_panel_${relEntity.id}`} value={relEntity.slug}>
               <RecordRelationsTab
                 record={record.data}
@@ -136,7 +136,7 @@ export const RecordDetailsTabs: FC<TRecordListFiltersProps> = ({
               />
             </Tabs.Panel>
           ))}
-
+ */}
 
       </Tabs>
     </div>

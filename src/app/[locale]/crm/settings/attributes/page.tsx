@@ -1,6 +1,6 @@
 'use client';
 
-import { AttributesScreen } from '@uiScreens/crm/Settings/AttributesScreen/AttributesScreen';
+import { AttributesScreen } from '@crmComponents/attributes/AttributesScreen/AttributesScreen';
 
 export default function CrmSettingsPage() {
   return (

@@ -16,7 +16,7 @@ export const prepareHeaders = async( headers: Headers, { getState }: {
   headers.set( 'authorization', `Bearer ${accessToken}` );
   headers.set( 'Content-Type', 'application/json' );
   headers.set( 'Accept', 'application/json' );
-  headers.set( 'X-Tenant', account.tenant.tenantSlug );
+  headers.set( 'X-Tenant', account.tenant?.tenantSlug || '@' );
   headers.set( 'X-Realm', account.realm?.slug || 'dev' );
 
   return headers;

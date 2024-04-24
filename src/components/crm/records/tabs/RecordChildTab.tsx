@@ -59,7 +59,8 @@ export const RecordChildTab: FC<TRecordChildTabProps> = ({ record, attribute }) 
             >Add
             </Button>
           </Group>
-          {record.data[ attribute.slug ].map(( childRecord: any, index:number ) => (
+
+          {record.data[ attribute.slug ]?.map(( childRecord: any, index:number ) => (
             <Card key={`${attribute.slug}_card_${index}`} mr="lg" className="ndCard">
               <Stack gap="md">
                 {entityDetails?.attributes?.map(( attr: any ) => (

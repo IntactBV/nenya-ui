@@ -5,6 +5,7 @@ import { TEntityAttribute } from '@uiDomain/types';
 import { isEmpty } from 'lodash';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RecordRenderer } from '../RecordRenderer/RecordRenderer';
 
 type TRecordDataTabProps = {
   record: Record<string, any>;
@@ -32,7 +33,15 @@ export const RecordDataTab: FC<TRecordDataTabProps> = ({ record, entity }) => {
         {attrsToDisplay.map(( attr: IAttribute ) => (
           <Group gap="md" key={`record_attr_${attr.id}`}>
             <Text fw="bold">{t( `attributes.names.${attr.slug}` )}:</Text>
-            <Text>{record.data[ attr.slug ]}</Text>
+            {attr.fieldType === 1 && (
+              <Text>{record.data[ attr.slug ]}</Text>
+              )}
+            {attr.fieldType === 2 && (
+              <RecordRenderer
+                record={record}
+                attribute={attr}
+              />
+            )}
           </Group>
         ))}
         <Group gap="md">

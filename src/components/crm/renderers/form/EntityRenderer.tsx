@@ -4,9 +4,11 @@ import { useGetRecordsQuery } from '@uiRepos/records.repo';
 import { sortBy } from 'lodash';
 import { useGetEntityDetailsQuery } from '@uiRepos/entities.repo';
 import { IAttribute } from '@uiDomain/domain.types';
+import { useTranslation } from 'react-i18next';
 import { TFormRendererProps } from './form.types';
 
 export const EntityRenderer: FC<TFormRendererProps> = ({ attribute, props, form }) => {
+  const { t } = useTranslation();
   const { data: entityRecords, isLoading } = useGetRecordsQuery({
     entityId: attribute.id,
   });
@@ -32,13 +34,15 @@ export const EntityRenderer: FC<TFormRendererProps> = ({ attribute, props, form 
   }
 
   return (
-    <Select
-      searchable
-      label={`Select ${attribute.name.toLowerCase()}`}
-      placeholder={`Select ${attribute.name.toLowerCase()}`}
-      data={options}
-      {...props}
-    />
-    // <pre>{JSON.stringify( options, null, 2 )}</pre>
+    <>
+      <Select
+        searchable
+        label={attribute.label}
+        placeholder={`Select ${attribute.name.toLowerCase()}`}
+        data={options}
+        {...props}
+      />
+      {/* <pre>{JSON.stringify( attribute, null, 2 )}</pre> */}
+    </>
   );
 };

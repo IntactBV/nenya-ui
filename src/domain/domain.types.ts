@@ -18,6 +18,7 @@ export interface IAttribute {
   entityFieldId?: string;
   fieldType: EEntityFieldType;
   label?: string;
+  tags?: string[];
 }
 
 export interface IEntity {

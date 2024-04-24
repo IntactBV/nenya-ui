@@ -3,6 +3,7 @@ import { Avatar, Tooltip } from '@mantine/core';
 import Link from 'next/link';
 import { useGetRecordDetailsQuery } from '@uiRepos/records.repo';
 import { TFieldRendererProps } from './field-renderers.types';
+import { AvatarFieldRenderer } from './AvatarFieldRenderer';
 
 export const EmployeeFieldRenderer: FC<TFieldRendererProps> = ({ field, record }) => {
   const {
@@ -26,9 +27,9 @@ export const EmployeeFieldRenderer: FC<TFieldRendererProps> = ({ field, record }
   }
 
   return (
-    <Tooltip label={entityRecord?.data?.name || ''} position="top-start" withArrow>
+    <Tooltip label={entityRecord?.data?.name || entityRecord?.data?.[ 'full-name' ] || ''} position="top-start" withArrow>
       <Link href={`/crm/records/${entityRecord?.id}`}>
-        <Avatar>{initials}</Avatar>
+        <AvatarFieldRenderer field={field} record={entityRecord?.data} />
       </Link>
     </Tooltip>
   );

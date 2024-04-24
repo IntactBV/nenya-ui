@@ -4,14 +4,13 @@
 
 import { ModulePageHeader } from '@crmComponents/modules/pages/ModulePageHeader/ModulePageHeader';
 import { Box, Button, Drawer, Group, ScrollArea, Stack } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import { isEmpty, isNil, isNull } from 'lodash';
 import { FC, useCallback, useMemo, useState } from 'react';
 import { GoAlert, GoCheck, GoPlus, GoX } from 'react-icons/go';
+import { useTranslation } from 'react-i18next';
 import { NoData } from '@uiComponents/common/NoData';
 import { RecordEditor } from '@crmComponents/records/RecordEditor/RecordEditor';
-import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
-import { useCreateRecordMutation, useGetPageRecordsQuery, useUpdateRecordMutation } from '@uiRepos/records.repo';
+import { useCreateRecordMutation, useGetPageRecordsQuery, useSetRecordParentMutation, useUpdateRecordMutation } from '@uiRepos/records.repo';
 import { useAppDispatch, useAppSelector } from '@uiStore/hooks';
 import { selectAccountEmail } from '@uiStore/features/account/account.selectors';
 import { notifications } from '@mantine/notifications';
@@ -28,6 +27,7 @@ type TBaseTableListRendererprops = {
 };
 
 export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageData }) => {
+  const {t} = useTranslation();
   const dispatch = useAppDispatch();
   const showDrawer = useAppSelector( selectCommonPageShowEditDrawer );
   const selectedRecord = useAppSelector( selectCommonEditedRecord );
@@ -36,6 +36,7 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
   const entity = useMemo(() => pageData.entities[ 0 ] || {}, [ pageData ]);
   const [ createRecord ] = useCreateRecordMutation();
   const [ editRecord ] = useUpdateRecordMutation();
+  const [ setRecordParent ] = useSetRecordParentMutation();
   const { data: recordsData, isLoading: recordsLoading, isError } = useGetPageRecordsQuery({
     entityId: entity.id,
     moduleId: pageData.module.id,
@@ -122,6 +123,12 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
 
   const handleEditorSave = useCallback( async( data: any ) => {
     try {
+      const parentRecordId = data.parent;
+
+      if (!isNil(parentRecordId)) {
+        delete data.parent;
+      }
+
       const dto = {
         createdBy: accountEmail,
         module: pageData.module.id,
@@ -138,6 +145,16 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
 
       if ( !result || !isNil( result.error )) {
         throw new Error( result.error );
+      }
+
+      if (!isNil(parentRecordId)) {
+        console.log(result);
+        const setParentDto = {
+          recordId: result.data.id,
+          parentRecordId
+        };
+        console.log( 'setParentDto', setParentDto );
+        await setRecordParent(setParentDto);
       }
 
       handleDrawerClose();
@@ -201,7 +218,7 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
             size="lg"
             leftSection={<GoPlus size={30} />}
             onClick={handleAddEntityBtnClick}
-          >Add {pageData.entities[ 0 ].name.toLowerCase()}
+          >{t('buttons.add')} {pageData.entities[ 0 ].name.toLowerCase()}
           </Button>
         )}
       </ModulePageHeader>
@@ -237,7 +254,7 @@ export const BaseTableListRenderer: FC<TBaseTableListRendererprops> = ({ pageDat
       <Drawer
         opened={showDrawer}
         onClose={handleDrawerClose}
-        title={`${isNil( selectedRecord ) ? 'Add' : 'Edit'} ${pageData.entities[ 0 ].name.toLowerCase()}`}
+        title={`${isNil( selectedRecord ) ? t('buttons.add') : t('buttons.edit')} ${pageData.entities[ 0 ].name.toLowerCase()}`}
         position="right"
         className={css.drawer}
       >

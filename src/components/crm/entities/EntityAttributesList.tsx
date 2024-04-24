@@ -56,11 +56,34 @@ export const EntityAttributesList: FC<TEntityAttributesListProps> = ({ entityDet
     setFieldToEdit( attribute );
   }, []);
 
+  const handleDragEnd = useCallback(async({ source, destination }) => {
+    console.log( '### onDragEnd', source, destination, state );
+    const reordered = [...state];
+
+    // reordered[source.index].order = reordered[destination.index].order - 5;
+
+    // console.log( '### reordered', reordered );
+    await handlers.reorder({ from: source.index, to: destination?.index || 0 });
+  }, []);
+
   useEffect(() => {
     if ( isEmpty( state )) {
       setShowAddForm( true );
     }
   }, []);
+
+  useEffect(() => {
+
+    const newOrder = state.map(( item, index ) => ({
+      entityFieldId: item?.entityFieldId,
+      order: ( index + 1 ) * 10,
+    }));
+
+    console.log( 'state updated', newOrder );
+
+    performUpdateOrders( newOrder );
+
+  }, [ state ]);
 
   // useEffect(() => {
   //   if ( !isInitialize ) {
@@ -89,11 +112,7 @@ export const EntityAttributesList: FC<TEntityAttributesListProps> = ({ entityDet
       </Title>
 
       <DragDropContext
-        onDragEnd={async({ destination, source }) => {
-          // console.log( '### onDragEnd', source, destination );
-          await handlers.reorder({ from: source.index, to: destination?.index || 0 });
-        }
-        }
+        onDragEnd={handleDragEnd}
       >
         <Droppable droppableId="dnd-list" direction="vertical">
           {( provided ) => (

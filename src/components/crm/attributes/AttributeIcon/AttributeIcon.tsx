@@ -20,7 +20,9 @@ export const AttributeIcon: FC<TAttributeIconProps> = ({ attributeType }) => {
       {attributeType === 'text' && (
         <CiText size={size} />
       )}
-      {attributeType === 'date' && (
+      {( attributeType === 'date' ||
+        attributeType === 'date-time'
+      ) && (
         <CiCalendarDate size={size} />
       )}
       {attributeType === 'html' && (
@@ -41,6 +43,10 @@ export const AttributeIcon: FC<TAttributeIconProps> = ({ attributeType }) => {
       {attributeType === 'user' && (
         <CiUser size={size} />
       )}
+
+      {/* <i className="icon" >
+        {attributeType}
+      </i> */}
     </>
   );
 };

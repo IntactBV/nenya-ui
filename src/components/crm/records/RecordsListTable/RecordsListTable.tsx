@@ -39,7 +39,9 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
       return [];
     }
 
-    return entityDetails.attributes?.filter(( attr: any ) => attr.showInList ) || [];
+    const cols = entityDetails.attributes?.filter(( attr: any ) => attr.showInList ) || [];
+
+    return cols;
   }, [ entityDetails ]);
 
   const renderHeader = useMemo(() => {
@@ -60,6 +62,12 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
     //     });
     //   }
     // }
+    
+    headerItems.unshift({
+      slug: '_parent',
+      name: 'Parent',
+      align: 'right',
+    });
 
     headerItems.push({
       slug: '_actions',
@@ -77,11 +85,12 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
               .filter(( attr: any ) => !slugsToHide.includes( attr.slug ))
               .map(( attr: any ) => (
                 <Table.Th
+                  data-attr={JSON.stringify( attr )}
                   key={`header_${attr.slug}`}
                   style={{ textAlign: attr.align || 'left' }}
                   w={attr.slug === 'avatar' ? 40 : 'auto'}
                 >
-                  {slugsToHide.includes( attr.slug ) ? '' : attr.name}
+                  {slugsToHide.includes( attr.slug ) ? attr.name : attr.label}
                 </Table.Th>
               ))
           }
@@ -97,6 +106,8 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
       ? isNil(( fieldRenderers as Record<string, any> )[ `${capitalize( attr.slug )}FieldRenderer` ])
         ? 'EntityFieldRenderer'
         : `${capitalize( attr.slug )}FieldRenderer`
+      : attr.slug === '_parent'
+        ? 'ParentFieldRenderer'
       : attr.slug === '_actions'
         ? 'ActionsFieldRenderer'
         : `${capitalize( attr.slug )}FieldRenderer`;
@@ -126,7 +137,13 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
                 : null
               }
             >
-              <FieldRenderer field={attr.slug === '_actions' ? record : record[ attr.slug ]} />
+              <FieldRenderer 
+                field={
+                  ['_actions', '_parent'].includes(attr.slug)
+                    ? record 
+                    : record[ attr.slug ]
+                } 
+              />
             </Button>
           </Link>
         </Table.Td>
@@ -166,6 +183,9 @@ export const RecordsListTable: FC<TRecordsListTableProps> = ({
         //   }
         // }
 
+        tableColumns.unshift({
+          slug: '_parent',
+        });
         tableColumns.push({
           slug: '_actions',
         });

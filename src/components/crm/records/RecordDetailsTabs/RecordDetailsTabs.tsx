@@ -3,14 +3,15 @@
 import { Badge, Group, Indicator, Stack, Tabs, Text } from '@mantine/core';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { $isDarkMode } from '@uiDomain/signals/common.signals';
-import { useGetEntityDetailsQuery } from '@uiRepos/entities.repo';
+import { useGetEntityDetailsQuery, useGetEntityRelationsQuery } from '@uiRepos/entities.repo';
 import { CommonPageLoader } from '@uiComponents/common/CommonPageLoader';
 import { isEmpty } from 'lodash';
-import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
 import css from './RecordDetailsTabs.module.css';
 import { SubEntityTab } from './SubEntityTab';
 import { RecordDataTab } from '../tabs/RecordDataTab';
 import { RecordChildTab } from '../tabs/RecordChildTab';
+import { useTranslation } from 'react-i18next';
+import { RecordRelationsTab } from '../RecordRelationsTab/RecordRelationsTab';
 
 type TRecordListFiltersProps = {
   entityId: string;
@@ -21,12 +22,17 @@ export const RecordDetailsTabs: FC<TRecordListFiltersProps> = ({
   entityId,
   record,
 }) => {
+  const { t } = useTranslation();
   const [ activeTab, setActiveTab ] = useState<string | null>( null );
   const {
     data: entity,
     isLoading: entityLoading,
     isSuccess,
   } = useGetEntityDetailsQuery( entityId );
+  const {
+    data: entityRelations,
+    isLoading: usedEntityLoading,
+  } = useGetEntityRelationsQuery( entityId );
 
   const attrsWithTabs = useMemo(() => {
     if ( !entity || !entity.attributes ) {
@@ -87,6 +93,12 @@ export const RecordDetailsTabs: FC<TRecordListFiltersProps> = ({
             </Tabs.Tab>
           ))}
 
+          {/* {entityRelations?.map(( rel: any ) => (
+            <Tabs.Tab key={`tab_rel_${rel.id}`} value={rel.slug}>
+              {t(`entities.plurals.${rel.slug}`)}
+            </Tabs.Tab>
+          ))} */}
+
         </Tabs.List>
 
         {/* {entity.entities.map(( subEntity: any ) => (
@@ -105,9 +117,6 @@ export const RecordDetailsTabs: FC<TRecordListFiltersProps> = ({
 
         <Tabs.Panel value="others">
           <RecordDataTab record={record} entity={entity} />
-          {/* <CommonDebugger field="record" data={record} />
-          <CommonDebugger field="entity" data={entity} /> */}
-
         </Tabs.Panel>
 
         {attrsWithTabs.map(( attr: any ) => (
@@ -118,6 +127,16 @@ export const RecordDetailsTabs: FC<TRecordListFiltersProps> = ({
             />
           </Tabs.Panel>
         ))}
+
+          {/* {entityRelations?.map(( relEntity: any ) => (
+            <Tabs.Panel key={`tab_rel_panel_${relEntity.id}`} value={relEntity.slug}>
+              <RecordRelationsTab
+                record={record.data}
+                entity={relEntity}
+              />
+            </Tabs.Panel>
+          ))}
+ */}
 
       </Tabs>
     </div>

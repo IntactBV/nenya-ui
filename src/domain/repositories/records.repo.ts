@@ -109,6 +109,26 @@ export const
         }),
         invalidatesTags: [ recordDetailsTag ],
       }),
+
+      setRecordParent: builder.mutation({
+        query: ( body ) => ({
+          url: '/record-parent',
+          method: 'POST',
+          body,
+        }),
+        invalidatesTags: [ recordDetailsTag, recordsTag ],
+      }),
+
+      getRecordRelations: builder.query({
+        query: ({
+          recordId,
+          entityId
+         }) => ({
+          url: `/${recordId}/entity/${entityId}/record-relations`,
+          method: 'GET',
+        }),
+      }),
+
     }),
   }),
 
@@ -122,4 +142,7 @@ export const
     useFilterRecordsMutation,
     useGetRecordsQuery,
     useAddChildRecordMutation,
+    useSetRecordParentMutation,
+    useGetRecordRelationsQuery,
+    useLazyGetRecordDetailsQuery
   } = recordsRepo;

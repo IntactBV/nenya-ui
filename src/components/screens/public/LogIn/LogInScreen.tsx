@@ -69,6 +69,7 @@ export function LogInScreen() {
         role: userTenant.role as EAccountRoles,
         uid: loggedInUser?.uid,
       };
+      debugger;
       await dispatch( setAccountTenants( userDetails?.tenantAccounts ));
       await dispatch( accountLoginUser({
         user,

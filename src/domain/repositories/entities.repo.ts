@@ -89,6 +89,13 @@ export const
         providesTags: [ entityTag ],
       }),
 
+      getEntityRelations: builder.query({
+        query: ( entityId: string ) => ({
+          url: `/entities/${entityId}/entity-relations`,
+          method: 'GET',
+        }),
+      }),
+
       assignAttributeToEntity: builder.mutation({
         query: ( body ) => ({
           url: '/entities/assign-attribute-to-entity',
@@ -161,4 +168,5 @@ export const
     useUpdateEntityAttributeMutation,
     useUpdateEntityAttributesOrdersMutation,
     useUpdateAttributeOfEntityMutation,
+    useGetEntityRelationsQuery,
   } = entitiesRepo;

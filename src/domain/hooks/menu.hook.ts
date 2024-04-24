@@ -89,7 +89,7 @@ export const useNavigation = ( tenantModules: any ) => {
         })),
       }));
 
-    if ( $userData.value.role === EAccountRoles.ADMIN ) {
+    if ( $userData?.value?.role === EAccountRoles.ADMIN ) {
       const adminData: TNavItem[] = [
         {
           label: 'Dashboard',

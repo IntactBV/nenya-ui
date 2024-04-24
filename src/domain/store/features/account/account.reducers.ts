@@ -24,6 +24,7 @@ const accountReducers = {
     state: AccountState,
     action: PayloadAction<{ user: IUserImpl, tenant: TAccountTenant }>
   ) => {
+    debugger;
     state.user = action.payload.user;
     state.tenant = action.payload.tenant;
     // state.role = action.payload.tenant.role as EAccountRoles;

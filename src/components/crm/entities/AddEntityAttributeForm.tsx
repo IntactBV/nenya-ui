@@ -39,7 +39,9 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> = ({
   const editMode = useMemo(() => !isEmpty( attribute ), [ attribute ]);
 
   const [ newAttrType, setNewAttrType ] = useState<EEntityFieldType>(
-    isEmpty( attribute ) ? EEntityFieldType.Attribute : attribute.fieldType ||
+    isEmpty( attribute ) 
+      ? EEntityFieldType.Attribute 
+      : attribute.fieldType ||
     EEntityFieldType.Attribute
   );
     // const [ isMain, setIsMain ] = useState( false );
@@ -65,7 +67,10 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> = ({
       return;
     }
     const attr = attributes.find(( a: IAttribute ) => ( a.id === selectedAttributeId ));
-    setFieldLabel( t( `attributes.names.${attr?.slug}` ));
+
+    if ( isEmpty( fieldLabel ) && !isEmpty( attr?.slug )) {
+      setFieldLabel( t( `attributes.names.${attr?.slug}` ));
+    }
     // eslint-disable-next-line consistent-return
     return attr;
   }, [ selectedAttributeId ]);
@@ -77,7 +82,10 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> = ({
   const handleEntityChange = ( id: string | null ) => {
     selectEntityId( id as string );
     const entity = entities?.find(( e: IEntity ) => ( e.id === id ));
-    setFieldLabel( t( `entities.names.${entity?.slug}` ));
+
+    if ( isEmpty( fieldLabel ) && !isEmpty( entity?.slug )) {
+      setFieldLabel( t( `entities.names.${entity?.slug}` ));
+    }
   };
 
   const handleTypeChange = ( type: string | null ) => {
@@ -104,7 +112,14 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> = ({
     }
 
     onSubmit( params );
-  }, [ newAttrType, relation, selectedAttributeId, selectedEntityId, onSubmit, fieldLabel ]);
+  }, [ 
+    newAttrType, 
+    relation, 
+    selectedAttributeId, 
+    selectedEntityId, 
+    onSubmit, 
+    fieldLabel
+  ]);
 
   // const toggleMain = () => {
   //   setIsMain( !isMain );
@@ -128,6 +143,7 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> = ({
             : t( 'entities.cards.addField.title' )
           }
         </Title>
+
         <Group justify="space-between">
           <Group>
 
@@ -154,6 +170,7 @@ export const AddEntityAttributeForm: FC<TAddEntityAttributeFormProps> = ({
                 data={attributesData}
                 onChange={handleAttributeChange}
                 w={200}
+                value={attribute?.id || selectedAttributeId}
                 disabled={editMode}
               />
             )}

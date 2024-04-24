@@ -62,7 +62,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/screens/crm/Settings/EntitiesScreen"
+    "src/components/crm/entities/EntitiesScreen"
   ],
   "exclude": [
     "node_modules"

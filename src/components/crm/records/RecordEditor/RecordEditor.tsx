@@ -1,10 +1,11 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { CommonPageLoader } from '@uiComponents/common/CommonPageLoader';
 import { useGetEntityDetailsQuery } from '@uiRepos/entities.repo';
-import { isNil } from 'lodash';
+import { isEmpty, isNil } from 'lodash';
 import { RecordEditorForm } from './RecordEditorForm';
+import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
 
 type TRecordEditorProps = {
   entity: { id: string, children: any[] };
@@ -20,6 +21,36 @@ export const RecordEditor: FC<TRecordEditorProps> = ({
   onEditorSave,
 }) => {
   const { data, isLoading, isError, error } = useGetEntityDetailsQuery( entity.id );
+  const parent = useMemo(() => {
+    if ( !data ) {
+      return null;
+    }
+
+    const parents = data.references.filter(( ref: any ) => !ref.relation );
+
+    return isEmpty(parents)
+      ? null
+      : parents[ 0 ];
+  }, [data]);
+  // const editorEntities = useMemo(()=> {
+  //   if ( !data ) {
+  //     return [];
+  //   }
+  //   let list = entity.children || [];
+
+  //   if ( !isEmpty( data.references )) {
+  //     console.log( data.references );
+  //     const refs = data.references.map( ( ref: any ) => ref.entity);
+  //     list = [
+  //       ...list,
+  //       ...refs
+  //     ];
+  //   }
+
+  //   console.log( 'editorEntities', list, data, isEmpty( data.references ));
+
+  //   return list;
+  // }, [data, entity])
 
   if ( !entity || isLoading ) {
     return <CommonPageLoader />;
@@ -27,6 +58,8 @@ export const RecordEditor: FC<TRecordEditorProps> = ({
 
   return (
     <div>
+      {/* <CommonDebugger data={data} field='data' /> */}
+
       {!isNil( data.attributes ) && (
         <RecordEditorForm
           attributes={data.attributes}
@@ -34,6 +67,7 @@ export const RecordEditor: FC<TRecordEditorProps> = ({
           moduleId={moduleId}
           onFormSubmit={onEditorSave}
           record={record}
+          parent={parent}
         />
       )}
 

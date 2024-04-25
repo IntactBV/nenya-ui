@@ -1,13 +1,13 @@
 import { ActionIcon, Button, Group, Stack, Table, TableTbody, TableTd, TableTh, TableThead, TableTr, Text, Title, Tooltip } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { FC, Suspense, lazy } from 'react';
+import { FC, Suspense, lazy, useCallback } from 'react';
 import { GoArchive, GoCheck, GoPencil, GoPlus, GoTrash } from 'react-icons/go';
 import * as ReactIcons from 'react-icons';
 import { isEmpty, isNil } from 'lodash';
 import * as CI from 'react-icons/ci';
 import { notifications } from '@mantine/notifications';
 import { useDeleteModulePageMutation } from '@uiRepos/modules.repo';
-import { RENDERER_NAMES } from '@uiDomain/domain.constants';
+import { useTranslation } from 'react-i18next';
 import { ModulePageModal } from '../ModulePageModal/ModulePageModal';
 
 type TModulePagesListProps = {
@@ -23,6 +23,7 @@ IconsData.CI = CI;
 // }
 
 export const ModulePagesList: FC<TModulePagesListProps> = ({ moduleId, pages }) => {
+  const { t } = useTranslation();
   const [ performDeleteModulePage ] = useDeleteModulePageMutation();
   const handleEditClick = ( page: any ) => () => {
     modals.open({
@@ -36,13 +37,13 @@ export const ModulePagesList: FC<TModulePagesListProps> = ({ moduleId, pages }) 
       ),
     });
   };
-  const handleDeleteClick = ( page: any ) => () => {
+  const handleDeleteClick = useCallback(( page: any ) => () => {
     const managerTitle = 'Module pages manager';
     modals.openConfirmModal({
       title: managerTitle,
       children: (
         <Text size="sm">
-                    Please confirm that you want to remove module page <b>{page.name}</b>
+          Please confirm that you want to remove module page <b>{page.name}</b>
         </Text>
       ),
       labels: { confirm: 'Confirm', cancel: 'Cancel' },
@@ -72,7 +73,8 @@ export const ModulePagesList: FC<TModulePagesListProps> = ({ moduleId, pages }) 
         }
       },
     });
-  };
+  }, [ performDeleteModulePage, notifications ]);
+
   return (
     <Stack>
       <Table miw={800} verticalSpacing="md" stickyHeader>
@@ -87,7 +89,7 @@ export const ModulePagesList: FC<TModulePagesListProps> = ({ moduleId, pages }) 
           {pages.map(( page: any, index ) => {
             let Icon = GoArchive;
             // console.log( ReactIcons.IconBase );
-            console.log( ReactIcons.IconsManifest );
+            // console.log( ReactIcons.IconsManifest );
 
             if (
               !isEmpty( page.iconType ) &&
@@ -119,19 +121,19 @@ export const ModulePagesList: FC<TModulePagesListProps> = ({ moduleId, pages }) 
                   { page.description }
                 </TableTd>
                 <TableTd>
-                  {isNil( RENDERER_NAMES ) ? 'unknown' : RENDERER_NAMES[ page.pageType ]}
+                  { t( `renderers.list.${page.pageType}` ) }
                 </TableTd>
                 <TableTd>
                   { page.status.toString() }
                 </TableTd>
                 <TableTd>
                   <Group justify="center">
-                    <Tooltip label="Edit attribute" position="left" withArrow color="blue">
+                    <Tooltip label="Edit attribute" position="left" withArrow>
                       <ActionIcon color="teal" size="lg" radius="xl" variant="default" onClick={handleEditClick( page )}>
                         <GoPencil size="2.125rem" style={{ margin: '.5rem' }} />
                       </ActionIcon>
                     </Tooltip>
-                    <Tooltip label="Remove attribute" position="left" withArrow color="blue">
+                    <Tooltip label="Remove attribute" position="left" withArrow>
                       <ActionIcon color="teal" size="lg" radius="xl" variant="default" onClick={handleDeleteClick( page )}>
                         <GoTrash size="2.125rem" style={{ margin: '.5rem' }} />
                       </ActionIcon>

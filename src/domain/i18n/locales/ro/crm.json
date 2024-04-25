@@ -1,0 +1,297 @@
+{
+  "language": {
+    "singular": "Limba",
+    "plural": "Limbi"
+  },
+  "buttons": {
+    "add": "Adaug",
+    "edit": "Editează",
+    "delete": "Șterge",
+    "cancel": "Anulează",
+    "confirm": "Confirmă",
+    "add_user": "Adaug utilizator",
+    "edit_user": "Editează utilizator"
+  },
+  "roles": {
+    "admin": "Administrator",
+    "editor": "Editor",
+    "operator": "Operator",
+    "agent": "Agent",
+    "visitor": "Vizitator"
+  },
+  "placeholders": {
+    "confirm_password": "Confirmă parola",
+    "select_tenant": "Selectează client",
+    "select_role": "Selectează rol"
+  },
+  "tenant": {
+    "singular": "Client",
+    "plural": "Clienți",
+    "users": "Utilizatori"
+  },
+  "user": {
+    "singular": "Utilizator",
+    "plural": "Utilizatori",
+    "add": "Adaug utilizator"
+  },
+  "organization": {
+    "singular": "Organizație",
+    "plural": "Organizații"
+  },
+  "attributes": {
+    "names": {
+      "avatar": "Avatar",
+      "cui": "CUI",
+      "department": "Departament",
+      "description": "Descriere",
+      "date": "Data",
+      "e-mail": "E-mail",
+      "email": "E-mail",
+      "functie": "Functia",
+      "name": "Denumire",
+      "first-name": "Prenume",
+      "last-name": "Nume",
+      "full-name": "Nume complet",
+      "judet": "Județ",
+      "localitate": "Localitate",
+      "nrreg": "Nr. Reg. Com.",
+      "phone": "Telefon",
+      "tel": "Telefon",
+      "position": "Poziție",
+      "employee": "Angajat",
+      "estimate": "Estimare",
+      "hours": "Ore",
+      "weight-percent": "Procent pondere",
+      "deadline": "Termen limită",
+      "user": "Utilizator",
+      "persoana": "Persoană",
+      "organization": "Organizație",
+      "moment": "Moment",
+      "industry": "Domeniu de activitate",
+      "website": "Website",
+      "durata-min": "Durata în minute",
+      "interval-ora": "Interval oră",
+      "ora-min": "Oră minut",
+      "color": "Culoare",
+      "dow": "Ziua săptămânii"
+    },
+    "types": {
+      "text": "Text",
+      "number": "Număr",
+      "email": "E-mail",
+      "boolean": "Logic",
+      "date": "Dată",
+      "date-time": "Dată și oră",
+      "select": "Select",
+      "multiselect": "Select multiplu",
+      "textarea": "Textarea",
+      "avatar": "Avatar",
+      "html": "HTML",
+      "markdown": "Markdown",
+      "phone": "Telefon",
+      "color": "Culoare",
+      "image": "Imagine",
+      "file": "Fișier",
+      "date-range": "Interval dată",
+      "date-time-range": "Interval dată și oră",
+      "time": "Oră",
+      "time-range": "Interval oră",
+      "user": "Utilizator",
+      "list": "Listă"
+    },
+    "tt": {
+      "edit": "Editează atribut",
+      "remove": "Șterge atribut"
+    },
+    "main": "Principal",
+    "showInList": "Afișează în listă",
+    "singular": "Atribut",
+    "plural": "Atribute",
+    "select": {
+      "placeholder": "Alege un atribut",
+      "dow_1": "Luni",
+      "dow_2": "Marți",
+      "dow_3": "Miercuri",
+      "dow_4": "Joi",
+      "dow_5": "Vineri",
+      "dow_6": "Sâmbătă",
+      "dow_7": "Duminică"
+    }
+  },
+  "entities": {
+    "names": {
+      "contact": "Contact",
+      "employee": "Angajat",
+      "department": "Departament",
+      "project-estimate": "Estimare",
+      "project-task": "Sarcină",
+      "project-type": "Tip proiect",
+      "organization": "Organizație",
+      "industry": "Domeniu de activitate",
+      "persoana": "Persoana",
+      "notes": "Notițe",
+      "specializare": "Specializare",
+      "medic": "Medic",
+      "servicii-med": "Servicii medicale",
+      "dow": "Ziua saptamanii"
+    },
+    "plurals": {
+      "employee": "Angajați",
+      "department": "Departamente",
+      "project-estimate": "Estimări",
+      "project-task": "Sarcini",
+      "project-type": "Tipuri proiect",
+      "organization": "Organizații",
+      "industry": "Domenii de activitate",
+      "persoana": "Persoane",
+      "notes": "Notițe"
+    },
+    "singular": "Entitate",
+    "plural": "Entități",
+    "details": "Detalii entitate",
+    "edit": "Editează entitate",
+    "select": {
+      "placeholder": "Alege o entitate"
+    },
+    "cards": {
+      "addField": {
+        "title": "Adăugare câmp",
+        "description": "Adaug un câmp nou în entitatea curentă"
+      },
+      "editField": {
+        "title": "Modificare câmp",
+        "description": "Modificare câmp din entitatea curentă"
+      }
+    }
+  },
+  "derived": {
+    "singular": "Derivat",
+    "plural": "Derivate",
+    "percent": "Procent"
+  },
+  "fields": {
+    "type": "Tip câmp",
+    "label": "Etichetă"
+  },
+  "renderers": {
+    "list": {
+      "BaseTableListRenderer": "Listă cu tabel",
+      "BaseDebuggerListRenderer": "Listă depanare",
+      "ProjectsListRenderer": "Listă proiecte",
+      "BookingWeekListRenderer": "Listă saptamnală programări"
+    }
+  },
+  "app": {
+    "settings": {
+      "admin": {
+        "overview": "Vizualizare generală",
+        "title": "Setarile aplicatiei",
+        "description": "Setarile aplicatiei sunt folosite pentru a configura aplicatia in modul dorit de administratorul acesteia.",
+        "desc_en": "This is the place where admin can manage application structure",
+        "attributes": {
+          "title": "Atribute",
+          "description": "Atributele sunt folosite pentru a configura entitatile aplicatiei.",
+          "button": "Gestionați atributele",
+          "name": "Denumire atribut",
+          "type": "Tip atribut",
+          "status": "Status",
+          "actions": "Acțiuni",
+          "tags": "Etichete",
+          "manager": "Gestionare atribute",
+          "confirmRemove": "Sunteți sigur că doriți să ștergeți acest atribut?",
+          "btnAdd": "Adaug atribut",
+          "noData": {
+            "title": "Nu există aplicații",
+            "description": "Nu există aplicații definite in acest moment.",
+            "btnAdd": "Adaug prima entitate"
+          }
+        },
+        "entities": {
+          "title": "Entități",
+          "description": "Entitatile sunt folosite pentru a configura modulele aplicatiei.",
+          "button": "Gestionați entitățile",
+          "btnAdd": "Adaug entitate",
+          "name": "Denumire entitate",
+          "noData": {
+            "title": "Nu există entitiăți",
+            "description": "Nu există entități definite in acest moment."
+          }
+        },
+        "modules": {
+          "title": "Module",
+          "description": "Modulele sunt folosite pentru a configura aplicatia finala.",
+          "button": "Gestionați modulele",
+          "name": "Denumire modul"
+        },
+        "tenants": {
+          "title": "Clienți",
+          "description": "Clienții sunt folosiți pentru a configura utilizatorii aplicatiei.",
+          "listDescription": "Lista de clienți ai aplicatiei.",
+          "button": "Gestionați clienții",
+          "btnAdd": "Adaug client",
+          "name": "Denumire client"
+        },
+        "realms": {
+          "title": "Aplicații",
+          "description": "Aplicațiile sunt folosite pentru livra modulele sub diferite forme.",
+          "button": "Gestionați aplicațiile",
+          "btnAdd": "Adaug aplicație",
+          "btnEdit": "Modifică aplicație",
+          "menu": {
+            "details": "Detalii",
+            "edit": "Editează",
+            "delete": "Șterge",
+            "disable": "Dezactivează"
+          },
+          "noData": {
+            "title": "Nu există aplicații",
+            "description": "Nu există aplicații definite in acest moment."
+          },
+          "modalAdd": {
+            "title": "Adăugare aplicație",
+            "name": "Denumire",
+            "slug": "Prescurtare",
+            "description": "Descriere",
+            "server": "Server",
+            "enabled": "Activ"
+          },
+          "modalEdit": {
+            "title": "Modificare aplicație"
+          },
+          "notifications": {
+            "title": "Administrație aplicații",
+            "add": "Aplicația a fost adăugată cu succes.",
+            "edit": "Aplicația a fost modificată cu succes.",
+            "deleted": "Aplicația a fost ștearsă cu succes.",
+            "deletedError": "Aplicația nu a putut fi ștearsă.",
+            "disable": "Aplicația a fost dezactivată cu succes.",
+            "confirmDelete": "Sunteți sigur că doriți să ștergeți această aplicație?"
+          }
+        },
+        "users": {
+          "title": "Utilizatori",
+          "description": "Utilizatorii sunt folosiți pentru a configura accesul la aplicatie.",
+          "button": "Gestionați utilizatorii",
+          "noData": {
+            "title": "Nu există utilizatori",
+            "description": "Nu există utilizatori în această aplicație."
+          }
+        },
+        "reports": {
+          "title": "Rapoarte",
+          "description": "Rapoartele sunt folosite pentru vizualizarea datelor.",
+          "button": "Vizualizați rapoartele"
+        }
+      }
+    }
+  },
+  "role": "Rol",
+  "name": "Nume",
+  "email": "E-mail",
+  "password": "Parolă",
+  "records": "Înregistrări",
+  "tags": {
+    "singular": "Etichetă",
+    "plural": "Etichete"
+  }
+}

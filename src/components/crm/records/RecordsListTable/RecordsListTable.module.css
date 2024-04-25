@@ -1,0 +1,34 @@
+.recordRow {
+}
+
+.recordRow .recordActions {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.recordRow:hover {
+  opacity: 1;
+  background-color: #00000050;
+}
+
+.recordRow:hover .recordActions {
+  opacity: 1;
+}
+
+.mainAttr {
+  font-weight: bold;
+  text-decoration: none;
+}
+.mainAttr:hover {
+  text-decoration: underline;
+}
+
+.actionBtn {
+  transition: all 0.2s ease-in-out;
+  opacity: .8;
+  scale: .8;
+}
+.actionBtn:hover {
+  opacity: 1;
+  scale: 1.2;
+}

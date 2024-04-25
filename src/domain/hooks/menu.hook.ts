@@ -9,9 +9,11 @@ import {
   IconUsersGroup,
 } from '@tabler/icons-react';
 import { computed } from '@preact/signals-react';
-import { isEmpty } from 'lodash';
+import { isEmpty, isNil } from 'lodash';
 import { $userData } from '@uiSignals/common.signals';
-import { EAccountRoles } from '@/src/domain/types';
+import { useAuth } from '@uiDomain/contexts/AuthProvider';
+import { EAccountRoles } from '@uiStore/features/account/account.types';
+import { useTranslation } from 'react-i18next';
 
 const mockdata = [
   { label: 'Dashboard', icon: IconGauge },
@@ -63,6 +65,13 @@ type TNavItem = {
 };
 
 export const useNavigation = ( tenantModules: any ) => {
+  const { t } = useTranslation();
+  const { currentUser } = useAuth();
+  const userRole = EAccountRoles.APP_ADMIN;
+  // const userRole = isNil( currentUser )
+  //   ? EAccountRoles.VISITOR
+  //   : currentUser?.role || EAccountRoles.OPERATOR;
+
   const $navData = computed(() => {
     if ( !tenantModules ) {
       tenantModules = [];
@@ -80,27 +89,36 @@ export const useNavigation = ( tenantModules: any ) => {
         })),
       }));
 
-    if ( $userData.value.role === EAccountRoles.ADMIN ) {
+    if ( $userData?.value?.role === EAccountRoles.ADMIN ) {
       const adminData: TNavItem[] = [
         {
           label: 'Dashboard',
           icon: IconGauge,
           link: '/',
+          links: [
+            { label: 'Overview', link: '/crm/dashboard' },
+          ],
         },
         ...tenantOptions,
-        {
-          label: 'Settings',
+      ];
+
+      if ( userRole === EAccountRoles.APP_ADMIN ) {
+        adminData.push({
+          label: 'ADMIN',
           icon: IconAdjustments,
           initiallyOpened: true,
           links: [
-            { label: 'Overview', link: '/crm/settings' },
-            { label: 'Attributes', link: '/crm/settings/attributes' },
-            { label: 'Entities', link: '/crm/settings/entities' },
-            { label: 'Modules', link: '/crm/settings/modules' },
-            { label: 'Tenants', link: '/crm/settings/tenants' },
+            { label: t( 'app.settings.admin.overview' ), link: '/crm/settings' },
+            { label: t( 'app.settings.admin.attributes.title' ), link: '/crm/settings/attributes' },
+            { label: t( 'app.settings.admin.entities.title' ), link: '/crm/settings/entities' },
+            { label: t( 'app.settings.admin.modules.title' ), link: '/crm/settings/modules' },
+            { label: t( 'app.settings.admin.tenants.title' ), link: '/crm/settings/tenants' },
+            { label: t( 'app.settings.admin.realms.title' ), link: '/crm/settings/realms' },
+            { label: t( 'app.settings.admin.users.title' ), link: '/crm/settings/users' },
+            { label: t( 'app.settings.admin.reports.title' ), link: '/crm/settings/reports' },
           ],
-        },
-      ];
+        });
+      }
       return adminData;
     }
     return mockdata;

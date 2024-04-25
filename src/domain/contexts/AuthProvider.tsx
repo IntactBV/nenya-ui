@@ -7,7 +7,6 @@ import {
   createUserWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
-import { Group, Loader, Stack } from '@mantine/core';
 import { auth } from '@/src/domain/firebase';
 
 const AuthContext = React.createContext<any>({});
@@ -41,15 +40,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   return (
     <AuthContext.Provider value={value}>
       {isLoading && (
-        <Stack
-          align="center"
-          justify="center"
-          style={{
-            height: '100%',
-          }}
-        >
-          <Loader size="xl" />
-        </Stack>
+        <span>...</span>
       )}
 
       {!isLoading && children}

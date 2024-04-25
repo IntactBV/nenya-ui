@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_BASE_URL } from '@uiDomain/domain.constants';
+import { prepareHeaders } from './repo.helper';
 
 const baseUrl = `${API_BASE_URL}/api/v1/core`;
 
@@ -8,7 +9,10 @@ export const
   entityTag = 'uiEntity',
   entitiesRepo: any = createApi({
     reducerPath: 'entitiesRepo',
-    baseQuery: fetchBaseQuery({ baseUrl }),
+    baseQuery: fetchBaseQuery({
+      baseUrl,
+      prepareHeaders,
+    }),
     tagTypes: [ entitiesTag, entityTag ],
     endpoints: ( builder ) => ({
 
@@ -85,10 +89,26 @@ export const
         providesTags: [ entityTag ],
       }),
 
+      getEntityRelations: builder.query({
+        query: ( entityId: string ) => ({
+          url: `/entities/${entityId}/entity-relations`,
+          method: 'GET',
+        }),
+      }),
+
       assignAttributeToEntity: builder.mutation({
         query: ( body ) => ({
           url: '/entities/assign-attribute-to-entity',
           method: 'POST',
+          body,
+        }),
+        invalidatesTags: [ entityTag ],
+      }),
+
+      updateAttributeOfEntity: builder.mutation({
+        query: ( body ) => ({
+          url: '/entities/fields/field-of-entity',
+          method: 'PATCH',
           body,
         }),
         invalidatesTags: [ entityTag ],
@@ -101,7 +121,7 @@ export const
           params: undefined,
           body: undefined,
         }),
-        invalidatesTags: [ entityTag ],
+        invalidatesTags: [ entityTag, entitiesTag ],
       }),
 
       unlinkEntity: builder.mutation({
@@ -111,7 +131,7 @@ export const
           params: undefined,
           body: undefined,
         }),
-        invalidatesTags: [ entityTag ],
+        invalidatesTags: [ entityTag, entitiesTag ],
       }),
 
       updateEntityAttribute: builder.mutation({
@@ -147,4 +167,6 @@ export const
     useUnlinkEntityMutation,
     useUpdateEntityAttributeMutation,
     useUpdateEntityAttributesOrdersMutation,
+    useUpdateAttributeOfEntityMutation,
+    useGetEntityRelationsQuery,
   } = entitiesRepo;

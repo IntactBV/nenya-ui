@@ -53,6 +53,14 @@
     "tenants",
     "pages",
     "docker",
-    "theme"
+    "theme",
+    "records",
+    "entities",
+    "i18n",
+    "realms"
+    "records",
+    "entities",
+    "i18n",
+    "realms"
   ]
 }

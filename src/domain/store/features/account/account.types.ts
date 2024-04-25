@@ -1,18 +1,42 @@
-export enum EAccountRole {
+export enum EAccountRoles {
+  APP_ADMIN = 'appAdmin',
   ADMIN = 'admin',
-  MANAGER = 'manager',
-  EMPLOYEE = 'employee',
-  VISITOR = 'visitor'
+  EDITOR = 'editor',
+  AGENT = 'agent',
+  OPERATOR = 'operator',
+  VISITOR = 'visitor',
 }
 
-export interface IAccountTenant {
-  slug: string;
-  name: string;
-}
-
-export interface AccountState {
+export interface IUserImpl {
+  providerId: string;
   email: string;
-  tenant: IAccountTenant;
-  role: EAccountRole;
+  displayName: string;
+  uid: string;
+  phoneNumber: string;
+  photoURL: string;
+  tenant?: string;
+  tenantId?: string;
+  tenantName?: string;
+  tenantSlug?: string;
+  role: EAccountRoles;
+  realmSlug?: string;
+  realmId?: string;
+}
+
+export type TAccountTenant = {
+  tenantId: string;
+  tenantSlug?: string;
+  tenantName?: string;
+  role: string;
+  avatar?: string;
+  logo?: string;
+  color?: string;
+};
+export interface AccountState {
+  user: IUserImpl
+  email: string;
+  tenant: TAccountTenant;
+  tenantAccounts: TAccountTenant[];
+  role: EAccountRoles;
   token: string;
 }

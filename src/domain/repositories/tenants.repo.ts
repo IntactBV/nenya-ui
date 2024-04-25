@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_BASE_URL } from '@uiDomain/domain.constants';
+import { prepareHeaders } from './repo.helper';
 
 const baseUrl = `${API_BASE_URL}/api/v1/core`;
 
@@ -8,15 +9,16 @@ export const
   tenantDetailsTag = 'uiTenantDetails',
   tenantsRepo: any = createApi({
     reducerPath: 'tenantsRepo',
-    baseQuery: fetchBaseQuery({ baseUrl }),
+    baseQuery: fetchBaseQuery({
+      baseUrl,
+      prepareHeaders,
+    }),
     tagTypes: [ tenantsTag, tenantDetailsTag ],
     endpoints: ( builder ) => ({
       getAllTenants: builder.query({
         query: () => ({
           url: '/tenants',
           method: 'GET',
-          data: undefined,
-          params: undefined,
         }),
         providesTags: [ tenantsTag ],
       }),
@@ -24,11 +26,17 @@ export const
         query: ( tenantId ) => ({
           url: `/tenants/${tenantId}`,
           method: 'GET',
-          data: undefined,
-          params: undefined,
         }),
         providesTags: [ tenantDetailsTag ],
       }),
+      getTenantUsers: builder.query({
+        query: ( tenantId: string ) => ({
+          url: `/tenants/${tenantId}/tenant-users`,
+          method: 'GET',
+        }),
+        providesTags: [ tenantsTag ],
+      }),
+
       getTenantModules: builder.query({
         query: ( tenantId ) => ({
           url: `/tenants/${tenantId}/tenant-modules`,
@@ -81,6 +89,15 @@ export const
         },
         invalidatesTags: [ tenantsTag, tenantDetailsTag ],
       }),
+      updateTenantModulesOrder: builder.mutation({
+        query: ({ tenantId, body }) => ({
+          url: `/tenants/${tenantId}/update-modules-order`,
+          method: 'POST',
+          params: undefined,
+          body,
+        }),
+        invalidatesTags: [ tenantsTag, tenantDetailsTag ],
+      }),
     }),
   }),
 
@@ -93,4 +110,6 @@ export const
     useUpdateTenantMutation,
     useDeleteTenantMutation,
     useToggleModuleToTenantMutation,
+    useUpdateTenantModulesOrderMutation,
+    useGetTenantUsersQuery,
   } = tenantsRepo;

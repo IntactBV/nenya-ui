@@ -1,6 +1,6 @@
 'use client';
 
-import { Loader, SimpleGrid, Stack, Text, Title } from '@mantine/core';
+import { SimpleGrid, Stack, Text, Title } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { NoData } from '@uiComponents/common/NoData';
 import { PageHeader } from '@uiComponents/common/PageHeader';
@@ -11,13 +11,23 @@ import { IModule } from '@uiDomain/domain.types';
 import { notifications } from '@mantine/notifications';
 import { ModuleCard } from '@uiComponents/crm/modules/ModuleCard';
 import { ModuleModal } from '@uiComponents/crm/modules/ModuleModal/ModuleModal';
+import { CommonPageLoader } from '@uiComponents/common/CommonPageLoader';
+import { ModulesFilters } from '@uiComponents/crm/modules/ModulesFilters/ModulesFilters';
+import { effect, useSignal } from '@preact/signals-react';
+import { useSignals } from '@preact/signals-react/runtime';
+import { $modulesFilterName } from '@uiSignals/modules.signals';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 
 export const ModulesScreen = () => {
+  const { t } = useTranslation();
   const { data: modules, isLoading, error, isError } = useGetAllModulesQuery();
   const [ performDeleteModule ] = useDeleteModuleMutation();
+  const $filteredEntities = useSignal<IModule[]>( modules );
+
+  useSignals();
 
   const handleAddButtonClick = useCallback(( editMode = false, module?: IModule ) => {
-    console.log( '[handleAddButtonClick] ', editMode, module );
     const modalProps = {
       editMode,
       module,
@@ -37,7 +47,6 @@ export const ModulesScreen = () => {
   }, []);
 
   const handleDeleteButtonClick = useCallback(( module: IModule ) => () => {
-    console.log( '[handleDeleteButtonClick] module', module );
     modals.openConfirmModal({
       title: 'Modals manager',
       children: (
@@ -74,6 +83,29 @@ export const ModulesScreen = () => {
     });
   }, [ performDeleteModule ]);
 
+  effect(() => {
+    $filteredEntities.value = modules?.filter(( module: IModule ) => {
+      // const name = module.slug;
+      // const tags = entity.tags.map(( tag: string ) => tag.toLowerCase());
+      // const type = entity.type.toLowerCase();
+
+      const filterName = $modulesFilterName.value.toLowerCase();
+      // const filterTags = $attrFilterTags.value.map(( tag: string ) => tag.toLowerCase());
+      // const filterTypes = $attrFilterTypes.value.map(( type: string ) => type.toLowerCase());
+
+      const nameMatch = isEmpty( filterName ) ||
+        module.name.includes( filterName ) ||
+        module.slug.includes( filterName );
+
+      // const tagsMatch = isEmpty( filterTags ) || filterTags.every(
+      //   ( tag: string ) => tags.includes( tag )
+      // );
+      // const typeMatch = isEmpty( filterTypes ) || filterTypes.includes( type );
+
+      return nameMatch;
+    });
+  });
+
   if ( isError ) {
     return (
       <Stack align="center" h={600} justify="center">
@@ -86,24 +118,26 @@ export const ModulesScreen = () => {
 
   if ( isLoading ) {
     return (
-      <Stack align="center" h={600} justify="center">
-        <Loader size="xl" />
-      </Stack>
+      <CommonPageLoader />
     );
   }
 
   return (
     <>
-      {modules?.length > 0 && (
-        <Stack>
-          <PageHeader
-            title="Modules"
-            description="List of modules"
-            buttonLabel="Add module"
-            buttonClickHandler={() => {
-              handleAddButtonClick();
-            }}
-          />
+      <Stack>
+        <PageHeader
+          title="Modules"
+          description="List of modules"
+          buttonLabel="Add module"
+          buttonClickHandler={() => {
+            handleAddButtonClick();
+          }}
+        />
+
+        <ModulesFilters modules={modules} />
+
+        {$filteredEntities.value?.length > 0 && (
+
           <SimpleGrid
             spacing="lg"
             cols={{
@@ -113,7 +147,7 @@ export const ModulesScreen = () => {
               lg: 4,
             }}
           >
-            {modules.map(( module: IModule ) => (
+            {$filteredEntities.value.map(( module: IModule ) => (
               <ModuleCard
                 key={module.id}
                 module={module}
@@ -126,18 +160,18 @@ export const ModulesScreen = () => {
               /> ))}
           </SimpleGrid>
 
-          {/* <CommonDebugger field="modules" data={modules} floating /> */}
-        </Stack>
-      )}
-      {modules?.length === 0 && (
-        <NoData
-          buttonLabel="Add the first module"
-          description="No entities found"
-          buttonClickHandler={() => {
-            handleAddButtonClick();
-          }}
-        />
-      )}
+        )}
+        {$filteredEntities.value?.length === 0 && (
+          <NoData
+            buttonLabel="Add the first module"
+            description="No entities found"
+            buttonClickHandler={() => {
+              handleAddButtonClick();
+            }}
+          />
+        )}
+        {/* <CommonDebugger field="modules" data={modules} floating /> */}
+      </Stack>
 
     </>
   );

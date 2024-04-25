@@ -11,6 +11,7 @@ import { useCreateModuleMutation, useUpdateModuleMutation } from '@uiRepos/modul
 import { slugify } from '@uiDomain/domain.helpers';
 import { useGetActiveEntitiesQuery } from '@uiRepos/entities.repo';
 import * as reactIcons from 'react-icons';
+import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
 
 interface IModuleModalProps {
   editMode: boolean;
@@ -44,81 +45,15 @@ interface DndListHandleProps {
   }[];
 }
 
-// export function DndListHandle({ data, onChange }: DndListHandleProps ) {
-//   const { classes, cx } = useStyles();
-//   const [ state, handlers ] = useListState( data );
-
-//   const items = state.map(( item, index ) => (
-//     <Draggable key={item.symbol} index={index} draggableId={item.symbol}>
-//       {( provided: any, snapshot: any ) => (
-//         <div
-//           className={cx( classes.item, { [ classes.itemDragging ]: snapshot.isDragging })}
-//           ref={provided.innerRef}
-//           {...provided.draggableProps}
-//         >
-//           <span {...provided.dragHandleProps} className={classes.dragHandle}>
-//             <GoGrabber size="1.5em" />
-//           </span>
-//           <Text className={classes.symbol}>{item.name}</Text>
-//           {/* <div>
-//             <Text>{item.name}</Text>
-//             <Text color="dimmed" size="sm">
-//               Position: {item.position} • Mass: {item.mass}
-//             </Text>
-//           </div> */}
-//         </div>
-//       )}
-//     </Draggable>
-//   ));
-
-//   useEffect(() => {
-//     if ( isEmpty( state )) {
-//       return;
-//     }
-//     console.log( '##### ordered list ', state );
-//     onChange( state.map( s => s.symbol ));
-//   }, [ state ]);
-
-//   return (
-//     <DragDropContext
-//       onDragEnd={async({ destination, source }) => {
-//         console.log( 'onDragEnd', destination, source );
-//         await handlers.reorder({ from: source.index, to: destination?.index || 0 });
-//       }}
-//     >
-//       <Droppable droppableId="dnd-list" direction="vertical">
-//         {( provided, snapshot ) => {
-//           console.log( 'Droppable', provided, snapshot );
-//           return (
-//             <div {...provided.droppableProps} ref={provided.innerRef}>
-//               {/* {state.map(( val, index ) => {
-//                 return <Box id={val.id} key={index} index={index} title={val.name} className={cx( classes.item, { [ classes.itemDragging ]: snapshot.isDragging })}
-//                   ref={provided.innerRef}
-//                   {...provided.draggableProps}>
-//                   <div {...provided.dragHandleProps} className={classes.dragHandle}>
-//                     <GoGrabber size="2em" stroke={1.5} />
-//                   </div>
-//                   <Text className={classes.symbol}>{val.symbol}</Text>
-
-//                 </Box>
-//               })} */}
-//               {items}
-//               {provided.placeholder}
-//             </div>
-//           );
-//         }}
-//       </Droppable>
-//     </DragDropContext>
-//   );
-// }
-
 export const ModuleModal: FC<IModuleModalProps> = ({
   editMode,
   module,
   onClose,
 }) => {
   const form = useForm<IModule>({
-    initialValues: isNil( module ) ? emptyEntity : { ...module },
+    initialValues: isNil( module ) ? emptyEntity : {
+      ...module,
+    },
   });
   const [ performCreateModule, createState ] = useCreateModuleMutation();
   const [ performUpdateModule, updateState ] = useUpdateModuleMutation();
@@ -135,12 +70,23 @@ export const ModuleModal: FC<IModuleModalProps> = ({
 
   const handleFormSubmit = useCallback( async( data: IModule ) => {
     try {
+      let result;
       if ( editMode ) {
-        await performUpdateModule( data );
+        result = await performUpdateModule( data );
       } else {
         delete data?.id;
-        await performCreateModule( data );
+        result = await performCreateModule( data );
       }
+
+      console.log( '##### result', result );
+
+      notifications.show({
+        title: 'Modules manger',
+        message: `The module "${data.name}" has been saved.`,
+        withCloseButton: true,
+        icon: <GoCheck size={20} />,
+        radius: 'md',
+      });
     } catch ( e: any ) {
       console.error( e.message );
     }
@@ -163,27 +109,17 @@ export const ModuleModal: FC<IModuleModalProps> = ({
     });
   }, [ entitiesObject, form.values.entityIds ]);
 
-  useEffect(() => {
-    if ( createState.isUninitialized || createState.status !== 'fulfilled' ) {
-      return;
-    }
+  // useEffect(() => {
+  //   if ( createState.isUninitialized || createState.status !== 'fulfilled' ) {
+  //     return;
+  //   }
 
-    console.log( '[effect1] createState', createState );
-
-    notifications.show({
-      title: 'Modules manger',
-      message: 'The new module has been saved.',
-      withCloseButton: true,
-      icon: <GoCheck size={20} />,
-      radius: 'md',
-    });
-  }, [ createState ]);
+  // }, [ createState ]);
 
   return (
     <Stack>
       {!isNil( form.values ) && (
         <form onSubmit={form.onSubmit( handleFormSubmit )}>
-
           <TextInput
             size="sm"
             mb="md"
@@ -253,6 +189,7 @@ export const ModuleModal: FC<IModuleModalProps> = ({
             placeholder="Pick entities"
             label="Entities"
             withAsterisk
+            value={form.values?.entityIds}
             {...form.getInputProps( 'entityIds' )}
           />
 
@@ -286,7 +223,7 @@ export const ModuleModal: FC<IModuleModalProps> = ({
             <Loader size="md" />
             }
           </Group>
-          <pre>{JSON.stringify( entitiesList, null, 2 )}</pre>
+          {/* <pre>{JSON.stringify( module, null, 2 )}</pre> */}
         </form>
       )}
     </Stack>

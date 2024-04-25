@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_BASE_URL } from '@uiDomain/domain.constants';
+import { prepareHeaders } from './repo.helper';
 
 const baseUrl = `${API_BASE_URL}/api/v1/core`;
 
@@ -8,7 +9,10 @@ export const
   moduleStructTag = 'uiModuleStruct',
   modulesRepo: any = createApi({
     reducerPath: 'modulesRepo',
-    baseQuery: fetchBaseQuery({ baseUrl }),
+    baseQuery: fetchBaseQuery({
+      baseUrl,
+      prepareHeaders,
+    }),
     tagTypes: [ modulesTag, moduleStructTag ],
     endpoints: ( builder ) => ({
       getAllModules: builder.query({
@@ -44,6 +48,15 @@ export const
           return response;
         },
       }),
+      getModule: builder.query({
+        query: ( moduleId: string ) => ({
+          url: `/modules/${moduleId}/module-details`,
+          method: 'GET',
+          data: undefined,
+          params: undefined,
+        }),
+        providesTags: [],
+      }),
       createModule: builder.mutation({
         query: ( data ) => ({
           url: '/modules',
@@ -61,6 +74,28 @@ export const
           body: data,
         }),
         invalidatesTags: [ modulesTag, moduleStructTag ],
+      }),
+      addEntityToModule: builder.mutation({
+        query: ({ moduleId, entityId }: { moduleId: string, entityId: string }) => ({
+          url: `/modules/${moduleId}/entity`,
+          method: 'POST',
+          params: undefined,
+          body: {
+            entityId,
+          },
+        }),
+        invalidatesTags: [ moduleStructTag ],
+      }),
+      removeEntityFromModule: builder.mutation({
+        query: ({ moduleId, entityId }: { moduleId: string, entityId: string }) => ({
+          url: `/modules/${moduleId}/entity`,
+          method: 'DELETE',
+          params: undefined,
+          body: {
+            entityId,
+          },
+        }),
+        invalidatesTags: [ moduleStructTag ],
       }),
       deleteModule: builder.mutation({
         query: ( data ) => ({
@@ -119,6 +154,7 @@ export const
   {
     useGetAllModulesQuery,
     useGetActiveModulesQuery,
+    useGetModuleQuery,
     useGetModuleStructureQuery,
     useCreateModuleMutation,
     useUpdateModuleMutation,
@@ -127,4 +163,6 @@ export const
     useUpdateModulePageMutation,
     useDeleteModulePageMutation,
     useGetModulePageDetailsQuery,
+    useAddEntityToModuleMutation,
+    useRemoveEntityFromModuleMutation,
   } = modulesRepo;

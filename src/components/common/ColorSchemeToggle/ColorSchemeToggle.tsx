@@ -20,13 +20,12 @@ export function ColorSchemeToggle() {
   return (
     <Group
       justify="center"
-      mr="md"
       style={{
         cursor: 'pointer',
       }}
     >
       <Switch
-        size="md"
+        size="lg"
         onLabel={<FiSun size="1rem" />}
         offLabel={<FiMoon size="1rem" />}
         checked={$isDarkMode.value}

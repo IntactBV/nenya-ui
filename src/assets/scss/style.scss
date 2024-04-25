@@ -10,5 +10,36 @@ h1 {
 
 h2 {
   --mantine-font-size-md: 1.2rem;
+  --mantine-h1-font-weight: 700;
 }
 
+h3 {
+  --mantine-h3-font-weight: 300;
+}
+
+a {
+  color: var(--mantine-color-text);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ND Card*/
+.ndCard {
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: var(--mantine-shadow-lg);
+  &_disabled {
+    opacity: 0.3;
+  }
+}
+
+.ndActions {
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+
+.ndCard:hover .ndActions {
+  opacity: 1;
+}

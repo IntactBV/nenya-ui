@@ -1,7 +1,20 @@
+import { EAccountRoles } from '@uiStore/features/account/account.types';
+
 export type TAccountBase = {
     email: string;
-    password: string;
+    password?: string;
     confirm?: string
+};
+
+export type TAccount = TAccountBase & {
+  uid?: string;
+  tenantIds?: string[];
+  name: string;
+  displayName?: string;
+  status?: boolean;
+  role?: EAccountRoles;
+  avatar?: string;
+  tenantAccounts?: any[];
 };
 
 export interface CanvasAttributes {
@@ -14,20 +27,19 @@ export interface CanvasAttributes {
   props?: Record<string, any>;
 }
 
-export enum EAccountRoles {
-  ADMIN = 'admin',
-  EDITOR = 'editor',
-  AGENT = 'agent'
-}
-
 export type TEntityAttribute = {
   id: string;
   slug: string;
   name: string;
+  label: string;
   description: string;
   type: string;
+  isMain?: boolean;
+  showInList?: boolean;
+  relation: boolean;
   options?: string;
   status: boolean;
+  fieldType?: EEntityFieldType;
 };
 
 export type TModulePage = {
@@ -41,7 +53,29 @@ export type TRendererProps = {
   pageData: any;
 };
 
+export enum EEntityFieldType {
+  'Attribute' = 1,
+  'Entity' = 2,
+  'Derived' = 3,
+}
+
 export type TEntityAttributeBaseProps = {
-  attributeId: string,
-  isMain: boolean
+  attributeId?: string,
+  entityId?: string,
+  type: EEntityFieldType,
+  relation: boolean,
+  label: string;
+};
+
+export type TRealm = {
+  id?: string;
+  slug: string;
+  name: string;
+  description: string;
+  server: string;
+  status: boolean;
+};
+
+export type TTag = {
+  id: string;
 };

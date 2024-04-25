@@ -1,5 +1,5 @@
-import { CommonState, TBreadcrumbItem } from './common.types';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { CommonState, TBreadcrumbItem } from './common.types';
 
 const commonReducers = {
 
@@ -22,6 +22,21 @@ const commonReducers = {
   addCommonPageBreadcrumbs: ( state: CommonState, action: PayloadAction<TBreadcrumbItem> ) => {
     state.pageBreadcrumbs.push( action.payload );
   },
-}
+
+  setCommonPageShowEditDrawer: ( state: CommonState, action: PayloadAction<boolean> ) => {
+    state.pageShowEditDrawer = action.payload;
+  },
+
+  setCommonEditedRecord: ( state: CommonState, action: PayloadAction<any> ) => {
+    state.editedRecord = action.payload;
+  },
+
+  setCommonFilter: ( state: CommonState, action: PayloadAction<Record<string, any>> ) => {
+    state.filters = {
+      ...state.filters,
+      ...action.payload,
+    };
+  },
+};
 
 export default commonReducers;

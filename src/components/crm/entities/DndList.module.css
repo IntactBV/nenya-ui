@@ -7,3 +7,7 @@
   font-weight: 700;
   width: rem(60px);
 }
+
+.entity {
+  background-color: var(--mantine-color-dark-8);
+}

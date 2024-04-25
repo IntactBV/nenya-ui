@@ -1,13 +1,16 @@
 import { FC, useCallback, useEffect } from 'react';
-import { Button, Group, Loader, Select, Stack, Switch, TextInput } from '@mantine/core';
+import { Button, Group, Loader, MultiSelect, Select, Stack, Switch, TextInput, Textarea } from '@mantine/core';
 import { IAttribute } from '@uiDomain/domain.types';
 import { useForm } from '@mantine/form';
-import { notifications, Notifications } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 import { isNil } from 'lodash';
-import { GoCheck, GoDeviceDesktop, GoUpload } from 'react-icons/go';
+import { GoCheck } from 'react-icons/go';
 import { ATTRIBUTE_TYPES } from '@uiDomain/domain.constants';
 import { useCreateAttributeMutation, useUpdateAttributeMutation } from '@uiRepos/attributes.repo';
-import { slugify } from '@uiDomain/domain.helpers';
+import { EEntityFieldType } from '@uiDomain/types';
+import { useTranslation } from 'react-i18next';
+import { TagsSelector } from '@uiComponents/tags/TagsSelector/TagsSelector';
+import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
 
 interface IAttributeModalProps {
   editMode: boolean;
@@ -21,6 +24,7 @@ const emptyAttribute: IAttribute = {
   description: '',
   type: 'text',
   options: null,
+  fieldType: EEntityFieldType.Attribute,
 };
 
 export const AttributeModal: FC<IAttributeModalProps> = ({
@@ -28,6 +32,7 @@ export const AttributeModal: FC<IAttributeModalProps> = ({
   attribute,
   onClose,
 }) => {
+  const { t } = useTranslation();
   const form = useForm<IAttribute>({
     initialValues: isNil( attribute ) ? emptyAttribute : { ...attribute },
   });
@@ -37,6 +42,7 @@ export const AttributeModal: FC<IAttributeModalProps> = ({
 
   const handleFormSubmit = useCallback( async( data: IAttribute ) => {
     try {
+      data.status = !!data.status;
       if ( editMode ) {
         await performUpdateAttribute( data );
       } else {
@@ -64,49 +70,24 @@ export const AttributeModal: FC<IAttributeModalProps> = ({
     });
   }, [ createState.status ]);
 
-  useEffect(() => {
-    if ( updateState.isUninitialized || updateState.status !== 'fulfilled' ) {
-      return;
-    }
-    notifications.show({
-      title: 'Attributes manger',
-      message: 'The attribute has been updated.',
-      withCloseButton: true,
-      icon: <GoCheck size={20} />,
-      radius: 'md',
-    });
-  }, [ updateState.status ]);
-
   return (
-    <Stack>
+    <Stack gap="sm">
       {!isNil( form.values ) && (
         <form onSubmit={form.onSubmit( handleFormSubmit )}>
           <Select
             label="Tip"
             placeholder="Tip dispozitiv"
-            data={[ ...ATTRIBUTE_TYPES ]}
+            data={[ ...ATTRIBUTE_TYPES.map(( item: any ) => ({ value: item, label: t( `attributes.types.${item}` ) })) ]}
             {...form.getInputProps( 'type' )}
-            mb={1}
+            mb="md"
             size="sm"
+            searchable
           />
 
           <TextInput
             size="sm"
             mb="md"
-            label="Name"
-            placeholder="name"
-            {...form.getInputProps( 'name' )}
-            onBlur={( e: any ) => {
-              form.setValues({
-                slug: slugify( e.target.value ),
-              });
-            }}
-          />
-
-          <TextInput
-            size="sm"
-            mb="md"
-            label="Slug"
+            label={t( 'slug' )}
             placeholder="slug"
             readOnly={editMode}
             disabled={editMode}
@@ -119,6 +100,18 @@ export const AttributeModal: FC<IAttributeModalProps> = ({
             label="Description"
             placeholder="description"
             {...form.getInputProps( 'description' )}
+          />
+          
+          <Textarea
+            size="sm"
+            mb="md"
+            label="Options"
+            placeholder="options"
+            {...form.getInputProps( 'options' )}
+          />
+
+          <TagsSelector
+            {...form.getInputProps( 'tags' )}
           />
 
           <Switch size="md" label="Enabled" checked={form.values?.status} {...form.getInputProps( 'status' )} />
@@ -137,5 +130,6 @@ export const AttributeModal: FC<IAttributeModalProps> = ({
           </Group>
         </form>
       )}
+      {/* <CommonDebugger data={form.values} field="form" /> */}
     </Stack> );
 };

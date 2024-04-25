@@ -1,0 +1,6 @@
+.main {
+  --first-color: rgb(#ff0000);
+  --my-color: rgba( var(--mantine-primary-color-9), .5);
+  background: -webkit-linear-gradient(-25deg, transparent 60%, var(--mantine-primary-color-9) 100%);
+  background: linear-gradient(155deg, transparent 10%, var(--mantine-color-custom-9) 100%);
+}

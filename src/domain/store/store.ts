@@ -3,7 +3,11 @@ import { attributesRepo } from '@uiRepos/attributes.repo';
 import { entitiesRepo } from '@uiRepos/entities.repo';
 import { modulesRepo } from '@uiRepos/modules.repo';
 import { tenantsRepo } from '@uiRepos/tenants.repo';
+import { usersRepo } from '@uiRepos/users.repo';
 import { recordsRepo } from '@uiRepos/records.repo';
+import { rtkQueryErrorLogger } from '@uiDomain/middlewares/error.midleware';
+import { realmsRepo } from '@uiRepos/realms.repo';
+import { tagsRepo } from '@uiRepos/tags.repo';
 import account from './features/account';
 import common from './features/common';
 
@@ -17,6 +21,9 @@ export const store = configureStore({
     [ modulesRepo.reducerPath ]: modulesRepo.reducer,
     [ tenantsRepo.reducerPath ]: tenantsRepo.reducer,
     [ recordsRepo.reducerPath ]: recordsRepo.reducer,
+    [ usersRepo.reducerPath ]: usersRepo.reducer,
+    [ realmsRepo.reducerPath ]: realmsRepo.reducer,
+    [ tagsRepo.reducerPath ]: tagsRepo.reducer,
 
   },
   middleware: ( getDefaultMiddleware: any ) => getDefaultMiddleware().concat(
@@ -25,6 +32,10 @@ export const store = configureStore({
     modulesRepo.middleware,
     tenantsRepo.middleware,
     recordsRepo.middleware,
+    usersRepo.middleware,
+    realmsRepo.middleware,
+    tagsRepo.middleware,
+    rtkQueryErrorLogger
   ),
 });
 

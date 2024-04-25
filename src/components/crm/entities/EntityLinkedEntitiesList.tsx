@@ -5,6 +5,8 @@ import { useLinkEntityMutation, useUnlinkEntityMutation } from '@uiRepos/entitie
 import { $focusedEntityId } from '@uiDomain/signals/common.signals';
 import { IEntity } from '@uiDomain/domain.types';
 import { FC } from 'react';
+import { isEmpty } from 'lodash';
+import { NoData } from '@uiComponents/common/NoData';
 import { LinkEntityForm } from './LinkEntityForm';
 import { LinkedEntityCard } from './LinkedEntityCard';
 
@@ -24,21 +26,32 @@ export const EntityLinkedEntitiesList: FC<TEntityLinkedEntitiesListProps> = ({
     <Stack>
 
       <Title order={3}>
-            Entities
+        Entities
       </Title>
 
-      {entities.length && entities.map( entity => (
-        <LinkedEntityCard
-          key={entity.id}
-          entity={entity}
-          onRemove={() => {
-            requestUnlinkEntity({
-              idEntity: $focusedEntityId.value,
-              idChild: entity.id,
-            });
-          }}
+      {!isEmpty( entities ) && (
+        <>
+          {entities.map(( entity: any ) => (
+            <LinkedEntityCard
+              key={entity.id}
+              entity={entity}
+              onRemove={() => {
+                requestUnlinkEntity({
+                  idEntity: $focusedEntityId.value,
+                  idChild: entity.id,
+                });
+              }}
+            />
+          ))}
+        </>
+      )}
+
+      {isEmpty( entities ) && (
+        <NoData
+          title="No linked entities"
+          description="You can link entities to this entity"
         />
-      ))}
+      )}
 
       {$showForm.value && (
         <LinkEntityForm
@@ -69,10 +82,6 @@ export const EntityLinkedEntitiesList: FC<TEntityLinkedEntitiesListProps> = ({
           </Button>
         </Group>
       )}
-
-      <pre>{$showForm.toString()}
-        <br />
-      </pre>
 
     </Stack>
   );

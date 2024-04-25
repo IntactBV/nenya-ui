@@ -1,0 +1,25 @@
+.drawer {
+  background-color: aliceblue;
+}
+
+.drawer :global(.mantine-Drawer-header){
+  background-color: #00000050;
+}
+
+.body {
+  margin: 1rem 0;
+}
+
+.card {
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: var(--mantine-shadow-lg);
+}
+
+.actions {
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+
+.card:hover .actions {
+  opacity: 1;
+}

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 import initialState, { commonSlideName } from './common.state';
 import reducers from './common.reducers';
@@ -6,10 +6,18 @@ import reducers from './common.reducers';
 export const commonSlice = createSlice({
   name: commonSlideName,
   initialState,
-  reducers
-})
+  reducers,
+});
 
 // Action creators are generated for each case reducer function
-export const { setCommonExpanded, setCommonPageTitle, setCommonPageBreadcrumbs, addCommonPageBreadcrumbs } = commonSlice.actions
+export const {
+  setCommonExpanded,
+  setCommonPageTitle,
+  setCommonPageBreadcrumbs,
+  addCommonPageBreadcrumbs,
+  setCommonPageShowEditDrawer,
+  setCommonEditedRecord,
+  setCommonFilter,
+} = commonSlice.actions;
 
-export default commonSlice.reducer
+export default commonSlice.reducer;

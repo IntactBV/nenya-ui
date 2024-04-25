@@ -20,7 +20,7 @@ export const LinkedEntityCard:FC<TLinkedEntityCardProps> = ({
         <GoGitBranch size={20} />
         <Title order={4}>{entity.name}</Title>
       </Group>
-      <Tooltip label="Unlink entity" position="right" withArrow color="blue">
+      <Tooltip label="Unlink entity" position="right" withArrow>
         <ActionIcon size="lg" radius="xl" variant="default" onClick={onRemove}>
           <GoUnlink size="2.125rem" style={{ margin: '.4rem' }} />
         </ActionIcon>

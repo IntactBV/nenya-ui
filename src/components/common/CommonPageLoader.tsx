@@ -7,7 +7,7 @@ interface ICommonPageLoaderProps {
 }
 
 export const CommonPageLoader: FC<ICommonPageLoaderProps> = ({ message }) => (
-  <Stack align="center" h={600} justify="center">
+  <Stack align="center" h="100vh" justify="center">
     <Loader size="xl" />
     {!isNil( message ) && <Text>{message}</Text>}
   </Stack>

@@ -5,12 +5,20 @@
   "editor.suggest.showVariables": true,
   "editor.tabCompletion": "on",
   "eslint.format.enable": true,
-  "eslint.validate": ["javascript"],
+  "eslint.validate": ["javascript", "react", "typescript"],
+  "eslint.nodePath": "./node_modules",  
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
   },
   "[javascript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnType": false,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.wordWrap": "on"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
     "editor.formatOnType": false,
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
@@ -46,6 +54,10 @@
     "pages",
     "docker",
     "theme",
+    "records",
+    "entities",
+    "i18n",
+    "realms"
     "records",
     "entities",
     "i18n",

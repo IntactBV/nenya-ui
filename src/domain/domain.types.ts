@@ -29,6 +29,7 @@ export interface IEntity {
   status?: boolean;
   attributeIds?: IAttribute[];
   attributes?: IAttribute[];
+  tags?: string[];
 }
 
 export interface IModule {

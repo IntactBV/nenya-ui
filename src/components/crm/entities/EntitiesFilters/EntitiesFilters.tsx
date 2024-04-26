@@ -1,7 +1,6 @@
 import { Card, Group, Input, MultiSelect } from '@mantine/core';
 import { useSignals } from '@preact/signals-react/runtime';
-import { TEntityAttribute } from '@uiDomain/types';
-import { $entitiesFilterName } from '@uiSignals/entities.signals';
+import { $entitiesFilterName, $entitiesFilterTags } from '@uiSignals/entities.signals';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CiFilter } from 'react-icons/ci';
@@ -14,17 +13,18 @@ export const EntitiesFilters: FC<TEntitiesFiltersProps> = ({
   entities,
 }) => {
   const { t } = useTranslation();
-  // const filters = useMemo(() => {
-  //   const uniqTags = entities.reduce(( acc, attribute ) => {
-  //     for ( const tag of attribute.tags ) {
-  //       if ( !acc.includes( tag )) {
-  //         acc.push( tag );
-  //       }
-  //     }
-  //     return acc;
-  //   }, []);
-  //   return uniqTags.map(( tag ) => ({ value: tag, label: tag }));
-  // }, [ entities ]);
+  const tags = useMemo(() => {
+    const uniqTags = entities.reduce(( acc, attribute ) => {
+      for ( const tag of attribute.tags ) {
+        if ( !acc.includes( tag )) {
+          acc.push( tag );
+        }
+      }
+      return acc;
+    }, []);
+    return uniqTags.map(( tag ) => ({ value: tag, label: tag }));
+  }, [ entities ]);
+
   // const types = useMemo(() => {
   //   const uniqTags = entities.reduce(( acc, attribute ) => {
   //     if ( !acc.includes( attribute.type )) {
@@ -34,6 +34,8 @@ export const EntitiesFilters: FC<TEntitiesFiltersProps> = ({
   //   }, []);
   //   return uniqTags.map(( tag ) => ({ value: tag, label: tag }));
   // }, [ entities ]);
+
+
 
   useSignals();
 
@@ -49,24 +51,16 @@ export const EntitiesFilters: FC<TEntitiesFiltersProps> = ({
             $entitiesFilterName.value = e.currentTarget.value;
           }}
         />
-        {/* <MultiSelect
-          data={filters}
+        <MultiSelect
+          data={tags}
           placeholder="Pick tags"
           withAsterisk
-          value={$attrFilterTags.value}
+          value={$entitiesFilterTags.value}
           onChange={( tags ) => {
-            $attrFilterTags.value = tags;
+            $entitiesFilterTags.value = tags;
           }}
         />
-        <MultiSelect
-          data={types}
-          placeholder="Pick types"
-          withAsterisk
-          value={$attrFilterTypes.value}
-          onChange={( tags ) => {
-            $attrFilterTypes.value = tags;
-          }}
-        /> */}
+
       </Group>
     </Card>
   );

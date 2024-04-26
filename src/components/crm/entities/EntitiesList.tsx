@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { effect, useSignal } from '@preact/signals-react';
 import { useSignals } from '@preact/signals-react/runtime';
-import { $entitiesFilterName } from '@uiSignals/entities.signals';
+import { $entitiesFilterName, $entitiesFilterTags } from '@uiSignals/entities.signals';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { EntityModal } from './EntityModal';
@@ -88,24 +88,30 @@ export const EntitiesList: FC<IEntitiesListProps> = ({ entities }) => {
   effect(() => {
     filteredEntities.value = entities.filter(( entity: IEntity ) => {
       const name = t( `attributes.names.${entity.slug}` ) || entity.slug;
-      // const tags = entity.tags.map(( tag: string ) => tag.toLowerCase());
+      const tags = entity.tags.map(( tag: string ) => tag.toLowerCase());
       // const type = entity.type.toLowerCase();
 
       const filterName = $entitiesFilterName.value.toLowerCase();
-      // const filterTags = $attrFilterTags.value.map(( tag: string ) => tag.toLowerCase());
+      const filterTags = $entitiesFilterTags.value.map(( tag: string ) => tag.toLowerCase());
       // const filterTypes = $attrFilterTypes.value.map(( type: string ) => type.toLowerCase());
 
       const nameMatch = isEmpty( filterName ) ||
         name.includes( filterName ) ||
         entity.slug.includes( filterName );
-      // const tagsMatch = isEmpty( filterTags ) || filterTags.every(
-      //   ( tag: string ) => tags.includes( tag )
-      // );
+      const tagsMatch = isEmpty( filterTags ) || filterTags.every(
+        ( tag: string ) => tags.includes( tag )
+      );
       // const typeMatch = isEmpty( filterTypes ) || filterTypes.includes( type );
 
-      return nameMatch;
+      console.log('entity', entity.slug, entity.tags, nameMatch, tagsMatch, filterTags);
+
+      return nameMatch && tagsMatch;
     });
-  });
+  }, [
+    entities, 
+    $entitiesFilterName.value, 
+    $entitiesFilterTags.value 
+  ]);
 
   const rows = filteredEntities.value.map(( item ) => (
     <Table.Tr key={item.name}>
@@ -121,6 +127,14 @@ export const EntitiesList: FC<IEntitiesListProps> = ({ entities }) => {
             {item.description}
           </Text>
         </Group>
+      </Table.Td>
+
+      <Table.Td>
+        {item.tags.map(( tag: string, tagIndex: number ) => (
+          <Badge key={`tag_${tagIndex}`} m={3} variant="light">
+            {tag}
+          </Badge>
+        ))}
       </Table.Td>
 
       <Table.Td width={150}>
@@ -161,6 +175,7 @@ export const EntitiesList: FC<IEntitiesListProps> = ({ entities }) => {
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Entity</Table.Th>
+            <Table.Th style={{ textAlign: 'center' }}>Tags</Table.Th>
             <Table.Th style={{ textAlign: 'center' }}>Status</Table.Th>
             <Table.Th style={{ textAlign: 'center' }}>Actions</Table.Th>
           </Table.Tr>

@@ -8,6 +8,7 @@ import { GoCheck } from 'react-icons/go';
 import { useCreateEntityMutation, useUpdateEntityMutation } from '@uiRepos/entities.repo';
 import { useGetAllAttributesQuery } from '@uiRepos/attributes.repo';
 import { slugify } from '@uiDomain/domain.helpers';
+import { TagsSelector } from '@uiComponents/tags/TagsSelector/TagsSelector';
 
 interface IEntityModalProps {
   editMode: boolean;
@@ -104,14 +105,10 @@ export const EntityModal: FC<IEntityModalProps> = ({
             {...form.getInputProps( 'description' )}
           />
 
-          {/* <MultiSelect
-          mb="md"
-          data={attributesData}
-          placeholder="Pick attributes"
-          label="Attributes"
-          withAsterisk
-          {...form.getInputProps( 'attributeIds' )}
-        /> */}
+          <TagsSelector
+            {...form.getInputProps( 'tags' )}
+          />
+
 
           <Switch
             size="md"

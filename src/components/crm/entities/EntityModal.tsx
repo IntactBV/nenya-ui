@@ -6,7 +6,6 @@ import { notifications } from '@mantine/notifications';
 import { isNil } from 'lodash';
 import { GoCheck } from 'react-icons/go';
 import { useCreateEntityMutation, useUpdateEntityMutation } from '@uiRepos/entities.repo';
-import { useGetAllAttributesQuery } from '@uiRepos/attributes.repo';
 import { slugify } from '@uiDomain/domain.helpers';
 import { TagsSelector } from '@uiComponents/tags/TagsSelector/TagsSelector';
 
@@ -32,11 +31,6 @@ export const EntityModal: FC<IEntityModalProps> = ({
   const form = useForm<IEntity>({
     initialValues: isNil( entity ) ? emptyEntity : { ...entity },
   });
-  const { data: attributes } = useGetAllAttributesQuery();
-  // const attributesData = useMemo(() => attributes?.map(( item: IAttribute ) => ({
-  //   value: item.id,
-  //   label: item.name,
-  // })) || [], [ attributes ]);
   const [ performCreateEntity, createState ] = useCreateEntityMutation();
   const [ performUpdateEntity, updateState ] = useUpdateEntityMutation();
 

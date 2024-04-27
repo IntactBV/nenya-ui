@@ -1,4 +1,4 @@
-import { ActionIcon, Card, Group, Menu, Stack, Text, Title, rem } from '@mantine/core';
+import { ActionIcon, Badge, Card, Group, Menu, Stack, Text, Title, rem } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IModule } from '@uiDomain/domain.types';
 import { useUpdateModuleMutation } from '@uiRepos/modules.repo';
@@ -63,9 +63,16 @@ export const ModuleCard: FC<IModuleCardProps> = ({ module, onEdit, onDelete }) =
               <Text>{module.slug}</Text>
             </Stack>
           </Group>
+            <Group>
+              {module.tags?.map(( tag ) => (
+                <Badge key={tag} style={{ marginRight: rem( 0.5 ) }}>
+                  {tag}
+                </Badge>
+              ))}
+            </Group>
           <Menu withinPortal position="bottom-end" shadow="sm">
             <Menu.Target>
-              <ActionIcon>
+              <ActionIcon variant="subtle">
                 <GoKebabHorizontal size="1rem" />
               </ActionIcon>
             </Menu.Target>

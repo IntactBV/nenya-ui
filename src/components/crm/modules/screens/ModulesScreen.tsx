@@ -15,7 +15,7 @@ import { CommonPageLoader } from '@uiComponents/common/CommonPageLoader';
 import { ModulesFilters } from '@uiComponents/crm/modules/ModulesFilters/ModulesFilters';
 import { effect, useSignal } from '@preact/signals-react';
 import { useSignals } from '@preact/signals-react/runtime';
-import { $modulesFilterName } from '@uiSignals/modules.signals';
+import { $modulesFilterName, $modulesFilterTags } from '@uiSignals/modules.signals';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
@@ -86,23 +86,23 @@ export const ModulesScreen = () => {
   effect(() => {
     $filteredEntities.value = modules?.filter(( module: IModule ) => {
       // const name = module.slug;
-      // const tags = entity.tags.map(( tag: string ) => tag.toLowerCase());
+      const tags = module.tags.map(( tag: string ) => tag.toLowerCase());
       // const type = entity.type.toLowerCase();
 
       const filterName = $modulesFilterName.value.toLowerCase();
-      // const filterTags = $attrFilterTags.value.map(( tag: string ) => tag.toLowerCase());
+      const filterTags = $modulesFilterTags.value.map(( tag: string ) => tag.toLowerCase());
       // const filterTypes = $attrFilterTypes.value.map(( type: string ) => type.toLowerCase());
 
       const nameMatch = isEmpty( filterName ) ||
         module.name.includes( filterName ) ||
         module.slug.includes( filterName );
 
-      // const tagsMatch = isEmpty( filterTags ) || filterTags.every(
-      //   ( tag: string ) => tags.includes( tag )
-      // );
+      const tagsMatch = isEmpty( filterTags ) || filterTags.every(
+        ( tag: string ) => tags.includes( tag )
+      );
       // const typeMatch = isEmpty( filterTypes ) || filterTypes.includes( type );
 
-      return nameMatch;
+      return nameMatch && tagsMatch;
     });
   });
 
@@ -136,7 +136,7 @@ export const ModulesScreen = () => {
 
         <ModulesFilters modules={modules} />
 
-        {$filteredEntities.value?.length > 0 && (
+        {/* {$filteredEntities.value?.length > 0 && (
 
           <SimpleGrid
             spacing="lg"
@@ -160,7 +160,19 @@ export const ModulesScreen = () => {
               /> ))}
           </SimpleGrid>
 
-        )}
+        )} */}
+        {$filteredEntities.value.map(( module: IModule ) => (
+          <ModuleCard
+            key={module.id}
+            module={module}
+            onEdit={( moduleToEdit ) => {
+              handleAddButtonClick( true, moduleToEdit );
+            }}
+            onDelete={
+              handleDeleteButtonClick( module )
+            }
+          /> 
+        ))}
         {$filteredEntities.value?.length === 0 && (
           <NoData
             buttonLabel="Add the first module"

@@ -39,6 +39,7 @@ export interface IModule {
   description: string;
   status: boolean;
   entityIds?: string[];
+  tags?: string[];
   entities?: IEntity[];
   iconType?: string;
   icon?: string;

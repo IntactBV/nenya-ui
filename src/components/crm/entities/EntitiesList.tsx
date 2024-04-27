@@ -46,7 +46,7 @@ export const EntitiesList: FC<IEntitiesListProps> = ({ entities }) => {
     router.push( `/crm/settings/entities/${entity.id}` );
   };
 
-  const handleDeleteClick = ( item: IAttribute ) => () => {
+  const handleDeleteClick = ( item: IEntity ) => () => {
     modals.openConfirmModal({
       title: 'Entities manager',
       children: (
@@ -174,10 +174,10 @@ export const EntitiesList: FC<IEntitiesListProps> = ({ entities }) => {
       <Table miw={800} verticalSpacing="md" stickyHeader>
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>Entity</Table.Th>
-            <Table.Th style={{ textAlign: 'center' }}>Tags</Table.Th>
-            <Table.Th style={{ textAlign: 'center' }}>Status</Table.Th>
-            <Table.Th style={{ textAlign: 'center' }}>Actions</Table.Th>
+            <Table.Th>{t( 'entities.singular' )}</Table.Th>
+            <Table.Th style={{ textAlign: 'center' }}>{t( 'app.settings.admin.attributes.tags' )}</Table.Th>
+            <Table.Th style={{ textAlign: 'center' }}>{t( 'app.settings.admin.attributes.status' )}</Table.Th>
+            <Table.Th style={{ textAlign: 'center' }}>{t( 'app.settings.admin.attributes.actions' )}</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <tbody>{rows}</tbody>

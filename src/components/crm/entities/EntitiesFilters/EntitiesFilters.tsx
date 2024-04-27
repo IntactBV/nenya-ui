@@ -22,7 +22,7 @@ export const EntitiesFilters: FC<TEntitiesFiltersProps> = ({
       }
       return acc;
     }, []);
-    return uniqTags.map(( tag ) => ({ value: tag, label: tag }));
+    return uniqTags.map(( tag: string ) => ({ value: tag, label: tag }));
   }, [ entities ]);
 
   // const types = useMemo(() => {

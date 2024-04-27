@@ -1,7 +1,8 @@
 import { Card, Group, Input, MultiSelect } from '@mantine/core';
 import { useSignals } from '@preact/signals-react/runtime';
-import { $modulesFilterName } from '@uiSignals/modules.signals';
+import { $modulesFilterName, $modulesFilterTags } from '@uiSignals/modules.signals';
 import { FC, useMemo } from 'react';
+import { isNil } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { CiFilter } from 'react-icons/ci';
 
@@ -13,17 +14,19 @@ export const ModulesFilters: FC<TModulesFiltersProps> = ({
   modules,
 }) => {
   const { t } = useTranslation();
-  // const filters = useMemo(() => {
-  //   const uniqTags = entities.reduce(( acc, attribute ) => {
-  //     for ( const tag of attribute.tags ) {
-  //       if ( !acc.includes( tag )) {
-  //         acc.push( tag );
-  //       }
-  //     }
-  //     return acc;
-  //   }, []);
-  //   return uniqTags.map(( tag ) => ({ value: tag, label: tag }));
-  // }, [ entities ]);
+  const filters = useMemo(() => {
+    const uniqTags = modules.reduce(( acc, mod: any ) => {
+      if (isNil(mod.tags)) return acc;
+      for ( const tag of mod.tags ) {
+        if ( !acc.includes( tag )) {
+          acc.push( tag );
+        }
+      }
+      return acc;
+    }, []);
+    return uniqTags.map(( tag: string ) => ({ value: tag, label: tag }));
+  }, [ modules ]);
+
   // const types = useMemo(() => {
   //   const uniqTags = entities.reduce(( acc, attribute ) => {
   //     if ( !acc.includes( attribute.type )) {
@@ -48,16 +51,17 @@ export const ModulesFilters: FC<TModulesFiltersProps> = ({
             $modulesFilterName.value = e.currentTarget.value;
           }}
         />
-        {/* <MultiSelect
+        <MultiSelect
+          disabled={filters.length === 0}
           data={filters}
           placeholder="Pick tags"
           withAsterisk
-          value={$attrFilterTags.value}
+          value={$modulesFilterTags.value}
           onChange={( tags ) => {
-            $attrFilterTags.value = tags;
+            $modulesFilterTags.value = tags;
           }}
         />
-        <MultiSelect
+        {/* <MultiSelect
           data={types}
           placeholder="Pick types"
           withAsterisk

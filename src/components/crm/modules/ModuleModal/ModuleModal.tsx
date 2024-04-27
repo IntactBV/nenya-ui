@@ -11,6 +11,7 @@ import { useCreateModuleMutation, useUpdateModuleMutation } from '@uiRepos/modul
 import { slugify } from '@uiDomain/domain.helpers';
 import { useGetActiveEntitiesQuery } from '@uiRepos/entities.repo';
 import * as reactIcons from 'react-icons';
+import { TagsSelector } from '@uiComponents/tags/TagsSelector/TagsSelector';
 import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
 
 interface IModuleModalProps {
@@ -25,6 +26,7 @@ const emptyEntity: IModule = {
   name: '',
   description: '',
   status: true,
+  tags: []
 };
 
 interface DndListProps {
@@ -192,6 +194,11 @@ export const ModuleModal: FC<IModuleModalProps> = ({
             value={form.values?.entityIds}
             {...form.getInputProps( 'entityIds' )}
           />
+
+          <TagsSelector
+            {...form.getInputProps( 'tags' )}
+          />
+
 
           <Switch
             size="md"

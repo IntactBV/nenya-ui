@@ -4,7 +4,7 @@ import { IModule } from '@uiDomain/domain.types';
 import { useUpdateModuleMutation } from '@uiRepos/modules.repo';
 import Link from 'next/link';
 import { FC, useCallback } from 'react';
-import { GoCheck, GoCircleSlash, GoDatabase, GoEye, GoEyeClosed, GoKebabHorizontal, GoPencil, GoTrash } from 'react-icons/go';
+import { GoCheck, GoCircleSlash, GoDatabase, GoEye, GoEyeClosed, GoKebabHorizontal, GoPackage, GoPencil, GoTrash } from 'react-icons/go';
 
 interface IModuleCardProps {
   module: IModule;
@@ -49,19 +49,32 @@ export const ModuleCard: FC<IModuleCardProps> = ({ module, onEdit, onDelete }) =
     >
       <Card.Section p="sm">
         <Group justify="space-between">
-          <Group>
+          <Group style={{
+            minWidth: '40%',
+          }}>
             <Link href={`/crm/settings/modules/${module.slug}`}>
-              {module.status && <GoDatabase size={24} color="grey" />}
+              {module.status && <GoPackage size={24} color="grey" />}
               {!module.status && <GoCircleSlash size={24} color="grey" />}
             </Link>
             <Stack gap={0}>
               <Link href={`/crm/settings/modules/${module.slug}`}>
+                <Group
+                  justify='start'
+                  align='center'
+                  gap={5}
+                >
                 <Title order={4}>
-                  {module.name}
+                  {module.name} 
                 </Title>
+                <Badge 
+                  size="sm"
+                  variant="light"
+                >{module.entityIds.length}</Badge>
+                </Group>
               </Link>
               <Text>{module.slug}</Text>
             </Stack>
+            
           </Group>
             <Group>
               {module.tags?.map(( tag ) => (

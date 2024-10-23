@@ -1,8 +1,8 @@
 'use client';
 
-import { ActionIcon, Group, Loader, Stack, Tabs, Title, Tooltip } from '@mantine/core';
+import { ActionIcon, Button, Group, Loader, Stack, Tabs, Title, Tooltip } from '@mantine/core';
 import { FC, useMemo } from 'react';
-import { GoChevronLeft, GoFile, GoPackageDependencies, GoPencil } from 'react-icons/go';
+import { GoChevronLeft, GoDownload, GoFile, GoPackageDependencies, GoPencil } from 'react-icons/go';
 import Link from 'next/link';
 import { IEntity, IModule } from '@uiDomain/domain.types';
 import { modals } from '@mantine/modals';
@@ -11,6 +11,7 @@ import { useGetModuleStructureQuery } from '@uiRepos/modules.repo';
 import { ModulePagesTab } from '@uiComponents/crm/modules/tabs/ModulePagesTab/ModulePagesTab';
 import { ModuleEntitiesTab } from '@uiComponents/crm/modules/tabs/ModuleEntitiesTab/ModuleEntitiesTab';
 import { CommonPageLoader } from '@uiComponents/common/CommonPageLoader';
+import { API_BASE_URL } from '@uiDomain/domain.constants';
 
 type TModuleScreenProps = {
   moduleSlug: string;
@@ -23,46 +24,54 @@ type TModuleTab = {
   panel: any
 };
 
+const baseUrl = `${API_BASE_URL}/api/v1/core`;
+
 export const ModuleScreen: FC<TModuleScreenProps> = ({ moduleSlug }) => {
-  const moduleTabsData: TModuleTab[] = useMemo(() => [ {
-    value: 'pages',
-    label: 'Pages',
-    icon: GoFile,
-    panel: ModulePagesTab,
-  }, {
-    value: 'entities',
-    label: 'Entities',
-    icon: GoPackageDependencies,
-    panel: ModuleEntitiesTab,
-  } ], []);
+  const moduleTabsData: TModuleTab[] = useMemo(() => [
+    {
+      value: 'pages',
+      label: 'Pages',
+      icon: GoFile,
+      panel: ModulePagesTab,
+    },
+    {
+      value: 'entities',
+      label: 'Entities',
+      icon: GoPackageDependencies,
+      panel: ModuleEntitiesTab,
+    },
+  ], []),
 
-  const handleEditClick = ( module: IModule ) => () => {
-    console.log( 'Edit module', module );
-    const moduleToEdit = {
-      ...module,
-      entityIds: module.entities.map(( entity: IEntity ) => entity.id ),
-    };
-    modals.open({
-      id: 'entityModal',
-      title: 'Edit module',
-      children: (
-        <ModuleModal
-          editMode
-          module={moduleToEdit}
-          onClose={() => {
-            modals.closeAll();
-          }}
-        />
-      ),
-    });
-  };
+    handleEditClick = ( module: IModule ) => () => {
+      console.log( 'Edit module', module );
+      const moduleToEdit = {
+        ...module,
+        entityIds: module.entities.map(( entity: IEntity ) => entity.id ),
+      };
+      modals.open({
+        id: 'entityModal',
+        title: 'Edit module',
+        children: (
+          <ModuleModal
+            editMode
+            module={moduleToEdit}
+            onClose={() => {
+              modals.closeAll();
+            }}
+          />
+        ),
+      });
+    },
 
-  const {
-    data: moduleStruct,
-    isLoading,
-    error,
-    isError,
-  } = useGetModuleStructureQuery( moduleSlug );
+    {
+      data: moduleStruct,
+      isLoading,
+      error,
+      isError,
+    } = useGetModuleStructureQuery( moduleSlug ),
+
+    exportLink = useMemo(() => `${baseUrl}/modules/${moduleStruct?.id}/export`
+      , [ moduleStruct ]);
 
   // useEffect(() => {
   //   $focusedEntityId.value = entitySlug;
@@ -82,23 +91,36 @@ export const ModuleScreen: FC<TModuleScreenProps> = ({ moduleSlug }) => {
 
   return (
     <Stack>
-      <Group>
-        <Tooltip label="Back to modules list" position="left" withArrow>
-          <Link href="/crm/settings/modules">
-            <GoChevronLeft size="2.125rem" style={{ margin: '.5rem' }} />
-          </Link>
-        </Tooltip>
-        <Stack gap={0}>
-          <Title order={2}>
-            {moduleStruct ? moduleStruct.name : 'Module'}
-          </Title>
-          <span>Module details</span>
-        </Stack>
-        <Tooltip label="Entity details" position="right" withArrow>
-          <ActionIcon size="lg" radius="xl" variant="default" onClick={handleEditClick( moduleStruct )}>
-            <GoPencil size="2.125rem" style={{ margin: '.5rem' }} />
-          </ActionIcon>
-        </Tooltip>
+      <Group justify="space-between">
+        <Group>
+          <Tooltip label="Back to modules list" position="left" withArrow>
+            <Link href="/crm/settings/modules">
+              <GoChevronLeft size="2.125rem" style={{ margin: '.5rem' }} />
+            </Link>
+          </Tooltip>
+          <Stack gap={0}>
+            <Title order={2}>
+              {moduleStruct ? moduleStruct.name : 'Module'}
+            </Title>
+            <span>Module details</span>
+          </Stack>
+          <Tooltip label="Entity details" position="right" withArrow>
+            <ActionIcon size="lg" radius="xl" variant="default" onClick={handleEditClick( moduleStruct )}>
+              <GoPencil size="2.125rem" style={{ margin: '.5rem' }} />
+            </ActionIcon>
+          </Tooltip>
+        </Group>
+        <Link
+          href={exportLink}
+          target="_blank"
+        >
+          <Button
+            variant="outline"
+            leftSection={<GoDownload size="1.5rem" />}
+          >
+            Export module
+          </Button>
+        </Link>
       </Group>
 
       <Tabs defaultValue="pages">
@@ -117,10 +139,10 @@ export const ModuleScreen: FC<TModuleScreenProps> = ({ moduleSlug }) => {
         </Tabs.List>
 
         {moduleTabsData.map( tabData => {
-          const TabPanel = tabData.panel;
-          const attributes = {
-            [ tabData.value ]: moduleStruct[ tabData.value ],
-          };
+          const TabPanel = tabData.panel,
+            attributes = {
+              [ tabData.value ]: moduleStruct[ tabData.value ],
+            };
           return (
             <Tabs.Panel key={tabData.value} value={tabData.value} pt="xs">
               <TabPanel

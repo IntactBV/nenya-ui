@@ -16,7 +16,9 @@ export const ModulesFilters: FC<TModulesFiltersProps> = ({
   const { t } = useTranslation();
   const filters = useMemo(() => {
     const uniqTags = modules.reduce(( acc, mod: any ) => {
-      if (isNil(mod.tags)) return acc;
+      if ( isNil( mod.tags )) {
+        return acc;
+      }
       for ( const tag of mod.tags ) {
         if ( !acc.includes( tag )) {
           acc.push( tag );
@@ -40,18 +42,21 @@ export const ModulesFilters: FC<TModulesFiltersProps> = ({
   useSignals();
 
   return (
-    <Card shadow="md" mb="xl" withBorder>
+    <Card mb="xs" bg="dark" bga="scroll">
       <Group>
         <CiFilter size={20} />
         <Input
           name="name"
+          variant="filled"
           placeholder={t( 'app.settings.admin.modules.name' )}
           value={$modulesFilterName.value}
           onChange={( e ) => {
             $modulesFilterName.value = e.currentTarget.value;
           }}
         />
+
         <MultiSelect
+          variant="filled"
           disabled={filters.length === 0}
           data={filters}
           placeholder="Pick tags"
@@ -61,6 +66,7 @@ export const ModulesFilters: FC<TModulesFiltersProps> = ({
             $modulesFilterTags.value = tags;
           }}
         />
+
         {/* <MultiSelect
           data={types}
           placeholder="Pick types"

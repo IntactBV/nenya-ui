@@ -1,11 +1,11 @@
 'use client';
 
-import { SimpleGrid, Stack, Text, Title } from '@mantine/core';
+import { Button, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { NoData } from '@uiComponents/common/NoData';
 import { PageHeader } from '@uiComponents/common/PageHeader';
 import { useCallback } from 'react';
-import { GoAlert, GoCheck } from 'react-icons/go';
+import { GoAlert, GoCheck, GoInbox, GoPlus } from 'react-icons/go';
 import { useDeleteModuleMutation, useGetAllModulesQuery } from '@uiRepos/modules.repo';
 import { IModule } from '@uiDomain/domain.types';
 import { notifications } from '@mantine/notifications';
@@ -18,6 +18,9 @@ import { useSignals } from '@preact/signals-react/runtime';
 import { $modulesFilterName, $modulesFilterTags } from '@uiSignals/modules.signals';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
+import { CommonHeader } from '@uiComponents/common/CommonHeader/CommonHeader';
+import { CiImport } from 'react-icons/ci';
+import Link from 'next/link';
 
 export const ModulesScreen = () => {
   const { t } = useTranslation();
@@ -125,14 +128,39 @@ export const ModulesScreen = () => {
   return (
     <>
       <Stack>
-        <PageHeader
-          title="Modules"
-          description="List of modules"
-          buttonLabel="Add module"
-          buttonClickHandler={() => {
-            handleAddButtonClick();
-          }}
-        />
+        <CommonHeader
+          id="modulesHeader"
+          title={t( 'app.settings.admin.modules.title' )}
+          description={t( 'app.settings.admin.modules.description' )}
+          backButtonUrl="/crm/settings"
+        >
+          <Group
+            gap="md"
+          >
+            <Link href="/crm/settings/modules/import">
+              <Button
+                variant="outline"
+                leftSection={<CiImport size={24} />}
+                size="md"
+                onClick={() => {
+                  console.log( 'import' );
+                }}
+              >
+                {t( 'app.settings.admin.modules.btnImport' )}
+              </Button>
+            </Link>
+            <Button
+              variant="gradient"
+              leftSection={<GoPlus size={24} />}
+              size="md"
+              onClick={() => {
+                handleAddButtonClick();
+              }}
+            >
+              {t( 'app.settings.admin.modules.btnAdd' )}
+            </Button>
+          </Group>
+        </CommonHeader>
 
         <ModulesFilters modules={modules} />
 
@@ -171,7 +199,7 @@ export const ModulesScreen = () => {
             onDelete={
               handleDeleteButtonClick( module )
             }
-          /> 
+          />
         ))}
         {$filteredEntities.value?.length === 0 && (
           <NoData

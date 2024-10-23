@@ -60,4 +60,5 @@ export interface ITenant {
   color?: string;
   logo?: string;
   realm?: string;
+  tags?: string[];
 }

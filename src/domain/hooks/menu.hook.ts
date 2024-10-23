@@ -95,25 +95,23 @@ export const useNavigation = ( tenantModules: any ) => {
           label: 'Dashboard',
           icon: IconGauge,
           link: '/',
-          links: [
-            { label: 'Overview', link: '/crm/dashboard' },
-          ],
+          links: [ { label: 'Overview', link: '/crm/dashboard' } ],
         },
         ...tenantOptions,
       ];
 
       if ( userRole === EAccountRoles.APP_ADMIN ) {
         adminData.push({
-          label: 'ADMIN',
+          label: 'Platform Admin',
           icon: IconAdjustments,
           initiallyOpened: true,
           links: [
             { label: t( 'app.settings.admin.overview' ), link: '/crm/settings' },
-            { label: t( 'app.settings.admin.attributes.title' ), link: '/crm/settings/attributes' },
-            { label: t( 'app.settings.admin.entities.title' ), link: '/crm/settings/entities' },
-            { label: t( 'app.settings.admin.modules.title' ), link: '/crm/settings/modules' },
-            { label: t( 'app.settings.admin.tenants.title' ), link: '/crm/settings/tenants' },
             { label: t( 'app.settings.admin.realms.title' ), link: '/crm/settings/realms' },
+            { label: t( 'app.settings.admin.modules.title' ), link: '/crm/settings/modules' },
+            { label: t( 'app.settings.admin.entities.title' ), link: '/crm/settings/entities' },
+            { label: t( 'app.settings.admin.attributes.title' ), link: '/crm/settings/attributes' },
+            { label: t( 'app.settings.admin.tenants.title' ), link: '/crm/settings/tenants' },
             { label: t( 'app.settings.admin.users.title' ), link: '/crm/settings/users' },
             { label: t( 'app.settings.admin.reports.title' ), link: '/crm/settings/reports' },
           ],

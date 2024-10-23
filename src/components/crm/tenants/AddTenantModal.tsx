@@ -12,6 +12,7 @@ import { useCreateTenantMutation } from '@uiRepos/tenants.repo';
 import { useTranslation } from 'react-i18next';
 import { CommonDebugger } from '@uiComponents/common/CommonDebugger';
 import { useGetAllRealmsQuery } from '@uiRepos/realms.repo';
+import { TagsSelector } from '@uiComponents/tags/TagsSelector/TagsSelector';
 
 interface IAddTenantModalProps {
   tenant?: ITenant;
@@ -27,6 +28,7 @@ const emptyEntity: ITenant = {
   color: '',
   logo: '',
   realm: '',
+  tags: [],
 };
 
 export const AddTenantModal: FC<IAddTenantModalProps> = ({
@@ -133,6 +135,10 @@ export const AddTenantModal: FC<IAddTenantModalProps> = ({
               { value: 'orange', label: 'Orange' },
             ]}
             {...form.getInputProps( 'color' )}
+          />
+
+          <TagsSelector
+            {...form.getInputProps( 'tags' )}
           />
 
           <Switch

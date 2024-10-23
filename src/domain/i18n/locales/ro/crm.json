@@ -221,7 +221,9 @@
           "title": "Module",
           "description": "Modulele sunt folosite pentru a configura aplicatia finala.",
           "button": "Gestionați modulele",
-          "name": "Denumire modul"
+          "name": "Denumire modul",
+          "btnAdd": "Adaug modul",
+          "btnImport": "Import modul"
         },
         "tenants": {
           "title": "Clienți",
